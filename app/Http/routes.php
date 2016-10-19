@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 Route::auth();
@@ -20,6 +20,11 @@ Route::auth();
 Route::get('/home', 'HomeController@index');
 
 Route::group(['middleware' => 'auth'], function() {
+
+    /**
+     * Управление контактными данными компании
+     */
+    Route::resource('/home/contacts', 'ContactController');
 
 
     /**

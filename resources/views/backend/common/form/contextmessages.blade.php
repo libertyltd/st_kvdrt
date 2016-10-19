@@ -3,9 +3,15 @@
         <strong>Запрос обработан с ошибками</strong>
         <br><br>
         <ul>
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
+            @if(gettype($errors) == 'object')
+                @foreach($errors->all() as $error)
+                    <li>{{e($error)}}</li>
+                @endforeach
+            @else
+                @foreach($errors as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            @endif
         </ul>
     </div>
 @endif

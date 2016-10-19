@@ -5,6 +5,10 @@
                 <i class="fa fa-cogs" aria-hidden="true"></i> Администрирование <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
+                @can('index', new App\Contact)
+                <li><a href="{{ url('/home/contacts/') }}"><i class="fa fa-location-arrow" aria-hidden="true"></i>&nbsp;Контакты</a></li>
+                @endcan
+
                 @can('index', new App\User())
                 <li><a href="{{ url('/home/users/') }}"><i class="fa fa-users" aria-hidden="true"></i> Пользователи</a></li>
                 @endcan
