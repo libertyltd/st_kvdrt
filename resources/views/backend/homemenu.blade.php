@@ -1,4 +1,7 @@
 @section('backendmenu')
+    @can('index', new App\FeedBack())
+    <li><a href="{{ url('/home/feedbacks/') }}"><i class="fa fa-rss" aria-hidden="true"></i>&nbsp;Отзывы</a></li>
+    @endcan
     @can('index', new App\Slider())
     <li><a href="{{ url('/home/sliders/') }}"><i class="fa fa-picture-o" aria-hidden="true"></i>&nbsp;Слайды главной страницы</a></li>
     @endcan

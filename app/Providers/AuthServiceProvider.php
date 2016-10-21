@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Contact;
+use App\FeedBack;
 use App\Policies\ModelPolicy;
 use App\Role;
 use App\RolePermission;
@@ -25,6 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         Role::class => ModelPolicy::class,
         Contact::class => ModelPolicy::class,
         Slider::class => ModelPolicy::class,
+        FeedBack::class => ModelPolicy::class,
     ];
 
     /**

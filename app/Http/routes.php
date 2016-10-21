@@ -29,6 +29,11 @@ Route::group(['middleware' => 'auth'], function() {
      */
     Route::resource('/home/sliders', 'SliderController');
 
+    /**
+     * Управление отзывами
+     */
+    Route::resource('/home/feedbacks', 'FeedBackController');
+
 
     /**
      * Управление правами доступа
