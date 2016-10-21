@@ -39,5 +39,4 @@ $(document).ready(function () {
     $('[data-toggle="countdown"]').countdown();
     $('[data-toggle="imagepicker"]').imagepicker();
     $('[data-toggle="imagepickermult"]').imagepickermult();
-    $('[data-toggle="weekwork"]').weekwork();
 });

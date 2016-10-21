@@ -76,7 +76,14 @@ class ContactController extends Controller
                         $activeContact->status = 0;
                         $activeContact->save();
                     }
+                } else {
+                    /* Смотрим на наличие записей в контактах, если их нет, то автоматически делаем эту запись активной */
+                    $AllContacts = Contact::all();
+                    if ($AllContacts->count() < 1) {
+                        $request->status = 1;
+                    }
                 }
+
                 $Contact = new Contact();
                 $Contact->email = $request->email;
                 $Contact->phone = $request->phone;
@@ -212,6 +219,6 @@ class ContactController extends Controller
 
         $nameOfDelete = $contact->email.' '.$contact->phone;
         $contact->delete();
-        return redirect('/home/contacts/')->with(['success'=>[$nameOfDelete.' успешно удален!']]);;
+        return redirect('/home/contacts/')->with(['success'=>[$nameOfDelete.' успешно удален!']]);
     }
 }

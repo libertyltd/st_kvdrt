@@ -25,15 +25,20 @@
             self.changedImage();
         });
 
-        this.$removeBth.bind('click', function () {
-            var nameDeleteInput = self.$element.attr('name');
-            var removeImg = self.$element.data('src');
-            removeImg = removeImg.replace(/\?\d+/, '');
-            self.$template.append('<input type="hidden" name="delete'+nameDeleteInput+'" value="'+removeImg+'">');
-            self.$template.find('img').attr('src', '');
-            self.$template.find('.imagepicker__action').css({'display': 'none'});
-            return false;
-        });
+        if (!this.$element.data('nodelete')) {
+            this.$removeBth.bind('click', function () {
+                var nameDeleteInput = self.$element.attr('name');
+                var removeImg = self.$element.data('src');
+                removeImg = removeImg.replace(/\?\d+/, '');
+                self.$template.append('<input type="hidden" name="'+nameDeleteInput+'[remove]" value="'+removeImg+'">');
+                self.$template.find('img').attr('src', '');
+                self.$template.find('.imagepicker__action').css({'display': 'none'});
+                return false;
+            });
+        } else {
+            this.$template.find('.imagepicker__action').remove();
+        }
+
     }
 
     ImagePickerElem.prototype.init = function () {

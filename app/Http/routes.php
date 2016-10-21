@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', 'FrontEndController@index');
 
 Route::auth();
 
@@ -25,6 +23,11 @@ Route::group(['middleware' => 'auth'], function() {
      * Управление контактными данными компании
      */
     Route::resource('/home/contacts', 'ContactController');
+
+    /**
+     * Управление слайдами главной страницы
+     */
+    Route::resource('/home/sliders', 'SliderController');
 
 
     /**

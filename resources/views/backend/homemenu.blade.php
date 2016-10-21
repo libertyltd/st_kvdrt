@@ -1,11 +1,15 @@
 @section('backendmenu')
+    @can('index', new App\Slider())
+    <li><a href="{{ url('/home/sliders/') }}"><i class="fa fa-picture-o" aria-hidden="true"></i>&nbsp;Слайды главной страницы</a></li>
+    @endcan
+
     @if (Auth::user()->hasRole('Administrator'))
         <li>
             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-cogs" aria-hidden="true"></i> Администрирование <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-                @can('index', new App\Contact)
+                @can('index', new App\Contact())
                 <li><a href="{{ url('/home/contacts/') }}"><i class="fa fa-location-arrow" aria-hidden="true"></i>&nbsp;Контакты</a></li>
                 @endcan
 
