@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Contact;
+use App\ImageStorage;
+use App\Slider;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -22,8 +24,15 @@ class FrontEndController extends Controller
                 'address' => $contact->address
             ];
         }
+
+        $slides = Slider::where('status', 1)->get();
+        foreach ($slides as &$slide) {
+            $IM = new ImageStorage($slide);
+            $slide->src = $IM->getCropped('image', 1365, 807)[0];
+        }
         return view('index', [
-            'contacts' => $contacts
+            'contacts' => $contacts,
+            'slides' => $slides,
         ]);
     }
 }

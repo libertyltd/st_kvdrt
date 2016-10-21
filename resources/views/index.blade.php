@@ -30,20 +30,24 @@
                 @endif
             </div>
         </header>
+        @if (isset($slides))
         <div class="hero">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
-
-                    <div class="swiper-slide slide1">
+                    @foreach($slides as $slide)
+                    <div class="swiper-slide" style="background-image: url('{!! $slide->src !!}');">
                         <div class="slide-content">
                             <div class="hero-head">
-                                Ремонт за фиксированное время по фиксированной цене
+                                {{ $slide->promo_text }}
                             </div>
+                            @if($slide->show_button)
                             <div class="conf-btn">
-                                <a href="constructor.html">Конфигуратор</a>
+                                <a href="{{ isset($slide->button_link) ? $slide->button_link : '#' }}">{{ $slide->button_text }}</a>
                             </div>
+                            @endif
                         </div>
                     </div>
+                    @endforeach
                     <!--
                     <div class="swiper-slide slide2">
                         <div class="slide-content">
@@ -72,5 +76,6 @@
                 <div class="swiper-pagination"></div>
             </div>
         </div>
+        @endif
     </div>
 @endsection
