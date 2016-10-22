@@ -188,7 +188,7 @@ class SliderController extends Controller
             return redirect('/home/sliders/'.$Slider->id.'/edit/')->with(['errors'=>[$e->getMessage()]]);
         }
 
-        return redirect('/home/sliders/'.$Slider->id.'/edit/')->with(['success'=>['Контактная запись изменена']]);
+        return redirect('/home/sliders/'.$Slider->id.'/edit/')->with(['success'=>['Слайд изменен']]);
     }
 
     /**

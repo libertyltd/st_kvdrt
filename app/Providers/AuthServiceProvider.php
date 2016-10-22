@@ -9,6 +9,7 @@ use App\Role;
 use App\RolePermission;
 use App\Slider;
 use App\User;
+use App\Work;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -27,6 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         Contact::class => ModelPolicy::class,
         Slider::class => ModelPolicy::class,
         FeedBack::class => ModelPolicy::class,
+        Work::class => ModelPolicy::class,
     ];
 
     /**

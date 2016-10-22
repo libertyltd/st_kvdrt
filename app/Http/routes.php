@@ -34,6 +34,11 @@ Route::group(['middleware' => 'auth'], function() {
      */
     Route::resource('/home/feedbacks', 'FeedBackController');
 
+    /**
+     * Управление выполненными работами
+     */
+    Route::resource('/home/works', 'WorkController');
+
 
     /**
      * Управление правами доступа

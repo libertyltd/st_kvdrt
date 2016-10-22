@@ -1,4 +1,7 @@
 @section('backendmenu')
+    @can('index', new App\Work())
+    <li><a href="{{ url('/home/works/') }}"><i class="fa fa-check-square-o" aria-hidden="true"></i>&nbsp;Выполненные работы</a></li>
+    @endcan
     @can('index', new App\FeedBack())
     <li><a href="{{ url('/home/feedbacks/') }}"><i class="fa fa-rss" aria-hidden="true"></i>&nbsp;Отзывы</a></li>
     @endcan
