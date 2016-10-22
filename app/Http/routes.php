@@ -39,6 +39,11 @@ Route::group(['middleware' => 'auth'], function() {
      */
     Route::resource('/home/works', 'WorkController');
 
+    /**
+     * Управление справочником по типам зданий
+     */
+    Route::resource('/home/type_buildings', 'TypeBuildingController');
+
 
     /**
      * Управление правами доступа

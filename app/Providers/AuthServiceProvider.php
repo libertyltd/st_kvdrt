@@ -3,11 +3,13 @@
 namespace App\Providers;
 
 use App\Contact;
+use App\Design;
 use App\FeedBack;
 use App\Policies\ModelPolicy;
 use App\Role;
 use App\RolePermission;
 use App\Slider;
+use App\TypeBuilding;
 use App\User;
 use App\Work;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
@@ -29,6 +31,8 @@ class AuthServiceProvider extends ServiceProvider
         Slider::class => ModelPolicy::class,
         FeedBack::class => ModelPolicy::class,
         Work::class => ModelPolicy::class,
+        Design::class => ModelPolicy::class,
+        TypeBuilding::class => ModelPolicy::class,
     ];
 
     /**

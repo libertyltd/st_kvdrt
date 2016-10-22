@@ -1,4 +1,17 @@
 @section('backendmenu')
+    @can('index', new App\Design())
+    <li>
+        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-arrows" aria-hidden="true"></i>&nbsp;Конструктор&nbsp;<span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="{{ url('/home/designs/') }}"><i class="fa fa-picture-o" aria-hidden="true"></i>&nbsp;Дизайны</a></li>
+            @can('index', new App\TypeBuilding())
+            <li><a href="{{ url('/home/type_buildings/') }}"><i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;Типы домов (справочник)</a></li>
+            @endcan
+        </ul>
+    </li>
+    @endcan
     @can('index', new App\Work())
     <li><a href="{{ url('/home/works/') }}"><i class="fa fa-check-square-o" aria-hidden="true"></i>&nbsp;Выполненные работы</a></li>
     @endcan
