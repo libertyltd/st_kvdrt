@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\FeedBack;
 use App\ImageStorage;
 use Exception;
+use Faker\Provider\Image;
 use Illuminate\Support\Facades\DB;
 use Validator;
 use Illuminate\Http\Request;
@@ -116,7 +117,18 @@ class FeedBackController extends Controller
      */
     public function edit($id)
     {
+        $FeedBack = FeedBack::find($id);
+        $IM = new ImageStorage($FeedBack);
+        $FeedBack->avatar = $IM->getCropped('avatar', 300, 300);
+        return view('backend.feedbacks.form', [
+            'item' => $FeedBack,
 
+            'nameAction' => $FeedBack->name,
+            'idEntity' => $FeedBack->id,
+            'controllerPathList' => '/home/feedbacks/',
+            'controllerAction' => 'edit',
+            'controllerEntity' => new FeedBack(),
+        ]);
     }
 
     /**
@@ -128,7 +140,37 @@ class FeedBackController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'text' => 'max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/home/feedbacks/edit/')->withInput()->withErrors($validator);
+        }
+
+        if (!$request->status) {
+            $request->status = 0;
+        } else {
+            $request->status = 1;
+        }
+
+        try {
+            $FeedBack = FeedBack::find($id);
+            $FeedBack->name = $request->name;
+            $FeedBack->text = $request->text;
+            $FeedBack->status = $request->status;
+            $FeedBack->save();
+
+            if ($request->avatar) {
+                $IS = new ImageStorage($FeedBack);
+                $IS->save($request->avatar, 'avatar');
+            }
+        } catch (Exception $e) {
+            return redirect('/home/feedbacks/'.$FeedBack->id.'/edit/')->with(['errors'=>[$e->getMessage()]]);
+        }
+
+        return redirect('/home/feedbacks/'.$FeedBack->id.'/edit/')->with(['success'=>['Контактная запись изменена']]);
     }
 
     /**
@@ -139,6 +181,11 @@ class FeedBackController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $FeedBack = FeedBack::find($id);
+        $nameOfDelete = $FeedBack->name;
+        $IM = new ImageStorage($FeedBack);
+        $IM->deleteNamespaceDir();
+        $FeedBack->delete();
+        return redirect('/home/feedbacks/')->with(['success'=>[$nameOfDelete.' успешно удален!']]);
     }
 }

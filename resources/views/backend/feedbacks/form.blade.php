@@ -52,7 +52,7 @@
                             <textarea name="text"
                                       id="text"
                                       class="form-control"
-                                      rows="10" maxlength="255" data-toggle="ckeditor">{!! isset($item->text) ? $item->text : '' !!}</textarea>
+                                      rows="10" maxlength="255">{{ isset($item->text) ? $item->text : '' }}</textarea>
                         </div>
                     </div>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contact;
+use App\FeedBack;
 use App\ImageStorage;
 use App\Slider;
 use Illuminate\Http\Request;
@@ -30,9 +31,17 @@ class FrontEndController extends Controller
             $IM = new ImageStorage($slide);
             $slide->src = $IM->getCropped('image', 1365, 807)[0];
         }
+
+        $feedbacks = FeedBack::where('status', 1)->get();
+        foreach ($feedbacks as &$feedback) {
+            $IM = new ImageStorage($feedback);
+            $feedback->avatar = $IM->getCropped('avatar', 102, 102)[0];
+        }
+
         return view('index', [
             'contacts' => $contacts,
             'slides' => $slides,
+            'feedbacks' => $feedbacks,
         ]);
     }
 }

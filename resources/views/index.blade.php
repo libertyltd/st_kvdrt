@@ -185,7 +185,7 @@
         <div class="design-style">
             <!-- @TODO:доделать -->
         </div>
-
+        @if (isset($feedbacks))
         <div class="feedback">
             <div class="lg-head">
                 отзывы
@@ -203,27 +203,6 @@
                         </div>
                     </div>
                     @endforeach
-                    <!--
-                    <div class="swiper-slide">
-                        <div class="feedback-img">
-                            <img src="images/circle1.png" alt="">
-                        </div>
-                        <div class="feedback-response">
-                            Ничего не понимаю в ремонте, поэтому обратилась к ребятам и ни разу не пожалела.
-                            Видно, что люди, которые работают в KVADRAT.Space, точно на своем месте.
-                            <a href="">Светлана Мизюкина</a>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="feedback-img">
-                            <img src="images/circle2.png" alt="">
-                        </div>
-                        <div class="feedback-response">
-                            Хотите быстрый, красивый и качественный ремонт и при этом заплатить меньше денег? Вам нужно в KVADRAT.Space! Я все сказала! :)
-                            <a href="">Ольга Макарова</a>
-                        </div>
-                    </div>
-                    -->
                 </div>
                 @if($feedbacks->count() > 1)
                 <div class="swiper-button-next"></div>
@@ -233,5 +212,6 @@
                 <div class="swiper-pagination2"></div>
             </div>
         </div>
+        @endif
     </div>
 @endsection
