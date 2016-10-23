@@ -44,6 +44,11 @@ Route::group(['middleware' => 'auth'], function() {
      */
     Route::resource('/home/type_buildings', 'TypeBuildingController');
 
+    /**
+     * Управление справочником по типам санузлов
+     */
+    Route::resource('/home/type_bathrooms', 'TypeBathroomController');
+
 
     /**
      * Управление правами доступа

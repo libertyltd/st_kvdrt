@@ -9,6 +9,7 @@ use App\Policies\ModelPolicy;
 use App\Role;
 use App\RolePermission;
 use App\Slider;
+use App\TypeBathroom;
 use App\TypeBuilding;
 use App\User;
 use App\Work;
@@ -33,6 +34,7 @@ class AuthServiceProvider extends ServiceProvider
         Work::class => ModelPolicy::class,
         Design::class => ModelPolicy::class,
         TypeBuilding::class => ModelPolicy::class,
+        TypeBathroom::class => ModelPolicy::class,
     ];
 
     /**
