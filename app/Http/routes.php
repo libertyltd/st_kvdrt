@@ -49,6 +49,11 @@ Route::group(['middleware' => 'auth'], function() {
      */
     Route::resource('/home/type_bathrooms', 'TypeBathroomController');
 
+    /**
+     * Управление дизайном
+     */
+    Route::resource('/home/designs', 'DesignController');
+
 
     /**
      * Управление правами доступа
