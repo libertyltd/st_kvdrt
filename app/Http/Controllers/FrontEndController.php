@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contact;
+use App\Design;
 use App\FeedBack;
 use App\ImageStorage;
 use App\Slider;
@@ -47,6 +48,28 @@ class FrontEndController extends Controller
             $work->origSrc = $IM->getOrigImage('image');
         }
 
+
+        $designs = Design::where([
+            ['status', '=', '1'],
+            ['show_in_main', '=', 1]
+        ])->get();
+        $iterrator = 0;
+        foreach ($designs as &$item) {
+            $IM = new ImageStorage($item);
+            $item->hallMin = $IM->getCropped('hall', 458, 323);
+            $item->hall = $IM->getOrigImage('hall');
+            $item->bathMin = $IM->getCropped('bath', 225, 323);
+            $item->bath = $IM->getOrigImage('bath');
+            if ($iterrator%2 == 0) {
+                $item->side = 'left';
+            } else {
+                $item->side = 'right';
+            }
+            $iterrator++;
+        }
+
+
+
         $dateYear = date('Y');
 
         return view('index', [
@@ -54,6 +77,7 @@ class FrontEndController extends Controller
             'slides' => $slides,
             'feedbacks' => $feedbacks,
             'works' => $works,
+            'designs' => $designs,
             'dateYear' => $dateYear,
         ]);
     }

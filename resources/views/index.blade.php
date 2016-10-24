@@ -182,9 +182,71 @@
                 Всерьез задумали изменить интерьер? Мы поможем определиться с новыми цветами, текстурами и аксессуарами. Соберите собственный дизайн с помощью конструктора или выберите уже готовый вариант. Ваша идея - наша реализация!
             </div>
         </div>
+        @if (isset($designs))
         <div class="design-style">
-            <!-- @TODO:доделать -->
+            @foreach($designs as $design)
+                @if($design->side == 'left')
+                    <div class="design-row">
+                        <div class="row-left">
+                            <a class="example-image-link" href="{{ $design->hall[0] }}" data-lightbox="example-set1" data-title="{{ $design->description }}">
+                                <img src="{{ $design->hallMin[0] }}" class="lg-img-row" alt="{{ $design->name }}">
+
+                            </a>
+                            <a class="example-image-link" href="{{ $design->bath[0] }}" data-lightbox="example-set1" data-title="{{ $design->description }}">
+                                <img src="{{ $design->bathMin[0] }}" class="sm-img-row" alt="{{ $design->name }}">
+
+                            </a>
+                        </div>
+                        <div class="row-right">
+                            <div class="design-description">
+                                <div class="design-head">
+                                    {{ $design->name }}
+                                </div>
+                                <div class="design-price">
+                                    <span>от</span>
+                                    <span>{{ $design->price }}</span>
+                                    <span>р</span>
+                                </div>
+                                <div class="design-description-main">
+                                    {{ $design->lead_description }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearbox"></div>
+                    </div>
+                @else
+                    <div class="design-row">
+                        <div class="row-left">
+                            <div class="design-description right-align">
+                                <div class="design-head">
+                                    {{ $design->name }}
+                                </div>
+                                <div class="design-price">
+                                    <span>от</span>
+                                    <span>{{ $design->price }}</span>
+                                    <span>р</span>
+                                </div>
+                                <div class="design-description-main">
+                                    {{ $design->lead_description }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-right">
+                            <a class="example-image-link" href="{{ $design->hall[0] }}" data-lightbox="example-set1" data-title="{{ $design->description }}">
+                                <img src="{{ $design->hallMin[0] }}" class="lg-img-row" alt="{{ $design->name }}">
+
+                            </a>
+                            <a class="example-image-link" href="{{ $design->bath[0] }}" data-lightbox="example-set1" data-title="{{ $design->description }}">
+                                <img src="{{ $design->bathMin[0] }}" class="sm-img-row" alt="{{ $design->name }}">
+
+                            </a>
+                        </div>
+                        <div class="clearbox"></div>
+                    </div>
+                @endif
+            @endforeach
         </div>
+        @endif
         @if (isset($feedbacks))
         <div class="feedback">
             <div class="lg-head">
