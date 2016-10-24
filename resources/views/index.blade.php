@@ -327,10 +327,10 @@
                         Наши контакты
                     </div>
                     <div class="contact-address">
-                        {{ $contacts['address'] }}
+                        {{ isset($contacts['address']) ? $contacts['address'] : '' }}
                     </div>
                     <div class="contact-phone">
-                        {{ $contacts['phone'] }}
+                        {{ isset($contacts['phone']) ? $contacts['phone'] : '' }}
                     </div>
                 </div>
                 <div class="clearbox"></div>
