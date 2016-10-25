@@ -56,6 +56,7 @@ class FrontEndController extends Controller
         $iterrator = 0;
         foreach ($designs as &$item) {
             $IM = new ImageStorage($item);
+            $item->price = Design::formatPrice($item->price);
             $item->hallMin = $IM->getCropped('hall', 458, 323);
             $item->hall = $IM->getOrigImage('hall');
             $item->bathMin = $IM->getCropped('bath', 225, 323);
