@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\CategoryDesign;
 use App\Contact;
 use App\Design;
 use App\FeedBack;
@@ -37,6 +38,7 @@ class AuthServiceProvider extends ServiceProvider
         TypeBuilding::class => ModelPolicy::class,
         TypeBathroom::class => ModelPolicy::class,
         Option::class => ModelPolicy::class,
+        CategoryDesign::class => ModelPolicy::class,
     ];
 
     /**
