@@ -54,6 +54,11 @@ Route::group(['middleware' => 'auth'], function() {
      */
     Route::resource('/home/designs', 'DesignController');
 
+    /**
+     * Управление дополнительными опциями
+     */
+    Route::resource('/home/options', 'OptionController');
+
 
     /**
      * Управление правами доступа

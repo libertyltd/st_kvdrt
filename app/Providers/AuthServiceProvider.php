@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Contact;
 use App\Design;
 use App\FeedBack;
+use App\Option;
 use App\Policies\ModelPolicy;
 use App\Role;
 use App\RolePermission;
@@ -35,6 +36,7 @@ class AuthServiceProvider extends ServiceProvider
         Design::class => ModelPolicy::class,
         TypeBuilding::class => ModelPolicy::class,
         TypeBathroom::class => ModelPolicy::class,
+        Option::class => ModelPolicy::class,
     ];
 
     /**

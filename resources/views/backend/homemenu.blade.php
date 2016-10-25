@@ -6,6 +6,9 @@
         </a>
         <ul class="dropdown-menu">
             <li><a href="{{ url('/home/designs/') }}"><i class="fa fa-picture-o" aria-hidden="true"></i>&nbsp;Дизайны</a></li>
+            @can('index', new App\Option())
+            <li><a href="{{ url('/home/options/') }}"><i class="fa fa-plus-square-o" aria-hidden="true"></i>&nbsp;Дополнительные услуги (опции)</a></li>
+            @endcan
             @can('index', new App\TypeBuilding())
             <li><a href="{{ url('/home/type_buildings/') }}"><i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;Типы домов (справочник)</a></li>
             @endcan
