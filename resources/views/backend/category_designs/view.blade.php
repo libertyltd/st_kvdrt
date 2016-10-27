@@ -14,13 +14,13 @@
                 <div class="row">
                     <label class="col-sm-3">Название:</label>
                     <div class="col-sm-9">
-                        <img src="{{ $item->name }}">
+                        {{ $item->name }}
                     </div>
                 </div>
                 <div class="row">
-                    <label class="col-sm-3">Цена:</label>
+                    <label class="col-sm-3">Дизайн:</label>
                     <div class="col-sm-9">
-                        {{ $item->price }}
+                        {{ $item->Design->name }}
                     </div>
                 </div>
                 <a href="{{ isset($controllerPathList) ? $controllerPathList : url('/home/') }}" class="btn btn-default">Назад</a>

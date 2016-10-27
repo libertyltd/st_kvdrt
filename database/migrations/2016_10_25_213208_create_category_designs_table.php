@@ -14,10 +14,12 @@ class CreateCategoryDesignsTable extends Migration
     {
         Schema::create('category_designs', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_design')->unsigned();
+            $table->integer('design_id')->unsigned();
             $table->string('name', 255);
 
-            $table->foreign('id_design')->references('id')->on('designs')->onDelete('cascade')->onUpdate('restrict');
+            $table->boolean('status')->default(false);
+
+            $table->foreign('design_id')->references('id')->on('designs')->onDelete('cascade')->onUpdate('restrict');
         });
     }
 

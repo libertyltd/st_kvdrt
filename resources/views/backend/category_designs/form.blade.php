@@ -12,12 +12,12 @@
         @include('backend.common.form.contextmessages')
         <div class="panel panel-default">
             <div class="panel-body">
-                <form class="form-horizontal" method="POST" enctype="multipart/form-data"
+                <form class="form-horizontal" method="POST"
                       @if ($controllerAction === 'add')
-                      action="{{ url('/home/options/ ') }}"
+                      action="{{ url('/home/category_designs/ ') }}"
                       @endif
                       @if ($controllerAction === 'edit')
-                      action="{{ url('/home/options/'.$idEntity.'/') }}"
+                      action="{{ url('/home/category_designs/'.$idEntity.'/') }}"
                         @endif
                 >
                     {{ csrf_field() }}
@@ -33,9 +33,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="price" class="col-sm-3 control-label">Цена</label>
+                        <label for="design_id" class="col-sm-3 control-label">Дизайн</label>
                         <div class="col-sm-9">
-                            <input name="price" id="price" class="form-control" value="{{ isset($item->price) ? $item->price : '' }}" required>
+                            <select name="design_id" class="form-control" required>
+                                @foreach($designs as $design)
+                                    <option value="{{$design->id}}" {{$design->selected}}>{{$design->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 

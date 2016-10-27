@@ -43,19 +43,19 @@
                                             {{ $item->name }}
                                         </td>
                                         <td>
-                                            {{ $item->price }}
+                                            {{ $item->Design->name }}
                                         </td>
                                         <td class="column_text-right">
-                                            @can('edit', new App\Option())
-                                            <a class="btn btn-info" href="{{ url('/home/options/'.$item->id.'/edit/') }}" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Редактировать</a>
+                                            @can('edit', new App\CategoryDesign())
+                                            <a class="btn btn-info" href="{{ url('/home/category_designs/'.$item->id.'/edit/') }}" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Редактировать</a>
                                             @endcan
-                                            @cannot('edit', new App\Option())
-                                            @can('view', new App\Option())
-                                            <a class="btn btn-info" href="{{ url('/home/options/'.$item->id.'/') }}"><i class="fa fa-eye" aria-hidden="true"></i> Показать</a>
+                                            @cannot('edit', new App\CategoryDesign())
+                                            @can('view', new App\CategoryDesign())
+                                            <a class="btn btn-info" href="{{ url('/home/category_designs/'.$item->id.'/') }}"><i class="fa fa-eye" aria-hidden="true"></i> Показать</a>
                                             @endcan
                                             @endcannot
-                                            @can('delete', new App\Option())
-                                            <form action="{{ url('/home/options/'.$item->id.'/') }}" method="POST" class="form_action">
+                                            @can('delete', new App\CategoryDesign())
+                                            <form action="{{ url('/home/category_designs/'.$item->id.'/') }}" method="POST" class="form_action">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}
                                                 <button class="btn btn-danger" type="submit" data-toggle="countdown"><i class="fa fa-trash-o" aria-hidden="true"></i> Удалить</button>
