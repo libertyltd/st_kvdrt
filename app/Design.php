@@ -47,4 +47,8 @@ class Design extends Model
 
         return $integer;
     }
+
+    public function CategoryDesigns () {
+        return $this->hasMany('App\CategoryDesign');
+    }
 }

@@ -12,6 +12,9 @@
             @can('index', new App\CategoryDesign())
             <li><a href="{{ url('/home/category_designs/') }}"><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Конструктор стиля (категории)</a></li>
             @endcan
+            @can('index', new App\DesignOption())
+            <li><a href="{{ url('/home/design_options/') }}"><i class="fa fa-check-square" aria-hidden="true"></i>&nbsp;Опции конструктора стиля</a></li>
+            @endcan
             @can('index', new App\TypeBuilding())
             <li><a href="{{ url('/home/type_buildings/') }}"><i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;Типы домов (справочник)</a></li>
             @endcan
