@@ -16,15 +16,20 @@ class Design extends Model
         $integer = $integer[0];
 
         $lengthOfInteger = strlen($integer);
+
         if ($lengthOfInteger > 0) {
             $lengthOfInteger--;
         }
 
         $row = [];
+        $counter = 0;
+
         for (; $lengthOfInteger >= 0; $lengthOfInteger--) {
-            $row[] = $integer[$lengthOfInteger];
-            if ($lengthOfInteger%3 == 0) {
+            $row[] = substr($integer, $lengthOfInteger, 1);
+            $counter++;
+            if ($counter%3 == 0) {
                 $row[] = ' ';
+                $counter = 0;
             }
         }
 

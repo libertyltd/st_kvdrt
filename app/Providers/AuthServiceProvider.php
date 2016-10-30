@@ -8,6 +8,7 @@ use App\Design;
 use App\DesignOption;
 use App\FeedBack;
 use App\Option;
+use App\Order;
 use App\Policies\ModelPolicy;
 use App\Role;
 use App\RolePermission;
@@ -41,6 +42,7 @@ class AuthServiceProvider extends ServiceProvider
         Option::class => ModelPolicy::class,
         CategoryDesign::class => ModelPolicy::class,
         DesignOption::class => ModelPolicy::class,
+        Order::class => ModelPolicy::class,
     ];
 
     /**

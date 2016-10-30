@@ -24,6 +24,9 @@
         </ul>
     </li>
     @endcan
+    @can('index', new App\Order())
+    <li><a href="{{ url('/home/orders/') }}"><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Заявки на ремонт</a></li>
+    @endcan
     @can('index', new App\Work())
     <li><a href="{{ url('/home/works/') }}"><i class="fa fa-check-square-o" aria-hidden="true"></i>&nbsp;Выполненные работы</a></li>
     @endcan

@@ -23,6 +23,6 @@ class CategoryDesign extends Model
      * @return DesignOption
      */
     public function DesignOptions () {
-        return $this->hasMany('App/DesignOption');
+        return $this->hasMany('App\DesignOption');
     }
 }

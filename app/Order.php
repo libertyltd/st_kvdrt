@@ -7,4 +7,48 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     public $timestamps = false;
+
+    /**
+     * Возвращает все опции дизайна, выбранные пользователем
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function DesignOptions () {
+        return $this->belongsToMany('App\DesignOption');
+    }
+
+    /**
+     * Возвращает все дополнительные опции заказа
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function Options () {
+        return $this->belongsToMany('App\Option');
+    }
+
+    /**
+     * Возвращает тип здания
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function TypeBuilding() {
+        return $this->belongsTo('App\TypeBuilding');
+    }
+
+    /**
+     * Возвращет тип санузла
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function TypeBathroom() {
+        return $this->belongsTo('App\TypeBathroom');
+    }
+
+    /**
+     * Возвращает дизайн
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function Design() {
+        return $this->belongsTo('App\Design');
+    }
 }

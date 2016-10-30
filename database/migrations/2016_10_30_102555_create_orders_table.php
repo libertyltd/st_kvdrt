@@ -16,11 +16,11 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->string('name', 255)->nullable();
             $table->string('email', 255);
-            $table->string('theme', 255);
-            $table->text('message');
-            $table->string('address', 255);
-            $table->string('apartments_type', 255);
-            $table->decimal('apartments_square');
+            $table->string('theme', 255)->nullable();
+            $table->text('message')->nullable();
+            $table->string('address', 255)->nullable();
+            $table->string('apartments_type', 255)->nullable();
+            $table->decimal('apartments_square')->nullable();
             $table->integer('type_building_id')->unsigned()->nullable()->default(null);
             $table->integer('type_bathroom_id')->unsigned()->nullable()->default(null);
             $table->integer('design_id')->unsigned()->nullable()->default(null);
