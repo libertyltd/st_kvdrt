@@ -26,6 +26,8 @@
                                     <th>#</th>
                                     <th>Миниатюра</th>
                                     <th>Название</th>
+                                    <th>Цена от</th>
+                                    <th>Цена за м<sup>2</sup></th>
                                     <th class="column_text-right">Опции</th>
                                 </tr>
                                 </thead>
@@ -46,6 +48,12 @@
                                         </td>
                                         <td>
                                             {{ $item->name }}
+                                        </td>
+                                        <td>
+                                            {{ $item->price }}
+                                        </td>
+                                        <td>
+                                            {{ $item->price_square }}
                                         </td>
                                         <td class="column_text-right">
                                             @can('edit', new App\Design())

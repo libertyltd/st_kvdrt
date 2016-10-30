@@ -57,7 +57,9 @@ class DesignController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
             'lead_description' => 'required|max:255',
-            'price' => 'numeric|required'
+            'price' => 'numeric|required',
+            'price_square' => 'numeric|required',
+            'constant_cy' => 'numeric|required',
         ]);
 
         if ($validator->fails()) {
@@ -85,6 +87,8 @@ class DesignController extends Controller
                 $Design->price = $request->price;
                 $Design->status = $request->status;
                 $Design->show_in_main = $request->show_in_main;
+                $Design->price_square = $request->price_square;
+                $Design->constant_cy = $request->constant_cy;
                 $Design->save();
 
                 $IS = null;
@@ -162,7 +166,9 @@ class DesignController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
             'lead_description' => 'required|max:255',
-            'price' => 'numeric|required'
+            'price' => 'numeric|required',
+            'price_square' => 'numeric|required',
+            'constant_cy' => 'numeric|required',
         ]);
 
         if ($validator->fails()) {
@@ -189,6 +195,8 @@ class DesignController extends Controller
             $Design->price = $request->price;
             $Design->status = $request->status;
             $Design->show_in_main = $request->show_in_main;
+            $Design->price_square = $request->price_square;
+            $Design->constant_cy = $request->constant_cy;
             $Design->save();
 
             $IS = null;

@@ -83,6 +83,22 @@
                         <div class="col-sm-9">
                             <input name="price" id="price" class="form-control" value="{{ isset($item->price) ? $item->price : '' }}" required>
                         </div>
+                        <div class="col-sm-9 col-sm-offset-3"><span class="label label-info">Отображается на карточке дизайна НО НЕ УЧАСТВУЕТ в рассчете стоимости</span></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="price_square" class="col-sm-3 control-label">Цена за квадрат:</label>
+                        <div class="col-sm-9">
+                            <input name="price_square" id="price_square" class="form-control" value="{{ isset($item->price_square) ? $item->price_square : '' }}" required>
+                        </div>
+                        <div class="col-sm-9 col-sm-offset-3"><span class="label label-warning">Данное значение УЧАСТВУЕТ в рассчете стоимости и ОБЯЗАТЕЛЬНО к заполнению</span></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="constant_cy" class="col-sm-3 control-label">Константа СУ:</label>
+                        <div class="col-sm-9">
+                            <input name="constant_cy" id="constant_cy" class="form-control" value="{{ isset($item->constant_cy) ? $item->constant_cy : '' }}" required>
+                        </div>
                     </div>
 
                     <div class="form-group">
