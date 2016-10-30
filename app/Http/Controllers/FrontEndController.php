@@ -6,11 +6,16 @@ use App\Contact;
 use App\Design;
 use App\FeedBack;
 use App\ImageStorage;
+use App\Order;
 use App\Slider;
+use App\TypeBathroom;
+use App\TypeBuilding;
 use App\Work;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Validator;
+use Exception;
 
 class FrontEndController extends Controller
 {
@@ -69,6 +74,9 @@ class FrontEndController extends Controller
             $iterrator++;
         }
 
+        $typesBuilding = TypeBuilding::where('status', 1)->get();
+        $typesBathroom = TypeBathroom::where('status', 1)->get();
+
 
 
         $dateYear = date('Y');
@@ -80,6 +88,48 @@ class FrontEndController extends Controller
             'works' => $works,
             'designs' => $designs,
             'dateYear' => $dateYear,
+            'typesBuilding' => $typesBuilding,
+            'typesBathroom' => $typesBathroom,
         ]);
+    }
+
+    public function constructor_step_5 (Request $request) {
+        if ($request->ajax) {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|max:255',
+                'email' => 'email|required|max:255',
+                'theme' => 'max:255',
+                'message' => 'required'
+            ]);
+
+            if($validator->fails()) {
+                $messages = $validator->errors();
+                $messagesResponse = [];
+                foreach($messages->all() as $message) {
+                    $messagesResponse[] = '<li>'.$message.'</li>';
+                }
+                $messagesResponse = implode('', $messagesResponse);
+                $messagesResponse = str_replace('name', 'Имя', $messagesResponse);
+                $messagesResponse = str_replace('message', 'Сообщение', $messagesResponse);
+                $messagesResponse = str_replace('theme', 'Тема', $messagesResponse);
+                die("<p style='font: 13px Verdana;'><font color=#FF3333></font></p><ul class='error-box' style=''>".$messagesResponse."</ul><br />");
+            }
+
+            try {
+                $Order = new Order();
+                $Order->name = $request->name;
+                $Order->email = $request->email;
+                $Order->message = $request->message;
+                $Order->theme = $request->theme;
+                $Order->status = 0;
+                $Order->save();
+            } catch (Exception $e) {
+                die("<p style='font: 13px Verdana;'><font color=#FF3333></font></p><ul class='error-box' style=''><li>Произошла ошибка при сохранении заявки. Пожалуйста, попробуйте отправить сообщение позже.</li></ul><br />");
+            }
+
+            die('1');
+        }
+
+
     }
 }

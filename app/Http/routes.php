@@ -17,6 +17,8 @@ Route::auth();
 
 Route::get('/home', 'HomeController@index');
 
+Route::post('/constructor/step/5', 'FrontEndController@constructor_step_5');
+
 Route::group(['middleware' => 'auth'], function() {
 
     /**

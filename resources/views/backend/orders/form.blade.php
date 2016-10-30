@@ -169,13 +169,13 @@
                         <label class="col-sm-3 control-label">Статус заявки</label>
                         <div class="col-sm-9">
                             <div class="btn-group" data-toggle="buttons">
-                                <label class="btn btn-success {{ isset($item->status) ? $item->status == 0 ? 'active' : '' : '' }}">
+                                <label class="btn btn-danger {{ isset($item->status) ? $item->status == 0 ? 'active' : '' : '' }}">
                                     <input type="radio" name="status" value="0" autocomplete="off" {{ isset($item->status) ? $item->status == 0 ? 'checked' : '' : '' }}> Новая
                                 </label>
                                 <label class="btn btn-warning {{ isset($item->status) ? $item->status == 1 ? 'active' : '' : '' }}">
                                     <input type="radio" name="status" value="1" autocomplete="off" {{ isset($item->status) ? $item->status == 1 ? 'checked' : '' : '' }}> В работе
                                 </label>
-                                <label class="btn btn-danger {{ isset($item->status) ? $item->status == 2 ? 'active' : '' : '' }}">
+                                <label class="btn btn-success {{ isset($item->status) ? $item->status == 2 ? 'active' : '' : '' }}">
                                     <input type="radio" name="status" value="2" autocomplete="off" {{ isset($item->status) ? $item->status == 2 ? 'checked' : '' : '' }}> Завершена
                                 </label>
                             </div>

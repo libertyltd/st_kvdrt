@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="page">
+        @include('frontend.fragments.first_step_form')
         <header>
             <div class="logo">
                 <a href="/">
@@ -16,7 +17,7 @@
                     <a href="tel:{{ isset($contacts['phoneToLink']) ? $contacts['phoneToLink'] : '' }}"><img src="/images/_0012_icon-phone.png" alt="" class="icon">{{ isset($contacts['phone']) ? $contacts['phone'] : '' }}</a>
                 </div>
                 <div class="conf-btn">
-                    <a href="/constructor/step1">Конфигуратор</a>
+                    <a href="#" class="add_cont">Конфигуратор</a>
                 </div>
                 @if (isset($contacts['facebook_link']) && $contacts['facebook_link'])
                 <div class="socials">
@@ -42,7 +43,7 @@
                             </div>
                             @if($slide->show_button)
                             <div class="conf-btn">
-                                <a href="{{ isset($slide->button_link) ? $slide->button_link : '#' }}">{{ $slide->button_text }}</a>
+                                <a href="{{ isset($slide->button_link) ? $slide->button_link : '#' }}" class="add_cont">{{ $slide->button_text }}</a>
                             </div>
                             @endif
                         </div>
@@ -117,7 +118,7 @@
                             </div>
                         </div>
                         <div class="count">
-                            <a href="design.html" class='add_cont'>Рассчитать</a>
+                            <a href="#" class='add_cont'>Рассчитать</a>
                         </div>
                     </div>
                     <div id="tab2" class="tab">
@@ -300,21 +301,21 @@
         <div class="contacts">
             <div class="contacts-content">
                 <div class="contant-form">
-                    <!-- @TODO: Тут надо переделать на отправку контроллеру создания нового заказа -->
-                    <form action="#" method="post" id="cForm1">
+                    <form action="/constructor/step/5/" method="post" id="cForm1">
+                        {{ csrf_field() }}
                         <div class="contant-head">Решились на ремонт?
                             Свяжитесь с нами!</div>
                         <div>
-                            <input type="text" id="posName" placeholder="Имя">
+                            <input type="text" id="posName" name="name" placeholder="Имя" required>
                         </div>
                         <div>
-                            <input type="email" id="posEmail" placeholder="Email">
+                            <input type="email" id="posEmail" name="email" placeholder="Email" required>
                         </div>
                         <div>
-                            <input type="tel" id="posTheme" placeholder="Тема">
+                            <input type="text" id="posTheme" name="theme" placeholder="Тема">
                         </div>
                         <div>
-                            <textarea type="text" id="posText" class="message" placeholder="Сообщение"></textarea>
+                            <textarea id="posText" class="message" name="message" placeholder="Сообщение" required></textarea>
                         </div>
                         <div>
                             <button type="button" id="send" class="formStyle submit-button">Отправить</button>
@@ -460,7 +461,7 @@
             }
         });
     </script>
-    <script src="js/swiper.min.js"></script>
+    <script src="/js/swiper.min.js"></script>
     <!-- Initialize Swiper -->
     <script>
         var swiper = new Swiper('.swiper-container', {

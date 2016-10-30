@@ -52,11 +52,11 @@
                                         </td>
                                         <td>
                                             @if($item->status == 0)
-                                                Новый
+                                                <span class="label label-danger">Новый</span>
                                             @elseif($item->status == 1)
-                                                В обработке
+                                                <span class="label laber-warning">В обработке</span>
                                             @else
-                                                Обработана
+                                                <span class="label label-success">Обработана</span>
                                             @endif
                                         </td>
                                         <td class="column_text-right">

@@ -17,13 +17,15 @@ jQuery(document).ready(function() {
     });
     
     
-    $("#add_cont").click(function() {
+    $(".add_cont").click(function(e) {
+      e.preventDefault();
       if ($(".final_form").is(":visible")) {
        $(".final_form").fadeOut(600);
       } else {
        $(".final_form").fadeIn(600);
       };
      });
+    
     
     $("#final_close").click(function() {
       $(".final_form").fadeOut(600);

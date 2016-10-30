@@ -11,25 +11,34 @@ $("#send").click(function(){
 		var posEmail = $("#posEmail").val();
 		var posText = $("#posText").val();
         var posTheme = $("#posTheme").val();
+		var csfToken = $('input[name="_token"]').val();
 		$.ajax({
 			type: "POST",
-			url: "send.php",
-			data: {"posName": posName, "posEmail": posEmail, "posText": posText, "posTheme": posTheme,},
+			url: "/constructor/step/5/",
+			data: {
+				"name": posName,
+				"email": posEmail,
+				"message": posText,
+				"theme": posTheme,
+				"ajax":true,
+				'_token': csfToken,
+			},
 			cache: false,
 			success: function(response){
-		var messageResp = "<p style='' class='green-box'>Спасибо, <strong style='position: relative; top: -3px;'>";
-		var resultStat = "!</strong> Ваше сообщение отправлено!</p>";
-		var oll = (messageResp + posName + resultStat);
+				var messageResp = "<p style='' class='green-box'>Спасибо, <strong style='position: relative; top: -3px;'>";
+				var resultStat = "!</strong> Ваше сообщение отправлено!</p>";
+				var oll = (messageResp + posName + resultStat);
 				if(response == 1){
-				$("#loadBar").html(oll).fadeIn(3000);
-				$("#posName").val("");
-				$("#posEmail").val("");
-				$("#posText").val("");
-                $("#posText").val("");
-                $("#posTheme").val("");
+					$("#loadBar").html(oll).fadeIn(3000);
+					$("#posName").val("");
+					$("#posEmail").val("");
+					$("#posText").val("");
+                	$("#posText").val("");
+                	$("#posTheme").val("");
 				} else {
-		$("#loadBar").html(response).fadeIn(3000); }
-										}
+					$("#loadBar").html(response).fadeIn(3000);
+				}
+			}
 		});
 		return false;
 });

@@ -28,7 +28,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $Orders = Order::paginate(20);
+        $Orders = Order::orderBy('status', 'asc')->paginate(20);
         $Orders->groupBy('status', 'desc');
 
         return view('backend.orders.list', [
