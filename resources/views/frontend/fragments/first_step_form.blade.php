@@ -1,6 +1,7 @@
 <div class="final_form">
     <div class="form_end cons_form">
         <form action="/constructor/step/2/" method="post">
+            {{ csrf_field() }}
             <div class="lg-head">
                 Ваша квартира
             </div>

@@ -93,6 +93,97 @@ class FrontEndController extends Controller
         ]);
     }
 
+    public function constructor_step_2 (Request $request) {
+        date_default_timezone_set('UTC');
+        $validator = Validator::make($request->all(), [
+            'address' => 'required|max:255',
+            'apartments_type' => 'required|max:255',
+            'apartments_square' => 'numeric|required',
+            'type_building_id' => 'numeric|required',
+            'type_bathroom_id' => 'numeric|required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/')->withErrors($validator);
+        }
+
+        session(['orderCarcas' => []]);
+        $orderCarcas = [];
+        $orderCarcas['address'] = $request->address;
+        $orderCarcas['apartments_type'] = $request->apartments_type;
+        $orderCarcas['apartments_square'] = $request->apartments_square;
+        $orderCarcas['type_building_id'] = $request->type_building_id;
+        $orderCarcas['type_bathroom_id'] = $request->type_bathroom_id;
+        session(['orderCarcas' => $orderCarcas]);
+
+        /* Подготовим вьюху для отображения второго шага регистрации заказа */
+        date_default_timezone_set('UTC');
+        $contact = Contact::where('status', 1)->first();
+        $contacts = [];
+        if ($contact) {
+            $contacts = [
+                'email' => $contact->email,
+                'phone' => $contact->phone,
+                'phoneToLink' => preg_replace('~\D+~', '', $contact->phone),
+                'facebook_link' => $contact->facebook_link,
+                'instagram_link' => $contact->instagram_link,
+                'address' => $contact->address
+            ];
+        }
+
+        $designs = Design::where([
+            ['status', '=', '1'],
+        ])->get();
+        $iterrator = 0;
+        foreach ($designs as &$item) {
+            $IM = new ImageStorage($item);
+            $item->price = Design::formatPrice($item->price);
+            $item->hallMin = $IM->getCropped('hall', 458, 323);
+            $item->hall = $IM->getOrigImage('hall');
+            $item->bathMin = $IM->getCropped('bath', 225, 323);
+            $item->bath = $IM->getOrigImage('bath');
+            if ($iterrator%2 == 0) {
+                $item->side = 'left';
+            } else {
+                $item->side = 'right';
+            }
+            $iterrator++;
+        }
+
+        $dateYear = date('Y');
+
+        return view('frontend.constructor.step_2', [
+            'contacts' => $contacts,
+            'designs' => $designs,
+            'dateYear' => $dateYear,
+        ]);
+    }
+
+    public function constructor_step_3 ($id) {
+        $orderCarcas = session('orderCarcas');
+        if (!isset($orderCarcas) || empty($orderCarcas)) {
+            return redirect('/');
+        }
+
+        $orderCarcas['design_id'] = $id;
+        session(['orderCarcas' => $orderCarcas]);
+
+        /* Подготовим вывод опций категорий для выбранного дизайна */
+        $scripts[] = 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js';
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
     public function constructor_step_5 (Request $request) {
         if ($request->ajax) {
             $validator = Validator::make($request->all(), [
