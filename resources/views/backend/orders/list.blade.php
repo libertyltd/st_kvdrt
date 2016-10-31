@@ -54,7 +54,7 @@
                                             @if($item->status == 0)
                                                 <span class="label label-danger">Новый</span>
                                             @elseif($item->status == 1)
-                                                <span class="label laber-warning">В обработке</span>
+                                                <span class="label label-warning">В обработке</span>
                                             @else
                                                 <span class="label label-success">Обработана</span>
                                             @endif

@@ -341,6 +341,7 @@ class FrontEndController extends Controller
         $Order->type_building_id = $orderCarcas['type_building_id'];
         $Order->type_bathroom_id = $orderCarcas['type_bathroom_id'];
         $Order->phone  = $orderCarcas['phone'];
+        $Order->design_id = $orderCarcas['design_id'];
         $Order->save();
 
         $Order->DesignOptions()->sync($orderCarcas['designOptions']);
