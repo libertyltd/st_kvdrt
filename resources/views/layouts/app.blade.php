@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="/css/swiper.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/lightbox.css">
-
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     @if(isset($scripts))
         @foreach($scripts as $script)
             <script type="text/javascript" src="{{$script}}"></script>

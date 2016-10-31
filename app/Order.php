@@ -51,4 +51,22 @@ class Order extends Model
     public function Design() {
         return $this->belongsTo('App\Design');
     }
+
+    /**
+     * Подсчитывает стоимость заказа
+     *
+     * @param $apartmentsSquare Площадь квартиры в квадратных метрах
+     * @param $priceToMeter Цена за квадратный метр
+     * @param $constCY Константа CY
+     * @param $additionOption Массив с ценами за дополнительные опции
+     * @return mixed
+     */
+    public static function getFastCalculate ($apartmentsSquare, $priceToMeter, $constCY, $additionOption = []) {
+        $summ = ($apartmentsSquare-5)*$priceToMeter+$constCY;
+        foreach ($additionOption as $item) {
+            $summ += $item;
+        }
+
+        return $summ;
+    }
 }

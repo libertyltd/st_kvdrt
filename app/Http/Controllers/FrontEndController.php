@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Contact;
 use App\Design;
+use App\DesignOption;
 use App\FeedBack;
 use App\ImageStorage;
+use App\Option;
 use App\Order;
 use App\Slider;
 use App\TypeBathroom;
@@ -170,19 +172,115 @@ class FrontEndController extends Controller
 
         /* Подготовим вывод опций категорий для выбранного дизайна */
         $scripts[] = 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js';
+        $scripts[] = '/js/step_3.js';
 
+        date_default_timezone_set('UTC');
+        $contact = Contact::where('status', 1)->first();
+        $contacts = [];
+        if ($contact) {
+            $contacts = [
+                'email' => $contact->email,
+                'phone' => $contact->phone,
+                'phoneToLink' => preg_replace('~\D+~', '', $contact->phone),
+                'facebook_link' => $contact->facebook_link,
+                'instagram_link' => $contact->instagram_link,
+                'address' => $contact->address
+            ];
+        }
 
+        $design = Design::find($id);
+        if ($design->status != 1) {
+            abort(404);
+        }
+        $IM = new ImageStorage($design);
+        $design->hall = $IM->getCropped('hall', 590, 530);
+        $design->bath = $IM->getCropped('bath', 405, 530);
+
+        /* Рассчитаем сумму которую запишем в заказ */
+        $summ = Order::getFastCalculate($orderCarcas['apartments_square'], $design->price_square, $design->constant_cy, []);
+        $dateYear = date('Y');
+
+        $designCategorys = $design->CategoryDesigns;
+        $categoryAndOptions = [];
+        foreach ($designCategorys as $designCategory) {
+            $row = [];
+            $row['nameCategory'] = $designCategory->name;
+            $row['idCategory'] = $designCategory->id;
+            $optionsCategory = $designCategory->DesignOptions;
+            $options = [];
+            foreach ($optionsCategory as $optionCategory) {
+                $option = [];
+                $option['id'] = $optionCategory['id'];
+                $option['color'] = $optionCategory['color'];
+                $option['name'] = $optionCategory['name'];
+                $option['price'] = $optionCategory['price'];
+
+                $IM = new ImageStorage($optionCategory);
+                $option['hall'] = $IM->getCropped('hall', 590, 530)[0];
+                $option['bath'] = $IM->getCropped('bath', 405, 530)[0];
+                $options[] = $option;
+            }
+            $row['options'] = $options;
+            $categoryAndOptions[] = $row;
+        }
+
+        return view('frontend.constructor.step_3', [
+            'contacts' => $contacts,
+            'design' => $design,
+            'dateYear' => $dateYear,
+            'summ' => $summ,
+            'categoryAndOptions'=> $categoryAndOptions,
+            'scripts'=> $scripts,
+        ]);
     }
 
 
+    public function constructor_step_4 (Request $request) {
+        $orderCarcas = session('orderCarcas');
+        $design = Design::find($orderCarcas['design_id']);
+        $designOprions = [];
+        $price = 0;
+        /* Получить все категории которые связаны с заказом и по их номерам пройтись по request для сохранения опций */
+        foreach($design->CategoryDesigns as $category) {
+            if(isset($_REQUEST['category'.$category->id])) {
+                $designOprions[] = $_REQUEST['category'.$category->id];
+                $price = $price + DesignOption::find($_REQUEST['category'.$category->id])->price;
+            }
+        }
 
+        $orderCarcas['designOptions'] = $designOprions;
+        session(['orderCarcas' => $orderCarcas]);
 
+        $summ = Order::getFastCalculate($orderCarcas['apartments_square'], $design->price_square, $design->constant_cy, []);
+        $summ = $summ + $price;
 
+        $Options = Option::where('status', '1')->get();
 
+        date_default_timezone_set('UTC');
+        $contact = Contact::where('status', 1)->first();
+        $contacts = [];
+        if ($contact) {
+            $contacts = [
+                'email' => $contact->email,
+                'phone' => $contact->phone,
+                'phoneToLink' => preg_replace('~\D+~', '', $contact->phone),
+                'facebook_link' => $contact->facebook_link,
+                'instagram_link' => $contact->instagram_link,
+                'address' => $contact->address
+            ];
+        }
+        $dateYear = date('Y');
 
+        $scripts[] = '/js/step_4.js';
 
-
-
+        return view('frontend.constructor.step_4', [
+            'contacts' => $contacts,
+            'dateYear' => $dateYear,
+            'summ' => $summ,
+            'options' => $Options,
+            'scripts'=> $scripts,
+        ]);
+    }
 
     public function constructor_step_5 (Request $request) {
         if ($request->ajax) {
@@ -221,6 +319,33 @@ class FrontEndController extends Controller
             die('1');
         }
 
+        $orderCarcas = session('orderCarcas');
+        /* Сохраним все выбранные опции, посе проинициализируем объект заказа и сохраним его */
+        $Options = Option::all();
+        $optionsArray = [];
+        foreach ($Options as $option) {
+            if (isset($_REQUEST['option'.$option->id])) {
+                $optionsArray[] = $_REQUEST['option'.$option->id];
+            }
+        }
+        $orderCarcas['options'] = $optionsArray;
+        $orderCarcas['email'] = $_REQUEST['email'];
+        $orderCarcas['phone'] = $_REQUEST['phone'];
+        session(['orderCarcas' => []]);
 
+        $Order = new Order();
+        $Order->email = $orderCarcas['email'];
+        $Order->address = $orderCarcas['address'];
+        $Order->apartments_type = $orderCarcas['apartments_type'];
+        $Order->apartments_square = $orderCarcas['apartments_square'];
+        $Order->type_building_id = $orderCarcas['type_building_id'];
+        $Order->type_bathroom_id = $orderCarcas['type_bathroom_id'];
+        $Order->phone  = $orderCarcas['phone'];
+        $Order->save();
+
+        $Order->DesignOptions()->sync($orderCarcas['designOptions']);
+        $Order->Options()->sync($orderCarcas['options']);
+
+        return redirect('/');
     }
 }

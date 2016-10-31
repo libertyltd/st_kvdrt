@@ -30,66 +30,79 @@
                 @endif
             </div>
         </header>
-        <div class="constructor">
-            <div class="constructor_content">
-                <div class="constructor_img">
-                    <div class="constructor_head">
-                        <div class="lg-head design-head">
-                            Конструктор стиля
-                        </div>
-                        <div class="const_cost">
-                            <div class="from_a">
-                                Итого
+
+        <div class="addition_option">
+            <div class="addition_option_content">
+                <div class="lg-head">
+                    Дополнительные опции
+                </div>
+                <div class="option_block">
+                    <div class="option_block_content">
+                        <form action="/constructor/step/5/" method="post" id="additionOption">
+                            {{ csrf_field() }}
+                            @foreach($options as $option)
+                            <div class="option-item">
+                                <div class="option-name">{{$option->name}}</div>
+                                <div class="option-radio">
+                                    <div class="cost-option" id="win_ch">
+                                        <span>{{ \App\Design::formatPrice($option->price) }}</span><span> р</span>
+                                    </div>
+                                    <div>
+                                        <input id="option{{$option->id}}on" class="checkin" type="radio" name="option{{$option->id}}" value="{{$option->id}}"><label data-price="{{$option->price}}" for="option{{$option->id}}on">Да</label>
+                                    </div>
+                                    <div>
+                                        <input id="option{{$option->id}}off" class="uncheck" type="radio" name="option{{$option->id}}"><label for="option{{$option->id}}off">Нет</label>
+                                    </div>
+                                </div>
+                                <div class="clearbox"></div>
                             </div>
-                            <div class="cost-option">
-                                <span id="sum" data-sum="{{$summ}}">{{ \App\Design::formatPrice($summ) }}</span><span> р</span>
+                            @endforeach
+                        </form>
+                        <div class="add_diviver"></div>
+                        <div class="overall">
+                            <div class="overall_cost">
+                                <div class="from_a">
+                                    Итого
+                                </div>
+                                <div class="cost-option">
+                                    <span id="sum" data-sum="{{$summ}}">{{ \App\Design::formatPrice($summ) }}</span><span> р</span>
+                                </div>
+                            </div>
+                            <div class="contin">
+                                <button href="" class="cont_btn add_cont">Продолжить</button>
+                            </div>
+                        </div>
+                        <div class="final_form">
+                            <div class="form_end">
+                                    <div class="lg-head">
+                                        Приблизительная стоимость ремонта составила
+                                    </div>
+                                    <div class="cost-option" id="full-price">
+                                        <span id="sumWnd">{{ \App\Design::formatPrice($summ) }}</span><span> р</span>
+                                    </div>
+                                    <div class="leave_com">
+                                        оставьте свои контакты, и наш инженер свяжется с вами!
+                                    </div>
+                                    <div class="form_final_group">
+                                        <input form="additionOption" type="email" name="email" placeholder="E-mail" required>
+                                    </div>
+                                    <div class="form_final_group">
+                                        <input form="additionOption" type="tel" name="phone" placeholder="Телефон" required>
+                                    </div>
+                                    <div class="form_final_group">
+                                        <button form="additionOption">Отправить</button>
+                                    </div>
+                                    <div class="lg-head thanks">
+                                        Спасибо!
+                                    </div>
+                                <div class="close_btn">
+                                    <button id="final_close"><img src="/images/close_white.png" alt=""></button>
+                                </div>
                             </div>
                         </div>
                         <div class="clearbox"></div>
                     </div>
-                    <div class="constructor_images">
-                        <div class="">
-                            <div class="left_img">
-                                <img src="{{$design->hall[0]}}" alt="">
-                            </div>
-                            <div class="right_img">
-                                <img src="{{$design->bath[0]}}" alt="">
-                            </div>
-                        </div>
-                    </div>
                 </div>
-                <!-- @TODO: Вставить сюда кнопку и варинты выбора -->
-                <div class="constructor_style">
-                    <button type="submit" form="optionsForm" class="cont_btn" >Продолжить</button>
-                    <div class="constructor_work style-1">
-                        <form id="optionsForm" action="/constructor/step/4/" method="post">
-                            {{ csrf_field() }}
-                            @foreach($categoryAndOptions as $item)
-                                <div class="cons_item">
-                                    <button type="button" class="btn_cons" data-toggle="collapse" data-target="#category{{$item['idCategory']}}">{{$item['nameCategory']}}</button>
-                                    <div id="category{{$item['idCategory']}}" class="collapse">
-                                        <div class="const-radio">
-                                            @foreach($item['options'] as $option)
-                                            <div>
-                                                <input id="category_{{$item['idCategory']}}_{{$option['id']}}" class="checkin" type="radio" name="category{{$item['idCategory']}}" value="{{$option['id']}}">
-                                                <label for="category_{{$item['idCategory']}}_{{$option['id']}}"
-                                                data-hall = "{{$option['hall']}}" data-bath = "{{$option['bath']}}" data-price="{{$option['price']}}"
-                                                >
-                                                    <div class="square" style="background-color:#{{$option['color']}}"></div>
-                                                    <div class="color_struct">{{$option['name']}}</div>
-                                                    <div class="cost-option"><span>{{ \App\Design::formatPrice($option['price']) }}</span><span> р</span></div>
-                                                </label>
-                                            </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </form>
-                        <div class="force-overflow"></div>
-                    </div>
-                </div>
-                <div class="clearbox"></div>
             </div>
         </div>
 

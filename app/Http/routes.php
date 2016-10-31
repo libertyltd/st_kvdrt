@@ -19,6 +19,7 @@ Route::get('/home', 'HomeController@index');
 
 Route::post('/constructor/step/2', 'FrontEndController@constructor_step_2');
 Route::get('/constructor/step/3/{id}', 'FrontEndController@constructor_step_3');
+Route::post('/constructor/step/4', 'FrontEndController@constructor_step_4');
 Route::post('/constructor/step/5', 'FrontEndController@constructor_step_5');
 
 Route::group(['middleware' => 'auth'], function() {
