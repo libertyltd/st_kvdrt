@@ -344,7 +344,7 @@
         var map;
         function init() {
             var mapOptions = {
-                center: new google.maps.LatLng(55.759553,37.624811),
+                center: new google.maps.LatLng({{isset($contacts['latitude']) ? $contacts['latitude'] : ''}}, {{isset($contacts['longitude']) ? $contacts['longitude'] : ''}}),
                 zoom: 14,
                 zoomControl: false,
                 disableDoubleClickZoom: true,
@@ -364,7 +364,7 @@
             var mapElement = document.getElementById('kvadrat');
             var map = new google.maps.Map(mapElement, mapOptions);
             var locations = [
-                ['kvadrat', 'undefined', 'undefined', 'undefined', 'undefined', 55.7592267, 37.622211600000014, 'https://mapbuildr.com/assets/img/markers/default.png']
+                ['kvadrat', 'undefined', 'undefined', 'undefined', 'undefined', {{isset($contacts['latitude']) ? $contacts['latitude'] : ''}}, {{isset($contacts['longitude']) ? $contacts['longitude'] : ''}}, 'https://mapbuildr.com/assets/img/markers/default.png']
             ];
             for (i = 0; i < locations.length; i++) {
                 if (locations[i][1] =='undefined'){ description ='';} else { description = locations[i][1];}

@@ -61,6 +61,20 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="longitude" class="col-sm-3 control-label">Долгота (Google карты)</label>
+                        <div class="col-sm-9">
+                            <input name="longitude" id="longitude" class="form-control" value="{{ isset($longitude) ? $longitude : '' }}" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="latitude" class="col-sm-3 control-label">Широта (Google карты)</label>
+                        <div class="col-sm-9">
+                            <input name="latitude" id="latitude" class="form-control" value="{{ isset($latitude) ? $latitude : '' }}" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label for="status" class="col-sm-3 control-label">Статус записи</label>
                         <div class="col-sm-9">
                             <div class="btn-group" data-toggle="buttons">

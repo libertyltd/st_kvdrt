@@ -32,7 +32,9 @@ class FrontEndController extends Controller
                 'phoneToLink' => preg_replace('~\D+~', '', $contact->phone),
                 'facebook_link' => $contact->facebook_link,
                 'instagram_link' => $contact->instagram_link,
-                'address' => $contact->address
+                'address' => $contact->address,
+                'longitude' => $contact->longitude,
+                'latitude' => $contact->latitude,
             ];
         }
 
@@ -129,7 +131,9 @@ class FrontEndController extends Controller
                 'phoneToLink' => preg_replace('~\D+~', '', $contact->phone),
                 'facebook_link' => $contact->facebook_link,
                 'instagram_link' => $contact->instagram_link,
-                'address' => $contact->address
+                'address' => $contact->address,
+                'longitude' => $contact->longitude,
+                'latitude' => $contact->latitude,
             ];
         }
 
@@ -184,7 +188,9 @@ class FrontEndController extends Controller
                 'phoneToLink' => preg_replace('~\D+~', '', $contact->phone),
                 'facebook_link' => $contact->facebook_link,
                 'instagram_link' => $contact->instagram_link,
-                'address' => $contact->address
+                'address' => $contact->address,
+                'longitude' => $contact->longitude,
+                'latitude' => $contact->latitude,
             ];
         }
 
@@ -266,7 +272,9 @@ class FrontEndController extends Controller
                 'phoneToLink' => preg_replace('~\D+~', '', $contact->phone),
                 'facebook_link' => $contact->facebook_link,
                 'instagram_link' => $contact->instagram_link,
-                'address' => $contact->address
+                'address' => $contact->address,
+                'longitude' => $contact->longitude,
+                'latitude' => $contact->latitude,
             ];
         }
         $dateYear = date('Y');

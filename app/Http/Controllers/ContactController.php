@@ -55,7 +55,9 @@ class ContactController extends Controller
             'phone' => 'required|unique:contacts|max:16',
             'facebook_link' => 'max:255',
             'instagram_link' => 'max:255',
-            'address' => 'required|unique:contacts|max:255'
+            'address' => 'required|unique:contacts|max:255',
+            'longitude' => 'max:255',
+            'latitude' => 'max:255'
         ]);
 
         if ($validator->fails()) {
@@ -91,6 +93,8 @@ class ContactController extends Controller
                 $Contact->instagram_link = $request->instagram_link;
                 $Contact->address = $request->address;
                 $Contact->status = $request->status;
+                $Contact->longitude = $request->longitude;
+                $Contact->latitude = $request->latitude;
                 $Contact->save();
 
                 return true;
@@ -118,6 +122,8 @@ class ContactController extends Controller
             'facebook_link' => $contact->facebook_link,
             'instagram_link' => $contact->instagram_link,
             'address' => $contact->address,
+            'longitude' => $contact->longitude,
+            'latitude' => $contact->latitude,
             'controllerPathList' => '/home/contacts/'
         ]);
     }
@@ -138,6 +144,8 @@ class ContactController extends Controller
             'instagram_link' => $contact->instagram_link,
             'address' => $contact->address,
             'status' => $contact->status,
+            'longitude' => $contact->longitude,
+            'latitude' => $contact->latitude,
 
 
             'nameAction' => $contact->email.' '.$contact->phone,
@@ -162,7 +170,9 @@ class ContactController extends Controller
             'phone' => 'required|max:16',
             'facebook_link' => 'max:255',
             'instagram_link' => 'max:255',
-            'address' => 'required|max:255'
+            'address' => 'required|max:255',
+            'longitude' => 'max:255',
+            'latitude' => 'max:255'
         ]);
 
 
@@ -191,6 +201,8 @@ class ContactController extends Controller
             $contact->facebook_link = $request->facebook_link;
             $contact->instagram_link = $request->instagram_link;
             $contact->address = $request->address;
+            $contact->longitude = $request->longitude;
+            $contact->latitude = $request->latitude;
             if ($contact->status > $request->status) {
                 throw new Exception('Невозможно выключить единственную контактную запись');
             }
