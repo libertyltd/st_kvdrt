@@ -6,7 +6,7 @@
                 Ваша квартира
             </div>
             <div class="form_final_group">
-                <input type="text" name="address" placeholder="Адрес квартиры" required>
+                <input type="text" name="address" placeholder="Адрес квартиры">
             </div>
             <div class="sq_met">
                 <div>
