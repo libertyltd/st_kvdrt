@@ -100,7 +100,6 @@ class FrontEndController extends Controller
     public function constructor_step_2 (Request $request) {
         date_default_timezone_set('UTC');
         $validator = Validator::make($request->all(), [
-            'address' => 'required|max:255',
             'apartments_type' => 'required|max:255',
             'apartments_square' => 'numeric|required',
             'type_building_id' => 'numeric|required',
@@ -113,7 +112,9 @@ class FrontEndController extends Controller
 
         session(['orderCarcas' => []]);
         $orderCarcas = [];
-        $orderCarcas['address'] = $request->address;
+        if (isset($request->address)) {
+            $orderCarcas['address'] = $request->address;
+        }
         $orderCarcas['apartments_type'] = $request->apartments_type;
         $orderCarcas['apartments_square'] = $request->apartments_square;
         $orderCarcas['type_building_id'] = $request->type_building_id;
