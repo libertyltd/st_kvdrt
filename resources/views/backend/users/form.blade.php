@@ -95,6 +95,16 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <div class="col-sm-9 col-sm-offset-3">
+                            <div class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-primary {{ $item->send_mail ? 'active' : '' }}">
+                                    <input type="checkbox" name="send_mail" autocomplete="off" {{ $item->send_mail ? 'checked' : '' }} value="1"> Отправлять уведомления о новой заявке
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
                     @include('backend.common.form.action')
                 </form>
             </div>

@@ -77,6 +77,12 @@ class UserController extends Controller
             return redirect('/home/users/create/')->withInput()->withErrors($validator);
         }
 
+        if (isset($request->send_mail)) {
+            $request->send_mail = 1;
+        } else {
+            $request->send_mail = 0;
+        }
+
         /**
          * Создаем пользователя
          */
@@ -88,6 +94,7 @@ class UserController extends Controller
                 $user->middlename = $request->middlename;
                 $user->email = $request->email;
                 $user->password = Hash::make($request->password);
+                $user->send_mail = $request->send_mail;
                 $user->save();
 
                 /**
@@ -168,6 +175,7 @@ class UserController extends Controller
             'middlename' => $user->middlename,
             'email' => $user->email,
             'roles' => $rolesAll,
+            'item' => $user,
             'idEntity' => $user->id,
             'controllerPathList' => '/home/users/',
             'controllerAction' => 'edit',
@@ -200,6 +208,12 @@ class UserController extends Controller
             return redirect('/home/users/'.$id.'/edit/')->withInput()->withErrors($validator);
         }
 
+        if (isset($request->send_mail)) {
+            $request->send_mail = 1;
+        } else {
+            $request->send_mail = 0;
+        }
+
 
 
         try {
@@ -208,6 +222,7 @@ class UserController extends Controller
                 $user->name = $request->name;
                 $user->surname = $request->surname;
                 $user->middlename = $request->middlename;
+                $user->send_mail = $request->send_mail;
 
                 if ($user->email !== $request->email && $request->email !== '') {
                     $user = User::find(['email'=>$request->email]);

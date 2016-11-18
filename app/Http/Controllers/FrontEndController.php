@@ -12,6 +12,7 @@ use App\Order;
 use App\Slider;
 use App\TypeBathroom;
 use App\TypeBuilding;
+use App\User;
 use App\Work;
 use Illuminate\Http\Request;
 
@@ -297,6 +298,16 @@ class FrontEndController extends Controller
     }
 
     public function constructor_step_5 (Request $request) {
+        $users = User::where('send_mail', 1)->get();
+        $mailStr = '';
+        foreach ($users as $user) {
+            if ($mailStr == '') {
+                $mailStr .= $user->email;
+            } else {
+                $mailStr .= ', '.$user->email;
+            }
+        }
+
         if ($request->ajax) {
             $validator = Validator::make($request->all(), [
                 'name' => 'required|max:255',
@@ -326,6 +337,8 @@ class FrontEndController extends Controller
                 $Order->theme = $request->theme;
                 $Order->status = 0;
                 $Order->save();
+
+                mail ($mailStr, 'Новая заявка с сайта kvadrat.space', 'Новая заявка от '.$Order->name.' Email адресом '.$Order->email.' Темой: '.$Order->theme.'. Доступна по адресу http://kvadrat.space/home/orders/'.$Order->id.'/.');
             } catch (Exception $e) {
                 die("<p style='font: 13px Verdana;'><font color=#FF3333></font></p><ul class='error-box' style=''><li>Произошла ошибка при сохранении заявки. Пожалуйста, попробуйте отправить сообщение позже.</li></ul><br />");
             }
@@ -357,6 +370,8 @@ class FrontEndController extends Controller
         $Order->phone  = $orderCarcas['phone'];
         $Order->design_id = $orderCarcas['design_id'];
         $Order->save();
+
+        mail ($mailStr, 'Новый заказ с сайта kvadrat.space', 'Новый заказ от '.$Order->email.' Доступна по адресу http://kvadrat.space/home/orders/'.$Order->id.'/.');
 
         $Order->DesignOptions()->sync($orderCarcas['designOptions']);
         $Order->Options()->sync($orderCarcas['options']);
