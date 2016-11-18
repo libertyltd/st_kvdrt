@@ -28,13 +28,26 @@
     <li><a href="{{ url('/home/orders/') }}"><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Заявки на ремонт</a></li>
     @endcan
     @can('index', new App\Work())
-    <li><a href="{{ url('/home/works/') }}"><i class="fa fa-check-square-o" aria-hidden="true"></i>&nbsp;Выполненные работы</a></li>
+    <li>
+        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-files-o" aria-hidden="true"></i>&nbsp;Контент&nbsp;<span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            @can('index', new App\Work())
+                <li><a href="{{ url('/home/works/') }}"><i class="fa fa-check-square-o" aria-hidden="true"></i>&nbsp;Выполненные работы</a></li>
+            @endcan
+            @can('index', new App\FeedBack())
+                <li><a href="{{ url('/home/feedbacks/') }}"><i class="fa fa-rss" aria-hidden="true"></i>&nbsp;Отзывы</a></li>
+            @endcan
+            @can('index', new App\Slider())
+                <li><a href="{{ url('/home/sliders/') }}"><i class="fa fa-picture-o" aria-hidden="true"></i>&nbsp;Слайды главной страницы</a></li>
+            @endcan
+        </ul>
+    </li>
     @endcan
-    @can('index', new App\FeedBack())
-    <li><a href="{{ url('/home/feedbacks/') }}"><i class="fa fa-rss" aria-hidden="true"></i>&nbsp;Отзывы</a></li>
-    @endcan
-    @can('index', new App\Slider())
-    <li><a href="{{ url('/home/sliders/') }}"><i class="fa fa-picture-o" aria-hidden="true"></i>&nbsp;Слайды главной страницы</a></li>
+
+    @can('index', new App\SEO())
+    <li><a href="{{ url('/home/seos/') }}"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;SEO</a></li>
     @endcan
 
     @if (Auth::user()->hasRole('Administrator'))

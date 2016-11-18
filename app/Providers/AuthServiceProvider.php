@@ -12,6 +12,7 @@ use App\Order;
 use App\Policies\ModelPolicy;
 use App\Role;
 use App\RolePermission;
+use App\SEO;
 use App\Slider;
 use App\TypeBathroom;
 use App\TypeBuilding;
@@ -43,6 +44,7 @@ class AuthServiceProvider extends ServiceProvider
         CategoryDesign::class => ModelPolicy::class,
         DesignOption::class => ModelPolicy::class,
         Order::class => ModelPolicy::class,
+        SEO::class => ModelPolicy::class,
     ];
 
     /**

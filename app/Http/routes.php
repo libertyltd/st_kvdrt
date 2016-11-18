@@ -79,6 +79,11 @@ Route::group(['middleware' => 'auth'], function() {
      */
     Route::resource('/home/orders', 'OrderController');
 
+    /**
+     * Управление SEO данными
+     */
+    Route::resource('/home/seos', 'SEOsController');
+
 
     /**
      * Управление правами доступа
