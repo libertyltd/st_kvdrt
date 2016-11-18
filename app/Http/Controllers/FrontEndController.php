@@ -338,7 +338,9 @@ class FrontEndController extends Controller
                 $Order->status = 0;
                 $Order->save();
 
-                mail ($mailStr, 'Новая заявка с сайта kvadrat.space', 'Новая заявка от '.$Order->name.' Email адресом '.$Order->email.' Темой: '.$Order->theme.'. Доступна по адресу http://kvadrat.space/home/orders/'.$Order->id.'/.');
+                if (!mail ($mailStr, 'Новая заявка с сайта kvadrat.space', 'Новая заявка от '.$Order->name.' Email адресом '.$Order->email.' Темой: '.$Order->theme.'. Доступна по адресу http://kvadrat.space/home/orders/'.$Order->id.'/.')) {
+                    dd('not send');
+                }
             } catch (Exception $e) {
                 die("<p style='font: 13px Verdana;'><font color=#FF3333></font></p><ul class='error-box' style=''><li>Произошла ошибка при сохранении заявки. Пожалуйста, попробуйте отправить сообщение позже.</li></ul><br />");
             }
