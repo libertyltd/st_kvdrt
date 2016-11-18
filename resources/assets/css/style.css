@@ -1185,6 +1185,11 @@ input[type=radio   ]:not(old){
     height: 530px;
 }
 
+.left_img.left_img_last {
+    float: none;
+    margin: 0 auto;
+}
+
 .left_img img {
     height: 100%;
 }
@@ -1195,6 +1200,10 @@ input[type=radio   ]:not(old){
     overflow: hidden;
     height: 530px;
     margin-left: 10px;
+}
+
+.right_img.right_img_none {
+    display: none;
 }
 
 .right_img img {
