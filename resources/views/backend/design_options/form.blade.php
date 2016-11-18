@@ -49,14 +49,10 @@
                     <div class="form-group">
                         <label for="bath" class="col-sm-3 control-label">Фотография ванной</label>
                         <div class="col-sm-9">
-                            <input name="bath[]" id="bath" type="file" data-toggle="imagepicker" data-nodelete="true" data-src="{{ isset($item->bath[0]) ? $item->bath[0] : '' }}"
-                                   @if(!isset($item->bath[0]))
-                                   required
-                                    @endif
-                            >
+                            <input name="bath[]" id="bath" type="file" data-toggle="imagepicker" data-nodelete="true" data-src="{{ isset($item->bath[0]) ? $item->bath[0] : '' }}">
                         </div>
                         <div class="col-sm-9 col-sm-offset-3">
-                            <span class="label label-danger">Желательное разрешение изображения не меньше 1300x1700. Поле обязательно для заполнения!</span>
+                            <span class="label label-warning">Желательное разрешение изображения не меньше 1300x1700.</span>
                         </div>
                     </div>
 

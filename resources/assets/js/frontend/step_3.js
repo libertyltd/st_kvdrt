@@ -71,6 +71,16 @@ $(document).ready(function () {
         var hall = $(this).data('hall');
         var bath = $(this).data('bath');
         $photoPlace.find('.left_img > img').attr('src', hall);
-        $photoPlace.find('.right_img > img').attr('src', bath);
+
+        if (bath === '') {
+            $photoPlace.find('.left_img').addClass('left_img_last');
+            $photoPlace.find('.right_img').addClass('right_img_none');
+        } else {
+            $photoPlace.find('.left_img').removeClass('left_img_last');
+            $photoPlace.find('.right_img').removeClass('right_img_none');
+            $photoPlace.find('.right_img > img').attr('src', bath);
+        }
+
+
     });
 });

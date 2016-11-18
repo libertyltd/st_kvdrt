@@ -224,7 +224,12 @@ class FrontEndController extends Controller
 
                 $IM = new ImageStorage($optionCategory);
                 $option['hall'] = $IM->getCropped('hall', 590, 530)[0];
-                $option['bath'] = $IM->getCropped('bath', 405, 530)[0];
+
+                $option['bath'] = false;
+                $bathImg = $IM->getCropped('bath', 405, 530);
+                if (!empty($bathImg)) {
+                    $option['bath'] = $bathImg[0];
+                }
                 $options[] = $option;
             }
             $row['options'] = $options;
