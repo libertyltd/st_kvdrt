@@ -11,7 +11,10 @@
 |
 */
 
-Route::get('/', 'FrontEndController@index');
+
+use App\Http\Middleware\SEO;
+
+Route::get('/', 'FrontEndController@index')->middleware(SEO::class);
 
 Route::auth();
 
