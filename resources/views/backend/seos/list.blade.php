@@ -44,8 +44,7 @@
                                             @can('delete', new App\SEO())
                                                 <form action="{{ url('/home/seos/'.$item->id.'/') }}" method="POST" class="form_action">
                                                     {{ csrf_field() }}
-                                                    {{ method_field('UPDATE') }}
-                                                    <input type="hidden" name="status" value="0">
+                                                    {{ method_field('DELETE') }}
                                                     <button class="btn btn-danger" type="submit" data-toggle="countdown"><i class="fa fa-trash-o" aria-hidden="true"></i> Удалить</button>
                                                 </form>
                                             @endcan
