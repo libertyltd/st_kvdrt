@@ -321,7 +321,7 @@
                             <button type="button" id="send" class="formStyle submit-button">Отправить</button>
                         </div>
                     </form>
-                    <div align="center" id='loadBar'></div>
+                    <div id="loadBar"></div>
                 </div>
                 <div class="contact-info">
                     <div class="contant-head">
@@ -386,23 +386,10 @@
 
         }
     </script>
+    <!--
     <style>
-        #kvadrat {
-            height:244px;
-            width:100%;
-        }
-        .gm-style-iw * {
-            display: block;
-            width: 100%;
-        }
-        .gm-style-iw h4, .gm-style-iw p {
-            margin: 0;
-            padding: 0;
-        }
-        .gm-style-iw a {
-            color: #4272db;
-        }
-    </style>
+
+    </style> -->
     <div id='kvadrat'></div>
     <footer>
         <div class="logo">
