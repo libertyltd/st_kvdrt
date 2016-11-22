@@ -49,7 +49,7 @@
             </div>
             <div class="form_final_group sl">
                 <select name="type_building_id" class="classic" required>
-                    <option selected disabled>Тип дома</option>
+                    <option selected value="" disabled>Тип дома</option>
                     @foreach($typesBuilding as $typeBuilding)
                         <option value="{{ $typeBuilding->id }}">{{ $typeBuilding->name }}</option>
                     @endforeach
@@ -57,7 +57,7 @@
             </div>
             <div class="form_final_group sl">
                 <select name="type_bathroom_id" class="classic" required>
-                    <option selected disabled>Санузел</option>
+                    <option selected value="" disabled>Санузел</option>
                     @foreach($typesBathroom as $typeBathroom)
                         <option value="{{ $typeBathroom->id }}">{{ $typeBathroom->name }}</option>
                     @endforeach
