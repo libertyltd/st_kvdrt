@@ -3,6 +3,15 @@
 <head>
     <meta charset="utf-8">
     <title>{{isset($title) ? $title : "KVADRAT.space - ремонт за фиксированное время по фиксированной цене"}}</title>
+    @if(isset($keywords))
+    <meta name="keywords" content="{{$keywords}}" />
+    @endif
+
+
+    @if(isset($description))
+    <meta name="description" content="{{$description}}" />
+    @endif
+
     <link rel="shortcut icon" type="image/icon" href="/images/fav.png">
     <link rel="stylesheet" href="/css/swiper.min.css">
     <link rel="stylesheet" href="/css/style.css">

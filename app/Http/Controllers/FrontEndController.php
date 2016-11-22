@@ -9,6 +9,7 @@ use App\FeedBack;
 use App\ImageStorage;
 use App\Option;
 use App\Order;
+use App\SEO;
 use App\Slider;
 use App\TypeBathroom;
 use App\TypeBuilding;
@@ -26,6 +27,26 @@ class FrontEndController extends Controller
         date_default_timezone_set('UTC');
         $contact = Contact::where('status', 1)->first();
         $contacts = [];
+        $title = false;
+        $keywords = false;
+        $description = false;
+        $SEO = SEO::where([
+            ['original_url', '=' ,'/'],
+            ['status', '=', '1'],
+        ])->first();
+        if ($SEO) {
+            if ($SEO->title) {
+                $title = $SEO->title;
+            }
+
+            if ($SEO->keywords) {
+                $keywords = $SEO->keywords;
+            }
+
+            if ($SEO->description) {
+                $description = $SEO->description;
+            }
+        }
         if ($contact) {
             $contacts = [
                 'email' => $contact->email,
@@ -87,6 +108,11 @@ class FrontEndController extends Controller
         $dateYear = date('Y');
 
         return view('index', [
+            'title' => $title,
+            'keywords' => $keywords,
+            'description' => $description,
+
+
             'contacts' => $contacts,
             'slides' => $slides,
             'feedbacks' => $feedbacks,
