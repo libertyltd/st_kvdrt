@@ -16,6 +16,8 @@ use App\Http\Middleware\SEO;
 
 Route::get('/', 'FrontEndController@index')->middleware(SEO::class);
 
+Route::get('/sitemap.xml', 'FrontEndController@sitemap');
+
 Route::auth();
 
 Route::get('/home', 'HomeController@index');

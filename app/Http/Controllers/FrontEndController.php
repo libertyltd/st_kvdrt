@@ -124,6 +124,19 @@ class FrontEndController extends Controller
         ]);
     }
 
+    public function sitemap() {
+        echo '<?xml version="1.0" encoding="UTF-8"?>'."\n\r";
+        echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n\r";
+        echo '    <url>'."\n\r";
+        echo '        <loc>http://'.$_SERVER['HTTP_HOST'].'</loc>'."\n\r";
+        echo '        <lastmod>'.date('Y-m-d').'</lastmod>'."\n\r";
+        echo '        <changefreq>weekly</changefreq>'."\n\r";
+        echo '        <priority>1</priority>'."\n\r";
+        echo '    </url>'."\n\r";
+        echo '</urlset>';
+        die();
+    }
+
     public function constructor_step_2 (Request $request) {
         date_default_timezone_set('UTC');
         $validator = Validator::make($request->all(), [
