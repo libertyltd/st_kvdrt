@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" prefix="og: http://ogp.me/ns#">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{isset($title) ? $title : "KVADRAT.space - ремонт за фиксированное время по фиксированной цене"}}</title>
+    <meta property="og:title" content="{{isset($title) ? $title : "KVADRAT.space - ремонт за фиксированное время по фиксированной цене"}}" />
+    <meta property="og:image" content="http://kvadrat.space/images/logo.png" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:site_name" content="KVADRAT.space - ремонт за фиксированное время по фиксированной цене" />
     @if(isset($keywords))
     <meta name="keywords" content="{{$keywords}}" />
     @endif
