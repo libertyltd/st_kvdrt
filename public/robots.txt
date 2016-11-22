@@ -1,2 +1,5 @@
 User-agent: *
-Disallow:
+Disallow: /home
+Disallow: /home/*
+Allow: /
+Sitemap: http://kvadrat.space/sitemap.xml
