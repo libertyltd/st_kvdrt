@@ -169,6 +169,105 @@ div.socials a:hover img {
     font-family: SegoeUIBold;
 }
 
+@media (max-width:915px) {
+    .logo {
+        display: block;
+        padding: 20px 0;
+        width: 224px;
+        margin: 0 auto;
+        top: 0;
+    }
+
+    .info {
+        display: block;
+        padding: 24px 0;
+        text-align: center !important;
+    }
+
+    .info-email,
+    .info-phone,
+    .conf-btn {
+        display: block !important;
+        margin-right: 0 !important;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .conf-btn a {
+        display: inline-block !important;
+    }
+
+    .socials {
+        display: inline-block !important;
+        width: 26px;
+        height: 26px;
+    }
+
+    .feature-item {
+        display: block;
+        float: none !important;
+        margin: 0 auto;
+        width: 253px !important;
+
+    }
+
+    .feature-item:before {
+        display: none !important;
+    }
+
+    .feature-item:after {
+        display: none !important;
+    }
+
+    .features .tabs {
+        margin-bottom: 0 !important;
+        width: auto !important;
+    }
+
+    .features {
+        height: auto !important;
+    }
+
+    .tab-links li {
+        float: none !important;
+        width: auto !important;
+    }
+
+    .hero-head {
+        font-size: 30px !important;
+    }
+
+    .count a {
+        border: 3px solid #f9f9f9 !important;
+        color: #f9f9f9 !important;
+    }
+
+    .count a:hover {
+        background: #395674!important;
+    }
+
+
+    .contant-form,
+    .contact-info {
+        float: none !important;
+        width: auto !important;
+        display: block;
+        padding: 10px !important;
+    }
+
+    .contact-info .contant-head {
+        margin-top: 40px;
+        margin-bottom: 0!important;
+    }
+
+    .design-style .design-row  .row-left,
+    .design-style .design-row  .row-right {
+        display: block !important;
+        width: auto !important;
+    }
+
+}
+
 .conf-btn a{
     color: #395674;
     font-size: 13px;
