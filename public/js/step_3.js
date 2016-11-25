@@ -93,7 +93,7 @@ $(document).ready(function () {
                 $photoPlace.find('.left_img, .right_img').animate({
                     opacity: 1
                 }, {
-                    duration: 300,
+                    duration: 600,
                 });
             },
         });
