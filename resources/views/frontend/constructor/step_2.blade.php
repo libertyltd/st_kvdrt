@@ -131,9 +131,6 @@
     </div>
 
     <script src="/js/lightbox-plus-jquery.min.js"></script>
-    <script>
-
-    </script>
 
     <script>
         $(".fb_1").on({
