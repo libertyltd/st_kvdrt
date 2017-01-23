@@ -105,6 +105,7 @@ header, footer {
 
 footer {
     background-color: #345270;
+    min-width: 1349px; /*Удалить*/
 }
 
 .page {
@@ -1541,6 +1542,7 @@ option[disabled]:first-child { display: none; }
 #kvadrat {
     height:244px;
     width:100%;
+    min-width: 1349px; /*Удалить*/
 }
 .gm-style-iw * {
     display: block;
