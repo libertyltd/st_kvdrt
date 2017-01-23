@@ -168,7 +168,7 @@ div.socials a:hover img {
     color: #395674;
     font-family: SegoeUIBold;
 }
-
+/*
 @media (max-width:915px) {
     .logo {
         display: block;
@@ -266,7 +266,7 @@ div.socials a:hover img {
         width: auto !important;
     }
 
-}
+}*/
 
 .conf-btn a{
     color: #395674;
