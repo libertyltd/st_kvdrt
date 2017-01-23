@@ -1524,7 +1524,7 @@ option[disabled]:first-child { display: none; }
     height: 64px;
     background-color: #dfdfdf;
 }
-
+/*
 @media screen and (min-width: 1440px) {
     .page {
         min-width: initial;
@@ -1536,7 +1536,7 @@ option[disabled]:first-child { display: none; }
     .page {
         min-width: initial;
     }	
-}
+}*/
 
 #kvadrat {
     height:244px;
