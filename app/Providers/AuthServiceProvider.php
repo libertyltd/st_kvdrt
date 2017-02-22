@@ -18,6 +18,7 @@ use App\TypeBathroom;
 use App\TypeBuilding;
 use App\User;
 use App\Work;
+use App\WorkDescription;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -45,6 +46,7 @@ class AuthServiceProvider extends ServiceProvider
         DesignOption::class => ModelPolicy::class,
         Order::class => ModelPolicy::class,
         SEO::class => ModelPolicy::class,
+        WorkDescription::class => ModelPolicy::class,
     ];
 
     /**

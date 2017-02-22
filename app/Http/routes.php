@@ -28,6 +28,10 @@ Route::post('/constructor/step/4', 'FrontEndController@constructor_step_4');
 Route::post('/constructor/step/5', 'FrontEndController@constructor_step_5');
 
 Route::group(['middleware' => 'auth'], function() {
+    /**
+     * Управление описанием раздела проделанных работ
+     */
+    Route::resource('/home/work_description', 'WorkDescriptionController');
 
     /**
      * Управление контактными данными компании

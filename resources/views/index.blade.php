@@ -65,7 +65,7 @@
             <div class="tabs">
                 <ul class="tab-links">
                     <li class="active advantage"><a href="#tab1"><img src="/images/_0014_arrow-right.png" alt="">Преимущества</a></li>
-                    <li><a href="#tab2">Этапы работы<img src="/images/_0013_arrow-left.png" alt=""></a></li>
+                    <!--<li><a href="#tab2">Этапы работы<img src="/images/_0013_arrow-left.png" alt=""></a></li>-->
                 </ul>
                 <div class="tab-content">
                     <div id="tab1" class="tab active">
@@ -248,6 +248,115 @@
             @endforeach
         </div>
         @endif
+        <div class="features">
+            <div class="tabs">
+                <ul class="tab-links">
+                    <li class="active advantage"><a href="#tab1"><img src="/images/_0014_arrow-right.png" alt="">Этапы работы</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab1" class="tab active">
+                        <div class="feature-item">
+                            <div class="feature-img">
+                                <img src="/images/_0021_icon-6.png" alt="">
+                            </div>
+                            <div class="feature-text">
+                                КОНФИГУРАТОР НА САЙТЕ
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-img">
+                                <img src="/images/_0020_icon-7.png" alt="">
+                            </div>
+                            <div class="feature-text">
+                                ВСТРЕЧА С ГЛАВНЫМ ИНЖЕНЕРОМ
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-img">
+                                <img src="/images/_0019_icon-8.png" alt="">
+                            </div>
+                            <div class="feature-text">
+                                ПОДПИСАНИЕ ДОГОВОРА/ПЕРЕДАЧА КЛЮЧЕЙ
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-img">
+                                <img src="/images/_0018_icon-9.png" alt="">
+                            </div>
+                            <div class="feature-text">
+                                ремонт
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-img">
+                                <img src="/images/_0017_icon-10.png" alt="">
+                            </div>
+                            <div class="feature-text">
+                                сдача
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-img">
+                                <img src="/images/_0016_icon-11.png" alt="">
+                            </div>
+                            <div class="feature-text">
+                                заселение
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='clearbox'></div>
+        <div class="partners">
+            <div class="lg-head">
+                Наши партнеры
+            </div>
+            <div class="partners-grid first">
+                <div class="partners-grid-col">
+                    <img src="/images/partner-1.jpg">
+                </div>
+                <div class="partners-grid-col">
+                    <img src="/images/partner-2.jpg">
+                </div>
+                <div class="partners-grid-col">
+                    <img src="/images/partner-3.jpg">
+                </div>
+            </div>
+            <div class="partners-grid">
+                <div class="partners-grid-col">
+                    <img src="/images/partner-4.jpg">
+                </div>
+                <div class="partners-grid-col">
+                    <img src="/images/partner-5.jpg">
+                </div>
+                <div class="partners-grid-col">
+                    <img src="/images/partner-6.jpg">
+                </div>
+            </div>
+            <div class="partners-grid">
+                <div class="partners-grid-col">
+                    <img src="/images/partner-7.jpg">
+                </div>
+                <div class="partners-grid-col">
+                    <img src="/images/partner-8.jpg">
+                </div>
+                <div class="partners-grid-col">
+                    <img src="/images/partner-9.jpg">
+                </div>
+            </div>
+            <div class="partners-grid">
+                <div class="partners-grid-col">
+                    <img src="/images/partner-10.jpg">
+                </div>
+                <div class="partners-grid-col">
+                    <img src="/images/partner-11.jpg">
+                </div>
+                <div class="partners-grid-col">
+
+                </div>
+            </div>
+        </div>
         @if (isset($feedbacks))
         <div class="feedback">
             <div class="lg-head">
@@ -278,6 +387,11 @@
         @endif
         @if(isset($works))
             <div class='gallery-block'>
+                @if(isset($workDescription))
+                    <div class="reg-content" style="text-align:center; margin-bottom: 20px;">
+                        {{ $workDescription->description }}
+                    </div>
+                @endif
                 <div class='gallery'>
                     @foreach($works as $item)
                     <div class='gal-item'>

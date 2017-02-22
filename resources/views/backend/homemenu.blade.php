@@ -35,6 +35,7 @@
         <ul class="dropdown-menu">
             @can('index', new App\Work())
                 <li><a href="{{ url('/home/works/') }}"><i class="fa fa-check-square-o" aria-hidden="true"></i>&nbsp;Выполненные работы</a></li>
+                <li><a href="{{ url('/home/work_description/') }}"><i class="fa fa-file-text-o" aria-hidden="true"></i> Описание раздела выполненных работ</a> </li>
             @endcan
             @can('index', new App\FeedBack())
                 <li><a href="{{ url('/home/feedbacks/') }}"><i class="fa fa-rss" aria-hidden="true"></i>&nbsp;Отзывы</a></li>

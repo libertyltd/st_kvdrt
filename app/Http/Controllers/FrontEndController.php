@@ -15,6 +15,7 @@ use App\TypeBathroom;
 use App\TypeBuilding;
 use App\User;
 use App\Work;
+use App\WorkDescription;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -103,6 +104,8 @@ class FrontEndController extends Controller
         $typesBuilding = TypeBuilding::where('status', 1)->get();
         $typesBathroom = TypeBathroom::where('status', 1)->get();
 
+        $WorkDescription = WorkDescription::first();
+
 
 
         $dateYear = date('Y');
@@ -116,6 +119,7 @@ class FrontEndController extends Controller
             'contacts' => $contacts,
             'slides' => $slides,
             'feedbacks' => $feedbacks,
+            'workDescription' => $WorkDescription,
             'works' => $works,
             'designs' => $designs,
             'dateYear' => $dateYear,
