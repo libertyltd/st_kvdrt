@@ -421,4 +421,18 @@ class FrontEndController extends Controller
 
         return redirect('/');
     }
+
+    public function blog_list (Request $request) {
+        //Тут необходимая выборка элементов списка
+        $contact = Contact::where('status', 1)->first();
+        $typesBuilding = TypeBuilding::where('status', 1)->get();
+        $typesBathroom = TypeBathroom::where('status', 1)->get();
+
+        return view('frontend.blog.list', [
+            'contacts' => $contact->toArray(),
+            'typesBuilding' => $typesBuilding,
+            'typesBathroom' => $typesBathroom,
+            'blogActive' => true,
+        ]);
+    }
 }

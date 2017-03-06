@@ -11,19 +11,27 @@ var elixir = require('laravel-elixir');
  | file for our application, as well as publishing vendor resources.
  |
  */
+gulp.task ("watcher", function (mix) {
+    console.log (mix);
+    gulp.watch('./resources/assets/css/**', function (mix) {
+        mix.copy('resources/assets/css', 'public/css');
+        console.log('Отработали');
+    });
+});
+
 
 elixir(function(mix) {
-    mix.less('bootstrap/bootstrap.less', 'public/css/bootstrap.css');
-    mix.less('fontawesome/font-awesome.less', 'public/css/font-awesome.css');
-    mix.less('backend/*.less', 'public/css/backend.css');
+    //mix.less('bootstrap/bootstrap.less', 'public/css/bootstrap.css');
+    //mix.less('fontawesome/font-awesome.less', 'public/css/font-awesome.css');
+    //mix.less('backend/*.less', 'public/css/backend.css');
 
-    mix.scripts('jquery/*.js', 'public/js/jquery.js');
-    mix.scripts('bootstrap/bootstrap.js', 'public/js/bootstrap.js');
-    mix.scripts('backend/*.js', 'public/js/backend.js');
+    //mix.scripts('jquery/*.js', 'public/js/jquery.js');
+    //mix.scripts('bootstrap/bootstrap.js', 'public/js/bootstrap.js');
+    //mix.scripts('backend/*.js', 'public/js/backend.js');
 
-    mix.copy('resources/assets/images', 'public/images');
-    mix.copy('resources/assets/fonts', 'public/fonts');
+    //mix.copy('resources/assets/images', 'public/images');
+    //mix.copy('resources/assets/fonts', 'public/fonts');
     mix.copy('resources/assets/css', 'public/css');
-    mix.copy('resources/assets/img', 'public/img');
-    mix.copy('resources/assets/js/frontend', 'public/js');
+    //mix.copy('resources/assets/img', 'public/img');
+    //mix.copy('resources/assets/js/frontend', 'public/js');
 });

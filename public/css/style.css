@@ -113,24 +113,84 @@ footer {
 }
 
 .logo {
-    display: table-cell;
-    padding: 20px 83px;
+    display: inline-block;
+    padding: 20px 20px;
     position: relative;
     top: -2px;
 }
 
+.header_menu {
+    display: inline-block;
+    margin: 0 0 0 10px;
+    padding: 0;
+    list-style-type: none;
+    position: relative;
+
+}
+
+.header_menu .header_menu_item {
+    display: inline-block;
+}
+
+.header_menu .header_menu_item a {
+    display: inline-block;
+    font-family: SegoeUISemiBold, sans-serif;
+    font-size: 14px;
+    letter-spacing: 0;
+    color: #395675;
+    padding: 41px 20px;
+    background: #ffffff;
+
+    -webkit-transition: all 0.2s ease-out 0.1s;
+    -o-transition: all 0.2s ease-out 0.1s;
+    transition: all 0.2s ease-out 0.1s;
+}
+
+.header_menu .header_menu_item a.active,
+.header_menu .header_menu_item a:hover {
+    background: #e7ebf2;
+}
+
+.header_menu .header_menu_item {
+    display: inline-block;
+}
+
+@media (max-width:1080px) {
+    .info {
+        display: block !important;
+        float: none !important;
+        text-align:center !important;
+    }
+
+    .info .conf-btn {
+        margin-top: 10px;
+    }
+
+    .header_menu {
+        padding-right: 10px;
+    }
+
+    .header_menu,
+    .header_menu .header_menu_item,
+    .header_menu .header_menu_item a {
+        display: block;
+    }
+}
+
 .info {
-    padding: 24px 80px;
+    display: inline-block;
+    float: right;
+    padding: 24px 24px;
     vertical-align: middle;
-    text-align: right;
+    text-align: left;
+    box-sizing: border-box;
 }
 
 .info div {
     display: inline-block;
-    margin-right: 28px;
+    margin-right: 10px;
     position: relative;
 }
-
 
 .info div:last-child {
     margin-right: -10px;
@@ -139,7 +199,8 @@ footer {
 .info-email a{
     color: #395674;
     letter-spacing: 2px;
-    font-size: 15px;
+    font-size: 14px;
+
     font-family: SegoeUISemiBold;
 }
 
@@ -164,7 +225,8 @@ div.socials a:hover img {
 }
 
 .info-phone a{
-    font-size: 21.6px;
+    font-size: 18px;
+
     letter-spacing: 1.5px;
     color: #395674;
     font-family: SegoeUIBold;
