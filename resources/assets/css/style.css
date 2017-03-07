@@ -331,6 +331,43 @@ div.socials a:hover img {
 
 }*/
 
+/* Описание раздела блог */
+.container {
+    display: block;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 900px) {
+    .container {
+        width: auto;
+    }
+
+}
+
+@media screen and (min-width: 900px) {
+    .container {
+        width: 900px;
+    }
+}
+
+.blog_list {
+    display: block;
+}
+
+.blog_list-item {
+
+}
+
+.blog_list-item:first-child {
+    display: block;
+    width: 100%;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+
 .conf-btn a{
     color: #395674;
     font-size: 13px;
