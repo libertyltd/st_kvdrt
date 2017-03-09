@@ -427,12 +427,14 @@ class FrontEndController extends Controller
         $contact = Contact::where('status', 1)->first();
         $typesBuilding = TypeBuilding::where('status', 1)->get();
         $typesBathroom = TypeBathroom::where('status', 1)->get();
+        $dateYear = date('Y');
 
         return view('frontend.blog.list', [
             'contacts' => $contact->toArray(),
             'typesBuilding' => $typesBuilding,
             'typesBathroom' => $typesBathroom,
             'blogActive' => true,
+            'dateYear' => $dateYear,
         ]);
     }
 }
