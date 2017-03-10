@@ -31,6 +31,7 @@ Route::post('/constructor/step/5', 'FrontEndController@constructor_step_5');
  * Рутируем на блог
  */
 Route::get('/blog', 'FrontEndController@blog_list');
+Route::get('/blog/{id}', 'FrontEndController@blog_item');
 
 Route::group(['middleware' => 'auth'], function() {
     /**

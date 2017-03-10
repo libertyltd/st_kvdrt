@@ -437,4 +437,20 @@ class FrontEndController extends Controller
             'dateYear' => $dateYear,
         ]);
     }
+
+    public function blog_item ($id) {
+        //Тут необходимая выборка элементов списка
+        $contact = Contact::where('status', 1)->first();
+        $typesBuilding = TypeBuilding::where('status', 1)->get();
+        $typesBathroom = TypeBathroom::where('status', 1)->get();
+        $dateYear = date('Y');
+
+        return view('frontend.blog.item', [
+            'contacts' => $contact->toArray(),
+            'typesBuilding' => $typesBuilding,
+            'typesBathroom' => $typesBathroom,
+            'blogActive' => true,
+            'dateYear' => $dateYear,
+        ]);
+    }
 }
