@@ -15,6 +15,14 @@ class CreatePostCommentsTable extends Migration
         Schema::create('post_comments', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+            $table->string('name', 255);
+            $table->string('email', 255);
+            $table->text('message');
+            $table->integer('post_id');
+            $table->integer('post_comment_id')->nullable();
+
+            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('post_comment_id')->references('id')->on('post_comments')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
