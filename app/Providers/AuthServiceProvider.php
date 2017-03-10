@@ -10,6 +10,8 @@ use App\FeedBack;
 use App\Option;
 use App\Order;
 use App\Policies\ModelPolicy;
+use App\Post;
+use App\PostComment;
 use App\Role;
 use App\RolePermission;
 use App\SEO;
@@ -47,6 +49,8 @@ class AuthServiceProvider extends ServiceProvider
         Order::class => ModelPolicy::class,
         SEO::class => ModelPolicy::class,
         WorkDescription::class => ModelPolicy::class,
+        Post::class => ModelPolicy::class,
+        PostComment::class => ModelPolicy::class,
     ];
 
     /**

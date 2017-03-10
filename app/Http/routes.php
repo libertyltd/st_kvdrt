@@ -35,6 +35,12 @@ Route::get('/blog/{id}', 'FrontEndController@blog_item');
 
 Route::group(['middleware' => 'auth'], function() {
     /**
+     * Управление разделом Блог и комментариями к постам
+     */
+    Route::resource('/home/posts', 'PostController');
+    Route::resource('/home/post_comments', 'PostCommentsController');
+
+    /**
      * Управление описанием раздела проделанных работ
      */
     Route::resource('/home/work_description', 'WorkDescriptionController');

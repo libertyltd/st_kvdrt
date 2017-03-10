@@ -28,4 +28,5 @@ elixir(function(mix) {
     mix.copy('resources/assets/css', 'public/css');
     mix.copy('resources/assets/img', 'public/img');
     mix.copy('resources/assets/js/frontend', 'public/js');
+    mix.copy('resources/assets/js/lib', 'public/js/lib');
 });

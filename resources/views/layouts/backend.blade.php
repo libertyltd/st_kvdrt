@@ -25,6 +25,11 @@
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/font-awesome.css">
     <link rel="stylesheet" href="/css/backend.css">
+    @if (isset($styles))
+        @foreach($styles as $style)
+        <link rel="stylesheet" href="{{ $style }}">
+        @endforeach
+    @endif
 
 </head>
 <body id="backendLayout">
