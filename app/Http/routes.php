@@ -38,7 +38,7 @@ Route::group(['middleware' => 'auth'], function() {
      * Управление разделом Блог и комментариями к постам
      */
     Route::resource('/home/posts', 'PostController');
-    Route::resource('/home/post_comments', 'PostCommentsController');
+    Route::resource('/home/post_comments', 'PostCommentController');
 
     /**
      * Управление описанием раздела проделанных работ

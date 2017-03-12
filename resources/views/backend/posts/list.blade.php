@@ -46,15 +46,15 @@
                                             {{ $item->name }}
                                         </td>
                                         <td class="column_text-right">
-                                            @can('edit', new App\Option())
+                                            @can('edit', new App\Post())
                                             <a class="btn btn-info" href="{{ url('/home/posts/'.$item->id.'/edit/') }}" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Редактировать</a>
                                             @endcan
-                                            @cannot('edit', new App\Option())
-                                            @can('view', new App\Option())
+                                            @cannot('edit', new App\Post())
+                                            @can('view', new App\Post())
                                             <a class="btn btn-info" href="{{ url('/home/posts/'.$item->id.'/') }}"><i class="fa fa-eye" aria-hidden="true"></i> Показать</a>
                                             @endcan
                                             @endcannot
-                                            @can('delete', new App\Option())
+                                            @can('delete', new App\Post())
                                             <form action="{{ url('/home/posts/'.$item->id.'/') }}" method="POST" class="form_action">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}

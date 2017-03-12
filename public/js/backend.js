@@ -248,7 +248,7 @@ $(document).ready(function () {
 +function ($) {
     'use strict';
 
-    var ImagePickerMultItem = function ($pathToImage, $template, $pathToOrig) {
+    var ImagePickerMultItem = function ($pathToImage, $template, $pathToOrig, target) {
         var template = '<div class="imagepickermult__item">'+
                             '<div class="imagepickermult__item__container">'+
                                 '<img>'+
@@ -259,12 +259,14 @@ $(document).ready(function () {
                        '</div>';
         var linkTemplate = '<button class="imagepickermult__btn imagepickermult__btn_link" data-original-url=""><i class="fa fa-link" aria-hidden="true"></i></button>';
 
+        this.target = target;
+        this.targetPath = $pathToOrig;
         this.$elem = $(template);
         this.$elem.find('img').attr('src', $pathToImage);
         var nameOfFile = $pathToImage.split('/');
         nameOfFile = nameOfFile[nameOfFile.length-1];
         this.$elem.find('button.imagepickermult__btn_remove').data('name', nameOfFile);
-        if ($pathToOrig) {
+        if ($pathToOrig && !target) {
             var $btnLink = $(linkTemplate);
             $btnLink.data('content', $pathToOrig);
             $btnLink.attr('title', 'Ссылка на оригинал');
@@ -272,6 +274,10 @@ $(document).ready(function () {
             $btnLink.data('container', 'body');
             this.$elem.find('.imagepickermult__ation-panel').append($btnLink);
             $btnLink.popover();
+        } else {
+            var $btnLink = $(linkTemplate);
+            $btnLink.attr('title', 'Вставить в текст');
+            this.$elem.find('.imagepickermult__ation-panel').append($btnLink);
         }
 
         $template.prepend(this.$elem);
@@ -286,8 +292,21 @@ $(document).ready(function () {
         });
 
         this.$elem.find('.imagepickermult__btn_link').bind('click.imagepickermult', function () {
+            self.targetLink();
             return false;
         });
+    };
+
+    //Вставляет ссылку на изображение в CKEditor
+    ImagePickerMultItem.prototype.targetLink = function () {
+        if (this.target) {
+            $('#cke_'+this.target).find('.cke_button.cke_button__image').click();
+            var self = this;
+            window.setTimeout(function () {
+                $('.cke_editor_'+self.target+'_dialog').find('input').first().val(self.targetPath);
+                console.log ($('.cke_edior_'+self.target+'_dialog').find('input'));
+            }, 300);
+        }
     };
 
     ImagePickerMultItem.prototype.deleteItem = function () {
@@ -399,6 +418,9 @@ $(document).ready(function () {
                 imagesOrig.pop();
             }
 
+            /* Цель связь с CKEditor, будет передаваться в каждую миниатюру */
+            var targetCkEditor = $elem.data('target');
+
 
 
             /* Неймспейс в котором храняться изображения */
@@ -417,7 +439,7 @@ $(document).ready(function () {
 
             for (var i = 0; i < images.length; i++) {
                 if (imagesOrig && imagesOrig[i]) {
-                    new ImagePickerMultItem(images[i], $template, imagesOrig[i]);
+                    new ImagePickerMultItem(images[i], $template, imagesOrig[i], targetCkEditor);
                 } else {
                     new ImagePickerMultItem(images[i], $template)
                 }

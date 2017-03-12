@@ -47,7 +47,7 @@
                 <li><a href="{{ url('/home/posts/') }}"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Блог</a></li>
             @endcan
             @can('index', new App\PostComment())
-                <li><a href="{{ url('/home/posts_comments') }}"><i class="fa fa-comments-o" aria-hidden="true"></i> Комментарии к блогу</a></li>
+                <li><a href="{{ url('/home/post_comments') }}"><i class="fa fa-comments-o" aria-hidden="true"></i> Комментарии к блогу</a></li>
             @endcan
         </ul>
     </li>
