@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 
 class SEO
 {
@@ -16,6 +17,15 @@ class SEO
     public function handle($request, Closure $next)
     {
         $path = $request->path();
+
+        $SEO = \App\SEO::where(['original_url'=>$path])->first();
+        if (!$SEO) {
+            $SEO = \App\SEO::where(['alias_url'=>$path])->first();
+        }
+
+        if ($SEO) {
+            \App\SEO::saveCurrentSEO($SEO);
+        }
 
         return $next($request);
     }

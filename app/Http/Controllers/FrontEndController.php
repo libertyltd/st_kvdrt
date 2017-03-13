@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Capcha;
 use App\Contact;
 use App\Design;
 use App\DesignOption;
@@ -9,6 +10,8 @@ use App\FeedBack;
 use App\ImageStorage;
 use App\Option;
 use App\Order;
+use App\Post;
+use App\PostComment;
 use App\SEO;
 use App\Slider;
 use App\TypeBathroom;
@@ -19,6 +22,7 @@ use App\WorkDescription;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Storage;
 use Validator;
 use Exception;
 
@@ -423,7 +427,40 @@ class FrontEndController extends Controller
     }
 
     public function blog_list (Request $request) {
+        $SEO = SEO::getCurrentSEO();
+        $title = '';
+        $keywords = '';
+        $description = '';
+        if ($SEO) {
+            $title = $SEO->title;
+            $keywords = $SEO->keywords;
+            $description = $SEO->description;
+        }
+
         //Тут необходимая выборка элементов списка
+        $currentDate = date('Y-m-d');
+        $Posts= Post::where([
+            ['status', '=', 1],
+            ['date_publication', '<=', $currentDate]])->orderBy('date_publication', 'desc')->paginate(7);
+
+        //Отсчет надо вести со второго элемента и каждому третьему начиная со второго присваивать статус last
+        $counter = 0;
+        foreach ($Posts as &$post) {
+            $IM = new ImageStorage($post);
+            if ($counter == 0) {
+                $post->cover = $IM->getCropped('cover', 900, 598);
+            } else {
+                $post->cover = $IM->getCropped('cover', 270, 180);
+            }
+
+            if ($counter != 0 && $counter%3==0) {
+                $post->class = 'last';
+            } else {
+                $post->class = '';
+            }
+        }
+
+        //Обязательные данные
         $contact = Contact::where('status', 1)->first();
         $typesBuilding = TypeBuilding::where('status', 1)->get();
         $typesBathroom = TypeBathroom::where('status', 1)->get();
@@ -435,15 +472,56 @@ class FrontEndController extends Controller
             'typesBathroom' => $typesBathroom,
             'blogActive' => true,
             'dateYear' => $dateYear,
+            'title' => $title,
+            'keywords' => $keywords,
+            'description' => $description,
+            'list'=>$Posts,
         ]);
     }
 
     public function blog_item ($id) {
+        $SEO = SEO::getCurrentSEO();
+        $title = '';
+        $keywords = '';
+        $description = '';
+        if ($SEO) {
+            $title = $SEO->title;
+            $keywords = $SEO->keywords;
+            $description = $SEO->description;
+        }
+
         //Тут необходимая выборка элементов списка
         $contact = Contact::where('status', 1)->first();
         $typesBuilding = TypeBuilding::where('status', 1)->get();
         $typesBathroom = TypeBathroom::where('status', 1)->get();
         $dateYear = date('Y');
+
+        $post = Post::find($id);
+        if (!$post) {
+            abort(404, 'Страница не найдена');
+        }
+
+        $IM = new ImageStorage($post);
+        $post->cover = $IM->getCropped('cover', 900, 598);
+
+        $currentDate = date('Y-m-d');
+        $threeLastNews = Post::where([
+            ['status', '=', 1],
+            ['date_publication', '<=', $currentDate],
+            ['id', '<>', $id]])->orderBy('date_publication', 'desc')->limit(3)->get();
+        $counter = 0;
+        foreach ($threeLastNews as &$lastNew){
+            $IM = new ImageStorage($lastNew);
+            $lastNew->cover = $IM->getCropped('cover', 270, 180);
+            if ($counter == 2) {
+                $lastNew->class = 'last';
+            }
+            $counter++;
+        }
+
+        $capchaImage = Capcha::getCapcha(100, 23);
+
+        $Comments = $post->postComments;
 
         return view('frontend.blog.item', [
             'contacts' => $contact->toArray(),
@@ -451,6 +529,49 @@ class FrontEndController extends Controller
             'typesBathroom' => $typesBathroom,
             'blogActive' => true,
             'dateYear' => $dateYear,
+            'item' => $post,
+            'lastNews' => $threeLastNews,
+            'capcha' => $capchaImage,
+            'comments' => $Comments,
+            'title' => $title,
+            'keywords' => $keywords,
+            'description' => $description,
         ]);
+    }
+
+    public function blog_item_comment(Request $request, $id) {
+
+        $Post = Post::find($id);
+        if (!$Post) {
+            abort('404');
+        }
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'string|max:255|required',
+            'email' => 'email|required',
+            'message' => 'string| required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/blog/'.$id)->withInput()->with(['errors' => ['Проверьте, что заполнены все поля.']]);
+        }
+
+        if (!isset($request->capcha)) {
+            return redirect('/blog/'.$id)->withInput()->with(['errors' => ['Вы не ввели код.']]);
+        }
+
+        if (!Capcha::checkCapcha($request->capcha)) {
+            return redirect('/blog/'.$id)->withInput()->with(['errors' => ['Код введен не верно.']]);
+        }
+
+        $PostComment = new PostComment();
+        $PostComment->name = $request->name;
+        $PostComment->email = $request->email;
+        $PostComment->message = $request->message;
+        $PostComment->date_create = date('Y-m-d');
+        $PostComment->post_id = $id;
+        $PostComment->save();
+
+        return redirect('/blog/'.$id);
     }
 }

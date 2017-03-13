@@ -93,6 +93,10 @@ class PostController extends Controller
                     $IM = new ImageStorage($Post);
                     $IM->save($request->description_img, 'description_img');
                 }
+                if ($request->cover) {
+                    $IM = new ImageStorage($Post);
+                    $IM->save($request->cover, 'cover');
+                }
             });
         } catch (Exception $e) {
             return redirect(self::$path.'create/')->with(['errors' => [$e->getMessage()]]);
@@ -137,6 +141,7 @@ class PostController extends Controller
         $IM = new ImageStorage($Post);
         $Post->description_img = $IM->getCropped('description_img');
         $Post->description_img_src = $IM->getOrigImage('description_img');
+        $Post->cover =$IM->getCropped('cover');
 
         return view('backend.posts.form', [
             'item' => $Post,
@@ -198,6 +203,10 @@ class PostController extends Controller
             if ($request->description_img) {
                 $IM = new ImageStorage($Post);
                 $IM->save($request->description_img, 'description_img');
+            }
+            if ($request->cover) {
+                $IM = new ImageStorage($Post);
+                $IM->save($request->cover, 'cover');
             }
         } catch (Exception $e) {
             return redirect(self::$path.$Post->id.'/edit/')->with(['errors' => [$e->getMessage()]]);

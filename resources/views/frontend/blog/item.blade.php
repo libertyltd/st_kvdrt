@@ -4,15 +4,15 @@
     @include('frontend.fragments.header')
     <div class="container">
         <div class="blog__header">
-            <img class="blog__header__cover" src="/img/mockup.jpg">
+            <img class="blog__header__cover" src="{{ $item->cover[0] }}">
             <div class="blog__header__title">
-                <h1 class="blog__title">Заголовок</h1>
-                <div class="blog__time-publication">1 января 2016</div>
-                <p class="blog__lead">kdjflsdkjf sdlfj lsdjf sdhf osdhf sdfh sodufhdsfhdskjfhks dskfh sdifuh sdfn isduhf idjfn dsuhf idufn iudf iduhf iduhf iduhf iduhf idsuhf iduhf idufhidfuhidsajdfnlakdjflad lkasjhf klajdhf lakjhfk lajdhf lakjdhf ldajhf lajdkhf</p>
+                <h1 class="blog__title">{{ $item->name }}</h1>
+                <div class="blog__time-publication">{{ $item->getHumanDatePublication() }}</div>
+                <p class="blog__lead">{{ $item->lead }}</p>
             </div>
         </div>
         <div class="blog__content">
-            <p>Контент</p>
+            {!! $item->description !!}
         </div>
         <div class="blog__social">
             <script type="text/javascript">(function() {
@@ -30,14 +30,20 @@
     <div class="blog__comment-form">
         <div class="container">
             <form class="blog__comment-form__input-place" method="post">
+                {{ csrf_field() }}
+                @if($errors)
+                    @foreach($errors as $error)
+                        <div class="blog__comment-form__errors">{{ $error }}</div>
+                    @endforeach
+                @endif
                 <h3 class="blog__comment-form__title">Оставить комментарий:</h3>
-                <input class="blog__comment-form__control" name="name" type="text" placeholder="Имя">
-                <input class="blog__comment-form__control" name="email" type="email" placeholder="Email">
+                <input class="blog__comment-form__control" name="name" type="text" placeholder="Имя" value="{{ old('name') }}">
+                <input class="blog__comment-form__control" name="email" type="email" placeholder="Email" value="{{ old('email') }}">
                 <div class="blog__comment-form__capcha">
-                    <img class="blog__comment-form__capcha__img" src="/img/code.png">
-                    <input class="blog__comment-form__capcha__input" name="capcha" type="text" placeholder="Код">
+                    <img class="blog__comment-form__capcha__img" src="{{ $capcha }}">
+                    <input class="blog__comment-form__capcha__input" name="capcha" type="text" placeholder="Код" value="{{ old('capcha') }}">
                 </div>
-                <textarea name="message" class="blog__comment-form__message" rows="10" placeholder="Сообщение"></textarea>
+                <textarea name="message" class="blog__comment-form__message" rows="10" placeholder="Сообщение">{{ old('message') }}</textarea>
                 <div class="blog__comment-form__submit">
                     <button class="btn btn-info" type="submit">Отправить</button>
                 </div>
@@ -46,65 +52,43 @@
     </div>
     <div class="comment__list">
         <div class="container">
-            <div class="comment__item">
-                <div class="comment__item__name">Андрей</div>
-                <div class="comment__item__date">17.09.216</div>
-                <div class="comment__item__message">
-                    djldskfj lskjf sdkfj owefo eifj;dkfjsl;j lsdufhi dsfhklja lkfjhdaifuh iadsuhf ladkjfn kadsjfnlkdasjhfl udf iudsahf jdashflk jadshfo iudahf jadnf.dmnf,mndbsfkljdh lfjdashf lkjdashflkdjhfk ldjhfkl
+            @foreach($comments as $comment)
+                <div class="comment__item">
+                    <div class="comment__item__name">{{ $comment->name }}</div>
+                    <div class="comment__item__date">{{ date('d.m.Y', strtotime($comment->date_create)) }}</div>
+                    <div class="comment__item__message">
+                        {{ $comment->message }}
+                    </div>
                 </div>
-            </div>
-            <div class="comment__item comment__item_answer">
-                <div class="comment__item__name">Андрей</div>
-                <div class="comment__item__date">17.09.216</div>
-                <div class="comment__item__message">
-                    djldskfj lskjf sdkfj owefo eifj;dkfjsl;j lsdufhi dsfhklja lkfjhdaifuh iadsuhf ladkjfn kadsjfnlkdasjhfl udf iudsahf jdashflk jadshfo iudahf jadnf.dmnf,mndbsfkljdh lfjdashf lkjdashflkdjhfk ldjhfkl
-                </div>
-            </div>
+                @if($comment->answer)
+                    <div class="comment__item comment__item_answer">
+                        <div class="comment__item__name">$comment->answer->name</div>
+                        <div class="comment__item__date">{{ date('d.m.Y', strtotime($comment->answer->date_create)) }}</div>
+                        <div class="comment__item__message">
+                            {{ $comment->answer->message }}
+                        </div>
+                    </div>
+                @endif
+            @endforeach
         </div>
     </div>
     <div class="container">
         <h3 class="last-news__title">Последние новости:</h3>
         <div class="blog_list">
             <div class="blog_list-item__zero"></div>
-            <div class="blog_list-item">
-                <img class="blog_list-item__cover" src="/img/mockup.jpg">
-                <div class="blog_list-item__description">
-                    <a href="#" class="blog_list-item__title">Большая и длинная тема поста</a>
-                    <div class="blog_list-item__time_publication">21 сентября 2016</div>
-                    <div class="blog_list-item__lead">
-                        ;asdkjslkdl nsodijf odsjfh kdshuf kdsjfh kdsjfh kdsjfhl sieufh wpoeifj dslknjx,mbn d;o q[ewokfn a;dcvjna duhgo lkmadclvnck bru ihcnkcjbv iuewhfi jnv,mcbvj egfi weufn skbvj kfvhui rsufnvfkjbvfkmbjjk
-                    </div>
-                    <div class="blog_list-item__btn">
-                        <a class="btn btn-default" href="#" rel="nofollow">Подробнее</a>
-                    </div>
-                </div>
-            </div>
-            <div class="blog_list-item">
-                <img class="blog_list-item__cover" src="/img/mockup.jpg">
-                <div class="blog_list-item__description">
-                    <a href="#" class="blog_list-item__title">Большая и длинная тема поста</a>
-                    <div class="blog_list-item__time_publication">21 сентября 2016</div>
-                    <div class="blog_list-item__lead">
-                        ;asdkjslkdl nsodijf odsjfh kdshuf kdsjfh kdsjfh kdsjfhl sieufh wpoeifj dslknjx,mbn d;o q[ewokfn a;dcvjna duhgo lkmadclvnck bru ihcnkcjbv iuewhfi jnv,mcbvj egfi weufn skbvj kfvhui rsufnvfkjbvfkmbjjk
-                    </div>
-                    <div class="blog_list-item__btn">
-                        <a class="btn btn-default" href="#" rel="nofollow">Подробнее</a>
+            @foreach($lastNews as $new)
+                <div class="blog_list-item {{ $new->class }}">
+                    <img class="blog_list-item__cover" src="{{ $new->cover[0] }}">
+                    <div class="blog_list-item__description">
+                        <a href="{{ url('/blog/'.$new->id) }}" class="blog_list-item__title">{{ $new->name }}</a>
+                        <div class="blog_list-item__time_publication">{{ $new->getHumanDatePublication() }}</div>
+                        <div class="blog_list-item__lead">{{ $new->lead }}</div>
+                        <div class="blog_list-item__btn">
+                            <a class="btn btn-default" href="{{url('/blog/'.$new->id)}}" rel="nofollow">Подробнее</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="blog_list-item last">
-                <img class="blog_list-item__cover" src="/img/mockup.jpg">
-                <div class="blog_list-item__description">
-                    <a href="#" class="blog_list-item__title">Большая и длинная тема поста</a>
-                    <div class="blog_list-item__time_publication">21 сентября 2016</div>
-                    <div class="blog_list-item__lead">
-                        ;asdkjslkdl nsodijf hkjfhdskfj skdjfh ksdjfh ksdjfh kdsjfh kdsfh kdsjfh kdsjfh kdsjfh dsiufysodufyidsufh ksdjfnk sdkfh odsfh ksdjfn kdsfuhy isdufhy isdjfh isduyf isdufh kdsjfh sidufy siduh odsjfh kdshuf kdsjfh kdsjfh kdsjfhl sieufh wpoeifj dslknjx,mbn d;o q[ewokfn a;dcvjna duhgo lkmadclvnck bru ihcnkcjbv iuewhfi jnv,mcbvj egfi weufn skbvj kfvhui rsufnvfkjbvfkmbjjk
-                    </div>
-                    <div class="blog_list-item__btn">
-                        <a class="btn btn-default" href="#" rel="nofollow">Подробнее</a>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
     @include('frontend.fragments.footer')

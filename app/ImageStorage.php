@@ -272,6 +272,60 @@ class ImageStorage {
         return $name;
     }
 
+    /**
+     * Возвращает канву изображения
+     * @param int $width
+     * @param int $height
+     * @param string $background определение цвета фона в кодировке #ffffff
+     * @return mixed
+     */
+    public static function makeCanvas ($width=100, $height=100, $background = null) {
+        if (!$background) {
+            return Image::canvas($width, $height);
+        }
+
+        return Image::canvas($width, $height, $background);
+    }
+
+
+    public static function writeText ($img, $text, $textFontSize=12, $textFontColor='#000000', $textFontPositionX=null, $textFontPositionY=null, $align=null, $valign=null, $angle=null, $fontFile=null) {
+        $img->text($text, $textFontPositionX, $textFontPositionY, function ($font) use($textFontSize, $textFontColor, $align, $valign, $angle, $fontFile) {
+            if($fontFile) {
+                $font->file($fontFile);
+            }
+
+            if ($textFontSize) {
+                $font->size($textFontSize);
+            }
+
+            if ($textFontColor) {
+                $font->color($textFontColor);
+            }
+
+            if ($align) {
+                $font->align($align);
+            }
+
+            if ($valign) {
+                $font->valign($valign);
+            }
+
+            if ($angle) {
+                $font->angle($angle);
+            }
+        });
+
+        return $img;
+    }
+
+    public static function pixelate ($img, $width) {
+        return $img->pixelate($width);
+    }
+
+    public static function getURLEncoded ($img, $quality=100) {
+        return $img->stream('data-url', $quality);
+    }
+
 
 
 }

@@ -51,7 +51,7 @@
                                 locale:'ru',
                                 format: 'DD-MM-YYYY',
                                 date: null,
-                                {!! isset($item->date_create)? 'defaultDate:"'.date('d-m-Y', strtotime($item->date_create)).'",' : '' !!}
+                                {!! isset($item->date_create)? 'defaultDate: new Date('.date('Y', strtotime($item->date_create)).', '.(date('m', strtotime($item->date_create))-1).','.date('d', strtotime($item->date_create)).'),' : '' !!}
                             });
                         });
                     </script>

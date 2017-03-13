@@ -41,6 +41,19 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="cover" class="col-sm-3 control-label">Обложка</label>
+                        <div class="col-sm-9">
+                            <input name="cover[]" id="cover" type="file" data-toggle="imagepicker" data-nodelete="true" data-src="{{ isset($item->cover[0]) ? $item->cover[0] : '' }}"
+                                   @if(!isset($item->cover[0]))
+                                   required
+                                    @endif
+                            >
+                        </div>
+                        <div class="col-sm-9 col-sm-offset-3">
+                            <span class="label label-danger">Желательное разрешение изображения не меньше 1550x1000. Поле обязательно для заполнения!</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="date_publication" class="col-sm-3 control-label">Дата публикации</label>
                         <div class="col-sm-9">
                             <div class="input-group date" id="date_publication">
@@ -55,7 +68,7 @@
                                 locale:'ru',
                                 format: 'DD-MM-YYYY',
                                 date: null,
-                                {!! isset($item->date_publication)? 'defaultDate:"'.date('d-m-Y', strtotime($item->date_publication)).'",' : '' !!}
+                                {!! isset($item->date_publication)? 'defaultDate: new Date('.date('Y', strtotime($item->date_publication)).', '.(date('m', strtotime($item->date_publication))-1).','.date('d', strtotime($item->date_publication)).'),' : '' !!}
                             });
                         });
                     </script>
