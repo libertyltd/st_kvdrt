@@ -682,6 +682,12 @@ div.socials a:hover img {
     font-weight: normal;
 }
 
+.blog__comment-form__errors {
+    display: block;
+    margin-bottom: 10px;
+    color: #ec5d6b;
+}
+
 .blog__comment-form__control {
     display: inline-block;
     padding: 10px;
