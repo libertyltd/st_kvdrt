@@ -572,6 +572,6 @@ class FrontEndController extends Controller
         $PostComment->post_id = $id;
         $PostComment->save();
 
-        return redirect('/blog/'.$id);
+        return redirect('/blog/'.$id.'/#form_comment');
     }
 }

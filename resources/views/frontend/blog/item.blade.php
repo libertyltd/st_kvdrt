@@ -29,7 +29,7 @@
     </div>
     <div class="blog__comment-form">
         <div class="container">
-            <form class="blog__comment-form__input-place" method="post">
+            <form class="blog__comment-form__input-place" id="form_comment" method="post">
                 {{ csrf_field() }}
                 @if($errors)
                     @foreach($errors as $error)
