@@ -12,7 +12,7 @@ class SEO extends Model
     public $timestamps = false;
 
     public static function getCurrentSEO() {
-        $SEOraw = Session::get('SEO');
+        $SEOraw = Session::pull('SEO');
         if (!$SEOraw) {
             return null;
         }

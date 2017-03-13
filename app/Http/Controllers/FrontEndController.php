@@ -481,9 +481,9 @@ class FrontEndController extends Controller
 
     public function blog_item ($id) {
         $SEO = SEO::getCurrentSEO();
-        $title = '';
-        $keywords = '';
-        $description = '';
+        $title = null;
+        $keywords = null;
+        $description = null;
         if ($SEO) {
             $title = $SEO->title;
             $keywords = $SEO->keywords;
