@@ -62,7 +62,7 @@
                 </div>
                 @if($comment->answer)
                     <div class="comment__item comment__item_answer">
-                        <div class="comment__item__name">$comment->answer->name</div>
+                        <div class="comment__item__name">{{ $comment->answer->name }}</div>
                         <div class="comment__item__date">{{ date('d.m.Y', strtotime($comment->answer->date_create)) }}</div>
                         <div class="comment__item__message">
                             {{ $comment->answer->message }}
