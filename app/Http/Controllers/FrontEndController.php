@@ -553,15 +553,15 @@ class FrontEndController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/blog/'.$id)->withInput()->with(['errors' => ['Проверьте, что заполнены все поля.']]);
+            return redirect('/blog/'.$id.'/#form_comment')->withInput()->with(['errors' => ['Проверьте, что заполнены все поля.']]);
         }
 
         if (!isset($request->capcha)) {
-            return redirect('/blog/'.$id)->withInput()->with(['errors' => ['Вы не ввели код.']]);
+            return redirect('/blog/'.$id.'/#form_comment')->withInput()->with(['errors' => ['Вы не ввели код.']]);
         }
 
         if (!Capcha::checkCapcha($request->capcha)) {
-            return redirect('/blog/'.$id)->withInput()->with(['errors' => ['Код введен не верно.']]);
+            return redirect('/blog/'.$id.'/#form_comment')->withInput()->with(['errors' => ['Код введен не верно.']]);
         }
 
         $PostComment = new PostComment();
