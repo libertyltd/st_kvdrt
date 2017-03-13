@@ -36,11 +36,7 @@
                                 @foreach($list as $item)
                                     <tr>
                                         <td>
-                                            @if($item->status == 0)
-                                                <span class="label label-danger">{{ $item->id }}</span>
-                                            @else
-                                                <span class="label label-success">{{ $item->id }}</span>
-                                            @endif
+                                            {{$item->id}}
                                         </td>
                                         <td>
                                             {{ $item->name }}
@@ -61,22 +57,22 @@
                                         </td>
                                         <td>
                                             @if($item->answer)
-                                                <a href="{{ url('/home/post_answers/'.$item->answer->id) }}">от {{ date('d.m.Y', strtotime($item->date_create)) }}</a>
+                                                <a href="{{ url('/home/post_comments/'.$item->answer->id) }}">от {{ date('d.m.Y', strtotime($item->date_create)) }}</a>
                                             @else
-                                                <a href="{{ url('/home/post_answers/create&comment='.$item->id) }}" class="btn btn-success">Ответить</a>
+                                                <a href="{{ url('/home/post_comments/create?post_comment='.$item->id) }}" class="btn btn-success">Ответить</a>
                                             @endif
                                         </td>
                                         <td class="column_text-right">
                                             @can('edit', new App\PostComment())
-                                            <a class="btn btn-info" href="{{ url('/home/posts_comments/'.$item->id.'/edit/') }}" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Редактировать</a>
+                                            <a class="btn btn-info" href="{{ url('/home/post_comments/'.$item->id.'/edit/') }}" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Редактировать</a>
                                             @endcan
                                             @cannot('edit', new App\PostComment())
                                             @can('view', new App\PostComment())
-                                            <a class="btn btn-info" href="{{ url('/home/posts_comments/'.$item->id.'/') }}"><i class="fa fa-eye" aria-hidden="true"></i> Показать</a>
+                                            <a class="btn btn-info" href="{{ url('/home/post_comments/'.$item->id.'/') }}"><i class="fa fa-eye" aria-hidden="true"></i> Показать</a>
                                             @endcan
                                             @endcannot
                                             @can('delete', new App\PostComment())
-                                            <form action="{{ url('/home/posts_comments/'.$item->id.'/') }}" method="POST" class="form_action">
+                                            <form action="{{ url('/home/post_comments/'.$item->id.'/') }}" method="POST" class="form_action">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}
                                                 <button class="btn btn-danger" type="submit" data-toggle="countdown"><i class="fa fa-trash-o" aria-hidden="true"></i> Удалить</button>

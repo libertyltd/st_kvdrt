@@ -12,40 +12,41 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="row">
-                    <label class="col-sm-3">Название:</label>
+                    <label class="col-sm-3">Автор:</label>
                     <div class="col-sm-9">
                         {{ $item->name }}
                     </div>
                 </div>
                 <div class="row">
-                    <label class="col-sm-3">Дата публикации:</label>
+                    <label class="col-sm-3">Email автора:</label>
                     <div class="col-sm-9">
-                        {{ date('d-m-Y', strtotime($item->date_publication)) }}
+                        {{ $item->email }}
                     </div>
                 </div>
                 <div class="row">
-                    <label class="col-sm-3">Лид:</label>
+                    <label class="col-sm-3">Дата создания комментария:</label>
                     <div class="col-sm-9">
-                        {{ $item->lead }}
+                        {{ date('d-m-Y', strtotime($item->date_create)) }}
                     </div>
                 </div>
                 <div class="row">
-                    <label class="col-sm-3">Описание:</label>
+                    <label class="col-sm-3">Текст сообщения:</label>
                     <div class="col-sm-9">
-                        {!! $item->description !!}
+                        {{ $item->message }}
                     </div>
                 </div>
                 <div class="row">
-                    <label class="col-sm-3">Статус записи:</label>
+                    <label class="col-sm-3">Пост:</label>
                     <div class="col-sm-9">
-                        @if($item->status)
-                            Запись активна
-                        @else
-                            Запись не активна
+                        @if($item->post_id)
+                            <a href="{{ url('/home/posts/'.$item->post_id) }}">{{ date('d-m-Y', strtotime($item->post->date_publication)) }} - {{ $item->post->name }}</a>
                         @endif
                     </div>
                 </div>
-                <a href="{{ isset($controllerPathList) ? $controllerPathList : url('/home/') }}" class="btn btn-default">Назад</a>
+                <div class="btn-group">
+                    <a href="{{ isset($controllerPathList) ? $controllerPathList : url('/home/') }}" class="btn btn-default">Назад</a>
+                    <a href="{{ url('/home/post_comments/'.$item->id.'/edit') }}" class="btn btn-info">Редактировать</a>
+                </div>
             </div>
         </div>
     </div>

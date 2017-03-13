@@ -18,7 +18,7 @@ class PostComment extends Model
         return $this->hasOne('App\PostComment');
     }
 
-    public function postCommnet () {
+    public function postComment () {
         return $this->belongsTo('App\PostComment');
     }
 }

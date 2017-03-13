@@ -179,7 +179,7 @@ class PostController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect(self::$path.'edit/')->withInput()->withErrors($validator);
+            return redirect(self::$path.$id.'edit/')->withInput()->withErrors($validator);
         }
 
         if (!$request->status) {

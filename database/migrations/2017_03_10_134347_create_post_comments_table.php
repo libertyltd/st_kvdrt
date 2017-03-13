@@ -18,7 +18,7 @@ class CreatePostCommentsTable extends Migration
             $table->string('name', 255);
             $table->string('email', 255);
             $table->text('message');
-            $table->integer('post_id')->unsigned();
+            $table->integer('post_id')->unsigned()->nullable();
             $table->integer('post_comment_id')->unsigned()->nullable();
 
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade')->onUpdate('cascade');
