@@ -72,8 +72,9 @@
             @endforeach
         </div>
     </div>
+    @if($lastNews)
     <div class="container">
-        <h3 class="last-news__title">Последние новости:</h3>
+        <h3 class="last-news__title">Последние статьи:</h3>
         <div class="blog_list">
             <div class="blog_list-item__zero"></div>
             @foreach($lastNews as $new)
@@ -91,5 +92,6 @@
             @endforeach
         </div>
     </div>
+    @endif
     @include('frontend.fragments.footer')
 @endsection
