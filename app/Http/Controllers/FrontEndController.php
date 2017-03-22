@@ -501,6 +501,12 @@ class FrontEndController extends Controller
             abort(404, 'Страница не найдена');
         }
 
+        if(!$SEO) {
+            $title = $post->name;
+            $keywords = $post->lead;
+            $description = $post->lead;
+        }
+
         $IM = new ImageStorage($post);
         $post->cover = $IM->getCropped('cover', 900, 598);
 

@@ -72,7 +72,7 @@
             @endforeach
         </div>
     </div>
-    @if($lastNews)
+    @if($lastNews->count())
     <div class="container">
         <h3 class="last-news__title">Последние статьи:</h3>
         <div class="blog_list">
