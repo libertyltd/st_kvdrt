@@ -13,6 +13,7 @@
 
 
 use App\Http\Middleware\SEO;
+use Illuminate\Http\Request;
 
 Route::get('/', 'FrontEndController@index')->middleware(SEO::class);
 
@@ -35,6 +36,17 @@ Route::group(['middleware' => SEO::class], function () {
     Route::get('/blog/{id}', 'FrontEndController@blog_item');
     Route::post('/blog/{id}', 'FrontEndController@blog_item_comment');
 });
+
+//СЕО контроллер
+Route::get('{slug?}', function (Request $request, $slug) {
+    //Надо взять СЕО запись и посмотреть ее маршрут
+    $SEO = \App\SEO::getCurrentSEO();
+    if (!$SEO) {
+        abort(404);
+    }
+
+
+})->where('slug', '.*');
 
 
 Route::group(['middleware' => 'auth'], function() {
