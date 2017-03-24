@@ -37,19 +37,11 @@ Route::group(['middleware' => SEO::class], function () {
     Route::post('/blog/{id}', 'FrontEndController@blog_item_comment');
 });
 
-//СЕО контроллер только для гет запросов
-Route::get('{slug?}', function (Request $request, $slug) {
-    //Надо взять СЕО запись и посмотреть ее маршрут
-    $SEO = \App\SEO::getCurrentSEO();
-    if (!$SEO) {
-        abort(404);
-    }
-
-    echo file_get_contents($request->root().'/'.$SEO->original_url.'?'.$request->getQueryString().'&from_seo=true');
-})->where('slug', '.*');
-
-
 Route::group(['middleware' => 'auth'], function() {
+    /**
+     * Управление разделом "О компании"
+     */
+    Route::resource('/home/about_page', 'AboutPageController');
     /**
      * Управление разделом Блог и комментариями к постам
      */
@@ -151,3 +143,16 @@ Route::group(['middleware' => 'auth'], function() {
     Route::delete('/home/roles/{name_role}', 'RolesController@destroy');
 
 });
+
+
+//СЕО контроллер только для гет запросов
+//В обязательном порядке должен находиться в самом низу
+Route::get('{slug?}', function (Request $request, $slug) {
+    //Надо взять СЕО запись и посмотреть ее маршрут
+    $SEO = \App\SEO::getCurrentSEO();
+    if (!$SEO) {
+        abort(404);
+    }
+
+    echo file_get_contents($request->root().'/'.$SEO->original_url.'?'.$request->getQueryString().'&from_seo=true');
+})->where('slug', '.*');

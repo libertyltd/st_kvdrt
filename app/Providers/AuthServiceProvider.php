@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\AboutPage;
 use App\CategoryDesign;
 use App\Contact;
 use App\Design;
@@ -51,6 +52,7 @@ class AuthServiceProvider extends ServiceProvider
         WorkDescription::class => ModelPolicy::class,
         Post::class => ModelPolicy::class,
         PostComment::class => ModelPolicy::class,
+        AboutPage::class => ModelPolicy::class,
     ];
 
     /**

@@ -49,6 +49,9 @@
             @can('index', new App\PostComment())
                 <li><a href="{{ url('/home/post_comments') }}"><i class="fa fa-comments-o" aria-hidden="true"></i> Комментарии к блогу</a></li>
             @endcan
+            @can('index', new App\AboutPage())
+                <li><a href="{{ url('/home/about_page') }}"><i class="fa fa-sticky-note-o" aria-hidden="true"></i> О компании</a></li>
+            @endcan
         </ul>
     </li>
     @endcan
