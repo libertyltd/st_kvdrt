@@ -6,6 +6,21 @@
     </div>
     <ul class="header_menu">
         <li class="header_menu_item"><a class="{{ isset($blogActive) ? 'active' : '' }}" href="/blog/">Блог</a></li>
+        <?php
+            $AboutPage = App\AboutPage::first();
+            $showAbout = false;
+            if ($AboutPage) {
+                $showAbout = true;
+            }
+            $SEO = App\SEO::where(['original_url'=>'about', 'status'=>1])->first();
+            $AboutPageUrl = '/about/';
+            if ($SEO && $SEO->alias_url) {
+                $AboutPageUrl = '/'.$SEO->alias_url;
+            }
+        ?>
+        @if($showAbout)
+            <li class="header_menu_item"><a class="{{ isset($aboutActive) ? 'active' : '' }}" href="{!!$AboutPageUrl!!}">О компании</a></li>
+        @endif
     </ul>
     <div class="info">
         <div class="info-email">

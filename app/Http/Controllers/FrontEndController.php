@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AboutPage;
 use App\Capcha;
 use App\Contact;
 use App\Design;
@@ -137,6 +138,41 @@ class FrontEndController extends Controller
         echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n\r";
         echo '    <url>'."\n\r";
         echo '        <loc>http://'.$_SERVER['HTTP_HOST'].'</loc>'."\n\r";
+        echo '        <lastmod>'.date('Y-m-d').'</lastmod>'."\n\r";
+        echo '        <changefreq>weekly</changefreq>'."\n\r";
+        echo '        <priority>1</priority>'."\n\r";
+        echo '    </url>'."\n\r";
+        //Добавим страницу блог
+        echo '    <url>'."\n\r";
+        echo '        <loc>http://'.$_SERVER['HTTP_HOST'].'/blog/</loc>'."\n\r";
+        echo '        <lastmod>'.date('Y-m-d').'</lastmod>'."\n\r";
+        echo '        <changefreq>weekly</changefreq>'."\n\r";
+        echo '        <priority>1</priority>'."\n\r";
+        echo '    </url>'."\n\r";
+        //Добавим статьи
+        $Posts = Post::all();
+        foreach ($Posts as $post) {
+            $SEO = SEO::where(['original_url'=>'blog/'.$post->id, 'status'=>1])->first();
+            $alias = 'blog/'.$post->id;
+            if ($SEO) {
+                $alias = $SEO->alias_url;
+            };
+            echo '    <url>'."\n\r";
+            echo '        <loc>http://'.$_SERVER['HTTP_HOST'].'/'.$alias.'</loc>'."\n\r";
+            echo '        <lastmod>'.date('Y-m-d').'</lastmod>'."\n\r";
+            echo '        <changefreq>weekly</changefreq>'."\n\r";
+            echo '        <priority>1</priority>'."\n\r";
+            echo '    </url>'."\n\r";
+        }
+        //Добавим страницу "О компании"
+        $AboutPage = AboutPage::first();
+        $SEO = SEO::where(['original_url'=>'about', 'status'=>1])->first();
+        $alias = 'about';
+        if ($SEO) {
+            $alias = $SEO->alias_url;
+        }
+        echo '    <url>'."\n\r";
+        echo '        <loc>http://'.$_SERVER['HTTP_HOST'].'/'.$alias.'</loc>'."\n\r";
         echo '        <lastmod>'.date('Y-m-d').'</lastmod>'."\n\r";
         echo '        <changefreq>weekly</changefreq>'."\n\r";
         echo '        <priority>1</priority>'."\n\r";
@@ -476,6 +512,41 @@ class FrontEndController extends Controller
             'keywords' => $keywords,
             'description' => $description,
             'list'=>$Posts,
+        ]);
+    }
+
+    public function about() {
+        $SEO = SEO::getCurrentSEO();
+        $title = null;
+        $keywords = null;
+        $description = null;
+        if ($SEO) {
+            $title = $SEO->title;
+            $keywords = $SEO->keywords;
+            $description = $SEO->description;
+        }
+
+        //Тут необходимая выборка элементов списка
+        $contact = Contact::where('status', 1)->first();
+        $typesBuilding = TypeBuilding::where('status', 1)->get();
+        $typesBathroom = TypeBathroom::where('status', 1)->get();
+        $dateYear = date('Y');
+
+        $AboutPage = AboutPage::all()->first();
+        if (!$AboutPage) {
+            abort(404, 'Страница не найдена');
+        }
+
+        return view('frontend.about.item', [
+            'contacts' => $contact->toArray(),
+            'typesBuilding' => $typesBuilding,
+            'typesBathroom' => $typesBathroom,
+            'aboutActive' => true,
+            'dateYear' => $dateYear,
+            'item' => $AboutPage,
+            'title' => $title,
+            'keywords' => $keywords,
+            'description' => $description,
         ]);
     }
 

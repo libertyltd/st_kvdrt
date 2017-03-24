@@ -35,6 +35,8 @@ Route::group(['middleware' => SEO::class], function () {
     Route::get('/blog', 'FrontEndController@blog_list');
     Route::get('/blog/{id}', 'FrontEndController@blog_item');
     Route::post('/blog/{id}', 'FrontEndController@blog_item_comment');
+
+    Route::get('/about', 'FrontEndController@about');
 });
 
 Route::group(['middleware' => 'auth'], function() {
