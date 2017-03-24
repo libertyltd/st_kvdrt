@@ -7,7 +7,7 @@
     <ul class="header_menu">
         <li class="header_menu_item"><a class="{{ isset($blogActive) ? 'active' : '' }}" href="/blog/">Блог</a></li>
         <?php
-            $AboutPage = App\AboutPage::first();
+            $AboutPage = App\AboutPage::where(['status'=>1])->first();
             $showAbout = false;
             if ($AboutPage) {
                 $showAbout = true;
