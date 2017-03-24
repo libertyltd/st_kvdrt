@@ -37,7 +37,7 @@ Route::group(['middleware' => SEO::class], function () {
     Route::post('/blog/{id}', 'FrontEndController@blog_item_comment');
 });
 
-//СЕО контроллер
+//СЕО контроллер только для гет запросов
 Route::get('{slug?}', function (Request $request, $slug) {
     //Надо взять СЕО запись и посмотреть ее маршрут
     $SEO = \App\SEO::getCurrentSEO();
@@ -45,7 +45,7 @@ Route::get('{slug?}', function (Request $request, $slug) {
         abort(404);
     }
 
-
+    echo file_get_contents($request->root().'/'.$SEO->original_url.'?'.$request->getQueryString().'&from_seo=true');
 })->where('slug', '.*');
 
 

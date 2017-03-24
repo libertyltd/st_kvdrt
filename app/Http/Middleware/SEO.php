@@ -28,8 +28,8 @@ class SEO
         if ($SEO) {
             \App\SEO::saveCurrentSEO($SEO);
 
-            if (($SEO->original_url === $path) && ($SEO->alias_url != '')) {
-                return redirect($SEO->alias_url, 301);
+            if (($SEO->original_url === $path) && ($SEO->alias_url != '') && !$request->from_seo) {
+                return redirect($SEO->alias_url.'?'.$request->getQueryString(), 301);
             }
         }
 
