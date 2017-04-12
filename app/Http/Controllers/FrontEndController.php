@@ -155,7 +155,9 @@ class FrontEndController extends Controller
             $SEO = SEO::where(['original_url'=>'blog/'.$post->id, 'status'=>1])->first();
             $alias = 'blog/'.$post->id;
             if ($SEO) {
-                $alias = $SEO->alias_url;
+                if ($SEO->alias_url != "") {
+                    $alias = $SEO->alias_url;
+                }
             };
             echo '    <url>'."\n\r";
             echo '        <loc>http://'.$_SERVER['HTTP_HOST'].'/'.$alias.'</loc>'."\n\r";
