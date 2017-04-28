@@ -2,7 +2,11 @@
 <html lang="ru" prefix="og: http://kvadrat.space/#">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=1400"><!--content="width=device-width, initial-scale=1">-->
+    @if(isset($class) && $class=='gen')
+    <meta name="viewport" content="width=1400">
+    @else
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    @endif
     <title>{{isset($title) ? $title : "KVADRAT.space - ремонт за фиксированное время по фиксированной цене"}}</title>
     <meta property="og:title" content="{{isset($title) ? $title : "KVADRAT.space - ремонт за фиксированное время по фиксированной цене"}}" />
     <meta property="og:image" content="http://kvadrat.space/images/logo.png" />
