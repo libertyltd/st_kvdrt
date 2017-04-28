@@ -107,6 +107,23 @@ footer {
     background-color: #345270;
 }
 
+header.gen, footer.gen {
+    display: block;
+    min-width: 1349px;
+}
+
+header.gen .header_menu {
+    display: inline-block !important;
+}
+
+header.gen .info {
+    float: right !important;
+}
+
+footer.gen .info {
+    float: right !important;
+}
+
 .page {
         min-width: 1349px;
 }

@@ -119,6 +119,7 @@ class FrontEndController extends Controller
             'title' => $title,
             'keywords' => $keywords,
             'description' => $description,
+            'class' => 'gen',
 
 
             'contacts' => $contacts,

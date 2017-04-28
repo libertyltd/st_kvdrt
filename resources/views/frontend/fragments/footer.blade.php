@@ -1,4 +1,4 @@
-<footer>
+<footer class="{{isset($class) ? $class : ''}}">
     <div class="logo">
         <a href="/">
             <img src="/images/white-logo.png" alt="">
