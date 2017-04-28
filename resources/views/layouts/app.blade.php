@@ -2,7 +2,7 @@
 <html lang="ru" prefix="og: http://kvadrat.space/#">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=1400px, initial-scale=1"><!--content="width=device-width, initial-scale=1">-->
+    <meta name="viewport" content="width=1400"><!--content="width=device-width, initial-scale=1">-->
     <title>{{isset($title) ? $title : "KVADRAT.space - ремонт за фиксированное время по фиксированной цене"}}</title>
     <meta property="og:title" content="{{isset($title) ? $title : "KVADRAT.space - ремонт за фиксированное время по фиксированной цене"}}" />
     <meta property="og:image" content="http://kvadrat.space/images/logo.png" />
