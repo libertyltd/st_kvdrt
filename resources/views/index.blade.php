@@ -148,7 +148,7 @@
             </div>
         </div>
         <div class='clearbox'></div>
-        <div class="design">
+        <div class="design" id="design">
             <div class="lg-head">
                 Дизайн
             </div>
@@ -281,7 +281,7 @@
             </div>
         </div>
         <div class='clearbox'></div>
-        <div class="partners">
+        <div class="partners" id="partners">
             <div class="lg-head">
                 Наши партнеры
             </div>
@@ -385,7 +385,7 @@
             </div>
         @endif
         <div class='clearbox'></div>
-        <div class="contacts">
+        <div class="contacts" id="contacts">
             <div class="contacts-content">
                 <div class="contant-form">
                     <form action="/constructor/step/5/" method="post" id="cForm1">
