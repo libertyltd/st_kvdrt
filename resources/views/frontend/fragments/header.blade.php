@@ -26,9 +26,6 @@
         <li class="header_menu_item"><a href="#contacts" data-toggle="slowScroll">Контакты</a></li>
     </ul>
     <div class="info">
-        <div class="info-email">
-            <a href="mailto:{{ isset($contacts['email']) ? $contacts['email'] : '' }}"><img src="/images/_0011_icon-mail.png" alt="" class="icon">{{ isset($contacts['email']) ? $contacts['email'] : '' }}</a>
-        </div>
         <div class="info-phone">
             <a href="tel:{{ isset($contacts['phoneToLink']) ? $contacts['phoneToLink'] : '' }}"><img src="/images/_0012_icon-phone.png" alt="" class="icon">{{ isset($contacts['phone']) ? $contacts['phone'] : '' }}</a>
         </div>
