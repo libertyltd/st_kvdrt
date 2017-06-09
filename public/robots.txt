@@ -1,6 +1,8 @@
 User-agent: *
 Disallow: /home
 Disallow: /home/*
+Disallow: /constructor
+Disallow: /constructor/*
 Allow: /
 Host: kvadrat.space
 Sitemap: http://kvadrat.space/sitemap.xml
