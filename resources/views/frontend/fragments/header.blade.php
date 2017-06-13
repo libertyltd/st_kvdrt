@@ -21,9 +21,9 @@
         @if($showAbout)
             <li class="header_menu_item"><a class="{{ isset($aboutActive) ? 'active' : '' }}" href="{!!$AboutPageUrl!!}">О компании</a></li>
         @endif
-        <li class="header_menu_item"><a href="#design" data-toggle="slowScroll">Дизайны</a></li>
-        <li class="header_menu_item"><a href="#partners" data-toggle="slowScroll">Партнеры</a></li>
-        <li class="header_menu_item"><a href="#contacts" data-toggle="slowScroll">Контакты</a></li>
+        <li class="header_menu_item"><a href="/#design" data-toggle="slowScroll">Дизайны</a></li>
+        <li class="header_menu_item"><a href="/#partners" data-toggle="slowScroll">Партнеры</a></li>
+        <li class="header_menu_item"><a href="/#contacts" data-toggle="slowScroll">Контакты</a></li>
     </ul>
     <div class="info">
         <div class="info-phone">
