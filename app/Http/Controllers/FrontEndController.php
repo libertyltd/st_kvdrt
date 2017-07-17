@@ -204,7 +204,7 @@ class FrontEndController extends Controller
                 'id' => $request->design,
             ])->first();
             if ($design) {
-                return redirect('/constructor/step/3/'.$request->design);
+                return redirect('/constructor/step/3/'.$request->design.'/');
             }
         }
 
