@@ -173,9 +173,9 @@
                         </div>
                         <div class="row-right">
                             <div class="design-description">
-                                <div class="design-head">
+                                <a href="#" data-id="{{$design->id}}" class="design-head" data-toggle="constructor">
                                     {{ $design->name }}
-                                </div>
+                                </a>
                                 <div class="design-price">
                                     <span>от</span>
                                     <span>{{ $design->price }}</span>
@@ -192,9 +192,9 @@
                     <div class="design-row">
                         <div class="row-left">
                             <div class="design-description right-align">
-                                <div class="design-head">
+                                <a href="#" data-id="{{$design->id}}" class="design-head" data-toggle="constructor">
                                     {{ $design->name }}
-                                </div>
+                                </a>
                                 <div class="design-price">
                                     <span>от</span>
                                     <span>{{ $design->price }}</span>

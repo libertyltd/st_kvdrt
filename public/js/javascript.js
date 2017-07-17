@@ -25,6 +25,14 @@ jQuery(document).ready(function() {
        $(".final_form").fadeIn(600);
       };
      });
+
+    $('[data-toggle="constructor"]').bind('click', function() {
+        var idDesign = $(this).data('id');
+        $('.final_form').find('form').find('[name="design"]').remove();
+        $('.final_form').find('form').append('<input type="hidden" name="design" value="' + idDesign + '">');
+        $('.add_cont').first().trigger('click');
+        return false;
+    });
     
     
     $("#final_close").click(function() {

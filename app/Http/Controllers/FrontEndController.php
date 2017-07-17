@@ -191,10 +191,21 @@ class FrontEndController extends Controller
             'apartments_square' => 'numeric|required',
             'type_building_id' => 'numeric|required',
             'type_bathroom_id' => 'numeric|required',
+            'design'           => 'numeric',
         ]);
 
         if ($validator->fails()) {
             return redirect('/')->withErrors($validator);
+        }
+
+        if ($request->design) {
+            $design = Design::where([
+                'status' => 1,
+                'id' => $request->design,
+            ])->first();
+            if ($design) {
+                return redirect('/constructor/step/3/'.$request->design);
+            }
         }
 
         session(['orderCarcas' => []]);
