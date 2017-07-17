@@ -34,7 +34,7 @@
         <div class="addition_option">
             <div class="addition_option_content">
                 <div class="lg-head">
-                    Дополнительные опции
+                    Дополнительные опции <sub>Шаг 3 из 3</sub>
                 </div>
                 <div class="option_block">
                     <div class="option_block_content">

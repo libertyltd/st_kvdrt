@@ -35,7 +35,7 @@
                 <div class="constructor_img">
                     <div class="constructor_head">
                         <div class="lg-head design-head">
-                            Конструктор стиля
+                            Конструктор стиля <sub>Шаг 2 из 3</sub>
                         </div>
                         <div class="const_cost">
                             <div class="from_a">

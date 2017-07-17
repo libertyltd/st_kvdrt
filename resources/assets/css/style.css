@@ -988,6 +988,12 @@ padding: 0 160px;
     margin-bottom: 40px;
 }
 
+.lg-head sub {
+    color: #7c858e;
+    font-family: SegoeUIregular;
+    font-size: 14px;
+}
+
 .reg-content {
     color: #7c858e;
     font-size: 17px;
