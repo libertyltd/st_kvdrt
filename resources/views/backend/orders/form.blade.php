@@ -158,7 +158,7 @@
                                 @foreach($options as $option)
                                     <label class="btn btn-warning {{$option->active}}">
                                         <input type="checkbox" name="option_id[]" autocomplete="off" {{isset($option->active) ? 'checked' : ''}} value="{{$option->id}}">
-                                        {{ $option->name }} ({{ \App\Design::formatPrice($option->price) }} руб.)
+                                        {{ $option->name }} ({{ \App\Design::formatPrice($option->getPrice(!empty($item->apartments_square) ? $item->apartments_square : null)) }} руб.)
                                     </label>
                                 @endforeach
                             </div>

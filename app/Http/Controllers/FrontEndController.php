@@ -391,6 +391,7 @@ class FrontEndController extends Controller
             'summ' => $summ,
             'options' => $Options,
             'scripts'=> $scripts,
+            'apartments_square' => $orderCarcas['apartments_square'],
         ]);
     }
 

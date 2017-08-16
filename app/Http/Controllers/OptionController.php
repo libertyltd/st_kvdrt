@@ -54,11 +54,19 @@ class OptionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
-            'price' => 'required'
+            'price' => 'required',
+            'price_per_meter' => 'required_if:is_dynamic_calculate, 1',
+            'minimal_dynamic_price' => 'required_if:is_dynamic_calculate, 1'
         ]);
 
         if ($validator->fails()) {
             return redirect('/home/options/create/')->withInput()->withErrors($validator);
+        }
+
+        if (!$request->is_dynamic_calculate) {
+            $request->is_dynamic_calculate = 0;
+        } else {
+            $request->is_dynamic_calculate = 1;
         }
 
         if (!$request->status) {
@@ -73,6 +81,11 @@ class OptionController extends Controller
                 $Option->name = $request->name;
                 $Option->price = $request->price;
                 $Option->status = $request->status;
+                $Option->is_dynamic_calculate = $request->is_dynamic_calculate;
+                if ($request->is_dynamic_calculate) {
+                    $Option->price_per_meter = $request->price_per_meter;
+                    $Option->minimal_dynamic_price = $request->minimal_dynamic_price;
+                }
                 $Option->save();
             });
         } catch (Exception $e) {
@@ -129,11 +142,20 @@ class OptionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
-            'price' => 'required'
+            'price' => 'required',
+            'price_per_meter' => 'required_if:is_dynamic_calculate, 1',
+            'minimal_dynamic_price' => 'required_if:is_dynamic_calculate, 1'
         ]);
 
         if ($validator->fails()) {
             return redirect('/home/options/edit/')->withInput()->withErrors($validator);
+        }
+
+
+        if (!$request->is_dynamic_calculate) {
+            $request->is_dynamic_calculate = 0;
+        } else {
+            $request->is_dynamic_calculate = 1;
         }
 
         if (!$request->status) {
@@ -147,6 +169,11 @@ class OptionController extends Controller
             $Option->name = $request->name;
             $Option->price = $request->price;
             $Option->status = $request->status;
+            $Option->is_dynamic_calculate = $request->is_dynamic_calculate;
+            if ($request->is_dynamic_calculate) {
+                $Option->price_per_meter = $request->price_per_meter;
+                $Option->minimal_dynamic_price = $request->minimal_dynamic_price;
+            }
             $Option->save();
         } catch (Exception $e) {
             return redirect('/home/options/'.$Option->id.'/edit/')->with(['errors'=>[$e->getMessage()]]);

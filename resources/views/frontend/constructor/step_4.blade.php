@@ -45,7 +45,7 @@
                                 <div class="option-name">{{$option->name}}</div>
                                 <div class="option-radio">
                                     <div class="cost-option" id="win_ch">
-                                        <span>{{ \App\Design::formatPrice($option->price) }}</span><span> р</span>
+                                        <span>{{ \App\Design::formatPrice($option->getPrice($apartments_square ? $apartments_square : null)) }}</span><span> р</span>
                                     </div>
                                     <div>
                                         <input id="option{{$option->id}}on" class="checkin" type="radio" name="option{{$option->id}}" value="{{$option->id}}"><label data-price="{{$option->price}}" for="option{{$option->id}}on">Да</label>
