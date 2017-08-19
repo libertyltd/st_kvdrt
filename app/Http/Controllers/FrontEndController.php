@@ -302,7 +302,16 @@ class FrontEndController extends Controller
         $design->bath = $IM->getCropped('bath', 405, 530);
 
         /* Рассчитаем сумму которую запишем в заказ */
-        $summ = Order::getFastCalculate($orderCarcas['apartments_square'], $design->price_square, $design->constant_cy, []);
+        $typeBuilding = TypeBuilding::find($orderCarcas['type_building_id']);
+        if (!$typeBuilding) {
+            return redirect('/')->withErrors(['errors'=>['Не выбран тип здания']]);
+        }
+        $typeBathroom = TypeBathroom::find($orderCarcas['type_bathroom_id']);
+        if (!$typeBathroom) {
+            return redirect('/')->withErrors(['errors'=>['Не выбран тип санузла']]);
+        }
+
+        $summ = Order::getFastCalculate($orderCarcas['apartments_square'], $design->price_square, $design->constant_cy, [], $typeBuilding->additional_coefficient, $typeBathroom->additional_coefficient);
         $dateYear = date('Y');
 
         $designCategorys = $design->CategoryDesigns;
@@ -361,7 +370,16 @@ class FrontEndController extends Controller
         $orderCarcas['designOptions'] = $designOprions;
         session(['orderCarcas' => $orderCarcas]);
 
-        $summ = Order::getFastCalculate($orderCarcas['apartments_square'], $design->price_square, $design->constant_cy, []);
+        $typeBuilding = TypeBuilding::find($orderCarcas['type_building_id']);
+        if (!$typeBuilding) {
+            return redirect('/')->withErrors(['errors'=>['Не выбран тип здания']]);
+        }
+        $typeBathroom = TypeBathroom::find($orderCarcas['type_bathroom_id']);
+        if (!$typeBathroom) {
+            return redirect('/')->withErrors(['errors'=>['Не выбран тип санузла']]);
+        }
+
+        $summ = Order::getFastCalculate($orderCarcas['apartments_square'], $design->price_square, $design->constant_cy, [], $typeBuilding->additional_coefficient, $typeBathroom->additional_coefficient);
         $summ = $summ + $price;
 
         $Options = Option::where('status', '1')->get();
@@ -457,22 +475,26 @@ class FrontEndController extends Controller
         $orderCarcas['email'] = $_REQUEST['email'];
         $orderCarcas['phone'] = $_REQUEST['phone'];
         session(['orderCarcas' => []]);
+        try {
+            $Order = new Order();
+            $Order->email = $orderCarcas['email'];
+            $Order->address = $orderCarcas['address'];
+            $Order->apartments_type = $orderCarcas['apartments_type'];
+            $Order->apartments_square = $orderCarcas['apartments_square'];
+            $Order->type_building_id = $orderCarcas['type_building_id'];
+            $Order->type_bathroom_id = $orderCarcas['type_bathroom_id'];
+            $Order->phone  = $orderCarcas['phone'];
+            $Order->design_id = $orderCarcas['design_id'];
+            $Order->save();
 
-        $Order = new Order();
-        $Order->email = $orderCarcas['email'];
-        $Order->address = $orderCarcas['address'];
-        $Order->apartments_type = $orderCarcas['apartments_type'];
-        $Order->apartments_square = $orderCarcas['apartments_square'];
-        $Order->type_building_id = $orderCarcas['type_building_id'];
-        $Order->type_bathroom_id = $orderCarcas['type_bathroom_id'];
-        $Order->phone  = $orderCarcas['phone'];
-        $Order->design_id = $orderCarcas['design_id'];
-        $Order->save();
+            mail ($mailStr, 'Новый заказ с сайта kvadrat.space', 'Новый заказ от '.$Order->email.' Доступна по адресу http://kvadrat.space/home/orders/'.$Order->id.'/.');
 
-        mail ($mailStr, 'Новый заказ с сайта kvadrat.space', 'Новый заказ от '.$Order->email.' Доступна по адресу http://kvadrat.space/home/orders/'.$Order->id.'/.');
+            $Order->DesignOptions()->sync($orderCarcas['designOptions']);
+            $Order->Options()->sync($orderCarcas['options']);
+        } catch (Exception $e) {
+            //пока ничего не делаем
+        }
 
-        $Order->DesignOptions()->sync($orderCarcas['designOptions']);
-        $Order->Options()->sync($orderCarcas['options']);
 
         return redirect('/');
     }

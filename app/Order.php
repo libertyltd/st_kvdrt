@@ -61,8 +61,10 @@ class Order extends Model
      * @param $additionOption Массив с ценами за дополнительные опции
      * @return mixed
      */
-    public static function getFastCalculate ($apartmentsSquare, $priceToMeter, $constCY, $additionOption = []) {
-        $summ = ($apartmentsSquare-5)*$priceToMeter+$constCY;
+    public static function getFastCalculate ($apartmentsSquare, $priceToMeter, $constCY, $additionOption = [], $addCoefTypeBuilding = 0, $addCoefTypeBathroom = 0) {
+        if ($addCoefTypeBuilding == 0) $addCoefTypeBuilding = 1;
+        if ($addCoefTypeBathroom == 0) $addCoefTypeBathroom = 1;
+        $summ = ($apartmentsSquare-5)*$priceToMeter*$addCoefTypeBuilding+$constCY*$addCoefTypeBathroom;
         foreach ($additionOption as $item) {
             $summ += $item;
         }

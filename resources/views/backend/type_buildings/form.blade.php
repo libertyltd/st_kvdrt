@@ -33,7 +33,17 @@
                             <input name="name" id="name" class="form-control" value="{{ isset($item->name) ? $item->name : '' }}" required>
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <label for="additional_coefficient" class="col-sm-3 control-label">Добавочный коэффициент</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <input type="text" name="additional_coefficient"
+                                       id="additional_coefficient" value="{{ isset($item->additional_coefficient) ? $item->additional_coefficient : '' }}"
+                                       aria-describedby="rub" class="form-control" data-toggle="masked-money">
+                                <span class="input-group-addon" id="rub"><i class="fa fa-rub" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="status" class="col-sm-3 control-label">Статус записи</label>
                         <div class="col-sm-9">
@@ -55,6 +65,11 @@
 
                     @include('backend.common.form.action')
                 </form>
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $('[data-toggle="masked-money"]').maskMoney({thousands:' ', decimal:'.'});
+                    });
+                </script>
             </div>
         </div>
     </div>

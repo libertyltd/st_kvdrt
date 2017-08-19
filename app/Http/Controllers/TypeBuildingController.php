@@ -38,7 +38,10 @@ class TypeBuildingController extends Controller
             'nameAction' => 'Тип здания',
             'controllerPathList' => '/home/type_buildings/',
             'controllerAction' => 'add',
-            'controllerEntity' => new TypeBuilding()
+            'controllerEntity' => new TypeBuilding(),
+            'scripts' => [
+                '/js/lib/jquery.maskMoney.min.js'
+            ],
         ]);
     }
 
@@ -69,6 +72,7 @@ class TypeBuildingController extends Controller
                 $TypeBuilding = new TypeBuilding();
                 $TypeBuilding->name = $request->name;
                 $TypeBuilding->status = $request->status;
+                $TypeBuilding->additional_coefficient = $request->additional_coefficient;
                 $TypeBuilding->save();
             });
         } catch (Exception $e) {
@@ -111,6 +115,9 @@ class TypeBuildingController extends Controller
             'controllerPathList' => '/home/type_buildings/',
             'controllerAction' => 'edit',
             'controllerEntity' => new TypeBuilding(),
+            'scripts' => [
+                '/js/lib/jquery.maskMoney.min.js'
+            ],
         ]);
     }
 
@@ -141,6 +148,7 @@ class TypeBuildingController extends Controller
             $TypeBuilding = TypeBuilding::find($id);
             $TypeBuilding->name = $request->name;
             $TypeBuilding->status = $request->status;
+            $TypeBuilding->additional_coefficient = $request->additional_coefficient;
             $TypeBuilding->save();
 
         } catch (Exception $e) {

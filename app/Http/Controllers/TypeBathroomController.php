@@ -38,7 +38,10 @@ class TypeBathroomController extends Controller
             'nameAction' => 'Тип санузла',
             'controllerPathList' => '/home/type_bathrooms/',
             'controllerAction' => 'add',
-            'controllerEntity' => new TypeBathroom()
+            'controllerEntity' => new TypeBathroom(),
+            'scripts' => [
+                '/js/lib/jquery.maskMoney.min.js'
+            ],
         ]);
     }
 
@@ -69,6 +72,7 @@ class TypeBathroomController extends Controller
                 $TypeBathroom = new TypeBathroom();
                 $TypeBathroom->name = $request->name;
                 $TypeBathroom->status = $request->status;
+                $TypeBathroom->additional_coefficient = $request->additional_coefficient;
                 $TypeBathroom->save();
             });
         } catch (Exception $e) {
@@ -112,6 +116,9 @@ class TypeBathroomController extends Controller
             'controllerPathList' => '/home/type_bathrooms/',
             'controllerAction' => 'edit',
             'controllerEntity' => new $TypeBathroom(),
+            'scripts' => [
+                '/js/lib/jquery.maskMoney.min.js'
+            ],
         ]);
     }
 
@@ -142,6 +149,7 @@ class TypeBathroomController extends Controller
             $TypeBathroom = TypeBathroom::find($id);
             $TypeBathroom->name = $request->name;
             $TypeBathroom->status = $request->status;
+            $TypeBathroom->additional_coefficient = $request->additional_coefficient;
             $TypeBathroom->save();
 
         } catch (Exception $e) {
