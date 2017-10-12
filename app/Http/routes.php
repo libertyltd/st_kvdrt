@@ -41,6 +41,11 @@ Route::group(['middleware' => SEO::class], function () {
 
 Route::group(['middleware' => 'auth'], function() {
     /**
+     *  Управление свободными параметрами
+     */
+    Route::resource('/home/variable_parapms', 'VariableParamController');
+
+    /**
      * Управление разделом "О компании"
      */
     Route::resource('/home/about_page', 'AboutPageController');

@@ -27,6 +27,15 @@ class Order extends Model
     }
 
     /**
+     * Возвращает все изменяемые параметры заказа
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function VariableParams() {
+        return $this->belongsToMany('App\VariableParam', 'variable_params', 'order_id', 'variable_param_id');
+    }
+
+    /**
      * Возвращает тип здания
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

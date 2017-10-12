@@ -20,6 +20,7 @@ use App\Slider;
 use App\TypeBathroom;
 use App\TypeBuilding;
 use App\User;
+use App\VariableParam;
 use App\Work;
 use App\WorkDescription;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
@@ -53,6 +54,7 @@ class AuthServiceProvider extends ServiceProvider
         Post::class => ModelPolicy::class,
         PostComment::class => ModelPolicy::class,
         AboutPage::class => ModelPolicy::class,
+        VariableParam::class => ModelPolicy::class,
     ];
 
     /**
