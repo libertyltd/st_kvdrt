@@ -32,7 +32,7 @@ class Order extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function VariableParams() {
-        return $this->belongsToMany('App\VariableParam', 'variable_params', 'order_id', 'variable_param_id');
+        return $this->belongsToMany('App\VariableParam', 'variable_param_order', 'order_id', 'variable_param_id')->withPivot('amount');
     }
 
     /**

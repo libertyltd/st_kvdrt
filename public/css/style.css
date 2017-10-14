@@ -1715,6 +1715,10 @@ input[type=radio   ]:not(old){
     background-color: #dd5764;
 }
 
+.final_form_freeze {
+    overflow: hidden;
+}
+
 .final_form {
     position: fixed;
     width: 100%;
@@ -1724,6 +1728,7 @@ input[type=radio   ]:not(old){
     left: 0;
     top: 0;
     display: none;
+    overflow-y: auto;
 }
 
 .form_end {
@@ -1761,6 +1766,58 @@ input[type=radio   ]:not(old){
     max-width: 600px;
     margin: auto;
     margin-bottom: 10px;
+}
+
+.variable_params {
+    text-align: left;
+}
+
+.variable_radio {
+    display: inline-block;
+    text-align: center;
+}
+
+.variable_checkbox {
+    display: block;
+    text-align: left;
+}
+
+.variable_checkbox input[type="checkbox"],
+.variable_radio input[type="radio"] {
+    display: none;
+}
+
+
+.variable_checkbox input[type="checkbox"] + span {
+    display: block;
+}
+
+.variable_checkbox input[type="checkbox"] + span input[type="text"] {
+    display: none;
+}
+
+.variable_checkbox input[type="checkbox"]:checked + span input[type="text"] {
+    display: block;
+    margin-top: 10px;
+}
+
+.variable_radio input[type="radio"] + span {
+    display: inline-block;
+}
+
+.variable_checkbox input[type="checkbox"] + span,
+.variable_radio input[type="radio"] + span {
+    padding: 15px;
+    margin: 0 5px;
+    border: 1px solid #dfdfdf;
+    cursor: pointer;
+    border-radius: 3px;
+    color: #395674;
+}
+
+.variable_checkbox input[type="checkbox"]:checked + span,
+.variable_radio input[type="radio"]:checked + span {
+    border: 3px solid #395674;
 }
 
 .form_final_group input, .form_final_group button, .form_final_group select {

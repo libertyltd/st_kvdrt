@@ -166,6 +166,10 @@ class VariableParamController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $VariableParam = VariableParam::find($id);
+        if (!$VariableParam) {
+            return redirect(self::$path . $id .'/edit/')->withErrors(['Специального параметра с указанным идентификатором не существует']);
+        }
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
             'min_amount' => 'integer',
@@ -174,7 +178,7 @@ class VariableParamController extends Controller
         ]);
 
         if($validator->fails()) {
-            return redirect(self::$path . $id .'/create/')->withInput()->withErrors($validator);
+            return redirect(self::$path . $id .'/edit/')->withInput()->withErrors($validator);
         }
 
         if (!$request->status) {
@@ -186,7 +190,7 @@ class VariableParamController extends Controller
         if (!$request->is_one) {
             $request->is_one = 0;
         } else {
-            $request->status = 1;
+            $request->is_one = 1;
         }
 
         $request->amount_piece = 0;
@@ -194,7 +198,6 @@ class VariableParamController extends Controller
         $request->price_per_one = preg_replace('/\s/', '', $request->price_per_one);
 
         try {
-            $VariableParam = new VariableParam();
             $VariableParam->name = $request->name;
             $VariableParam->amount_piece = $request->amount_piece;
             $VariableParam->price_per_one = $request->price_per_one;

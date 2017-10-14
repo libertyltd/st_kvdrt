@@ -105,6 +105,46 @@
                         </div>
                     </div>
 
+                    @if($item->VariableParams->count() > 0)
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Обязательные параметры заказа</label>
+                            <div class="col-sm-9">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Название параметра</th>
+                                            <th>Цена за штуку</th>
+                                            <th>Количество штук в заказе</th>
+                                            <th>Стоимость</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($item->VariableParams as $param)
+                                            <tr>
+                                                <td>{{$param->name}}</td>
+                                                <td>{{$param->price_per_one}}</td>
+                                                <td>
+                                                    @if($param->is_one)
+                                                        1
+                                                    @else
+                                                        {{$param->pivot->amount}}
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if($param->is_one)
+                                                        {{$param->price_per_one}}
+                                                    @else
+                                                        {{$param->pivot->amount * $param->price_per_one}}
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    @endif
+
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Дизайн</label>
                         <div class="col-sm-9"  id="designs_switcher">

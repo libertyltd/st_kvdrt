@@ -18,9 +18,11 @@ use App\Slider;
 use App\TypeBathroom;
 use App\TypeBuilding;
 use App\User;
+use App\VariableParam;
 use App\Work;
 use App\WorkDescription;
 use Illuminate\Http\Request;
+use Log;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Storage;
@@ -217,6 +219,30 @@ class FrontEndController extends Controller
         $orderCarcas['apartments_square'] = $request->apartments_square;
         $orderCarcas['type_building_id'] = $request->type_building_id;
         $orderCarcas['type_bathroom_id'] = $request->type_bathroom_id;
+
+        $variable_params = [];
+        if (isset($request->variable_param_checkbox)) {
+            foreach ($request->variable_param_checkbox as $key => $value) {
+                $variable_params[] = [
+                    'id' => $value,
+                    'amount' => !empty($request->variable_param_checkbox_amount[$value])
+                        ? $request->variable_param_checkbox_amount[$value]
+                        : '',
+                ];
+            }
+        }
+
+        if (isset($request->variable_param_radio)) {
+            foreach ($request->variable_param_radio as $key => $value) {
+                $variable_params[] = [
+                    'id' => $value,
+                    'amount' => 1,
+                ];
+            }
+        }
+
+        $orderCarcas['variable_params'] = $variable_params;
+
         session(['orderCarcas' => $orderCarcas]);
 
         /* Подготовим вьюху для отображения второго шага регистрации заказа */
@@ -311,7 +337,23 @@ class FrontEndController extends Controller
             return redirect('/')->withErrors(['errors'=>['Не выбран тип санузла']]);
         }
 
-        $summ = Order::getFastCalculate($orderCarcas['apartments_square'], $design->price_square, $design->constant_cy, [], $typeBuilding->additional_coefficient, $typeBathroom->additional_coefficient);
+        $variableParams = $orderCarcas['variable_params'];
+        $additionOptions = [];
+        foreach ($variableParams as $item) {
+            $VariableParam = VariableParam::find($item['id']);
+            if (!$VariableParam) continue;
+            if ($VariableParam->is_one) {
+                $additionOptions[] = $VariableParam->price_per_one;
+            } else {
+                if (is_numeric($item['amount'])) {
+                    $additionOptions[] = $VariableParam->price_per_one * $item['amount'];
+                } else {
+                    $additionOptions[] = $variableParams->price_per_one;
+                }
+            }
+        }
+
+        $summ = Order::getFastCalculate($orderCarcas['apartments_square'], $design->price_square, $design->constant_cy, $additionOptions, $typeBuilding->additional_coefficient, $typeBathroom->additional_coefficient);
         $dateYear = date('Y');
 
         $designCategorys = $design->CategoryDesigns;
@@ -379,7 +421,23 @@ class FrontEndController extends Controller
             return redirect('/')->withErrors(['errors'=>['Не выбран тип санузла']]);
         }
 
-        $summ = Order::getFastCalculate($orderCarcas['apartments_square'], $design->price_square, $design->constant_cy, [], $typeBuilding->additional_coefficient, $typeBathroom->additional_coefficient);
+        $variableParams = $orderCarcas['variable_params'];
+        $additionOptions = [];
+        foreach ($variableParams as $item) {
+            $VariableParam = VariableParam::find($item['id']);
+            if (!$VariableParam) continue;
+            if ($VariableParam->is_one) {
+                $additionOptions[] = $VariableParam->price_per_one;
+            } else {
+                if (is_numeric($item['amount'])) {
+                    $additionOptions[] = $VariableParam->price_per_one * $item['amount'];
+                } else {
+                    $additionOptions[] = $variableParams->price_per_one;
+                }
+            }
+        }
+
+        $summ = Order::getFastCalculate($orderCarcas['apartments_square'], $design->price_square, $design->constant_cy, $additionOptions, $typeBuilding->additional_coefficient, $typeBathroom->additional_coefficient);
         $summ = $summ + $price;
 
         $Options = Option::where('status', '1')->get();
@@ -487,8 +545,16 @@ class FrontEndController extends Controller
             $Order->design_id = $orderCarcas['design_id'];
             $Order->save();
 
-            mail ($mailStr, 'Новый заказ с сайта kvadrat.space', 'Новый заказ от '.$Order->email.' Доступна по адресу http://kvadrat.space/home/orders/'.$Order->id.'/.');
+            $headers  = "Content-type: text/html; charset=utf-8 \r\n";
+            $headers .= "From: =?utf-8?b?" . base64_encode('kvadrat.space new order handler') . "?= <noreply@kvadrat.space>\r\n";
+            mail ($mailStr, "=?utf-8?b?" . base64_encode('Новый заказ с сайта kvadrat.space') . '?=', 'Новый заказ от '.$Order->email.' Доступна по адресу http://kvadrat.space/home/orders/'.$Order->id.'/.', $headers);
 
+            foreach ($orderCarcas['variable_params'] as $item) {
+                $VariableParam = VariableParam::find($item['id']);
+                if ($VariableParam) {
+                    $Order->VariableParams()->save($VariableParam, ['amount' => !empty($item['amount']) ? $item['amount'] : null]);
+                }
+            }
             $Order->DesignOptions()->sync($orderCarcas['designOptions']);
             $Order->Options()->sync($orderCarcas['options']);
         } catch (Exception $e) {

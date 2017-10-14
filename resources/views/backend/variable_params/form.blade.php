@@ -46,8 +46,8 @@
                     <div class="form-group">
                         <div class="col-sm-9 col-sm-offset-3">
                             <div class="btn-group" data-toggle="buttons">
-                                <label class="btn btn-default {{ isset($item->is_one) ? 'active' : '' }}">
-                                    <input type="checkbox" autocomplete="off" name="is_one" value="1" {{ isset($item->is_one) ? 'checked' : '' }}> Только один элемент
+                                <label class="btn btn-default {{ isset($item->is_one) && $item->is_one ? 'active' : '' }}">
+                                    <input type="checkbox" autocomplete="off" name="is_one" value="1" {{ isset($item->is_one) && $item->is_one ? 'checked' : '' }}> Только один элемент
                                 </label>
                             </div>
                         </div>

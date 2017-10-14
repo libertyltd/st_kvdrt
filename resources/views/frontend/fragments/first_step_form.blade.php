@@ -1,3 +1,6 @@
+<?php
+    $variableParam = App\VariableParam::where(['status' => 1, 'parent_id' => null, 'status' => 1])->get();
+?>
 <div class="final_form">
     <div class="form_end cons_form">
         <form action="/constructor/step/2/" method="post">
@@ -63,6 +66,41 @@
                     @endforeach
                 </select>
             </div>
+            @if($variableParam && $variableParam->count() > 0)
+                @foreach ($variableParam as $item)
+                    @if($item->children->count() > 0)
+                        <div class="form_final_group variable_params">
+                            <label class="variable_radio">
+                                <input type="radio" name="variable_param_radio[{{$item->id}}]" value="{{$item->id}}">
+                                <span>{{ $item->name }}</span>
+                            </label>
+                            @foreach($item->children as $child)
+                                <label class="variable_radio">
+                                    <input type="radio" name="variable_param_radio[{{$item->id}}]" value="{{$child->id}}">
+                                    <span>
+                                        {{ $child->name }}
+                                    </span>
+                                </label>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="form_final_group variable_params">
+                            <label class="variable_checkbox" data-toggle="variable_param_checkbox">
+                                <input type="checkbox" name="variable_param_checkbox[]" value="{{$item->id}}">
+                                <span>
+                                    {{ $item->name }}
+                                    @if(!$item->is_one)
+                                        <input type="text" name="variable_param_checkbox_amount[{{$item->id}}]"
+                                               placeholder="Количество"
+                                               data-min="{{ isset($item->min_amount) ? $item->min_amount : '' }}"
+                                               data-max="{{ isset($item->max_amount) ? $item->max_amount : '' }}">
+                                    @endif
+                                </span>
+                            </label>
+                        </div>
+                    @endif
+                @endforeach
+            @endif
             <div class="form_final_group">
                 <button>продолжить</button>
             </div>
