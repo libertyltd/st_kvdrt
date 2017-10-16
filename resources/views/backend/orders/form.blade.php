@@ -113,8 +113,8 @@
                                     <thead>
                                         <tr>
                                             <th>Название параметра</th>
-                                            <th>Цена за штуку</th>
-                                            <th>Количество штук в заказе</th>
+                                            <th>Цена за единицу</th>
+                                            <th>Количество штук(количество от квадратуры) в заказе</th>
                                             <th>Стоимость</th>
                                         </tr>
                                     </thead>
@@ -132,7 +132,11 @@
                                                 </td>
                                                 <td>
                                                     @if($param->is_one)
-                                                        {{$param->price_per_one}}
+                                                        @if($param->is_square_require)
+                                                            {{$param->price_per_one * $item->apartments_square}}
+                                                        @else
+                                                            {{$param->price_per_one}}
+                                                        @endif
                                                     @else
                                                         {{$param->pivot->amount * $param->price_per_one}}
                                                     @endif

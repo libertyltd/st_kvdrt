@@ -19,6 +19,9 @@ var VariableParamCheckbox = function (element) {
         self.handleCheckbox();
     });
 
+    this.$input.bind('click', function (ev) {
+        ev.preventDefault();
+    });
     this.$input.bind('change', function() {
         self.handleInput();
     });

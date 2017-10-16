@@ -345,11 +345,18 @@ class FrontEndController extends Controller
             if ($VariableParam->is_one) {
                 $additionOptions[] = $VariableParam->price_per_one;
             } else {
+                $summ = 0;
                 if (is_numeric($item['amount'])) {
-                    $additionOptions[] = $VariableParam->price_per_one * $item['amount'];
+                    $summ = $VariableParam->price_per_one * $item['amount'];
                 } else {
-                    $additionOptions[] = $variableParams->price_per_one;
+                    $summ = $variableParams->price_per_one;
                 }
+
+                $additionOptions[] = $summ;
+            }
+            if ($VariableParam->is_square_require) {
+                $additionOptions[count($additionOptions) - 1] = $additionOptions[count($additionOptions) - 1] * $orderCarcas['apartments_square'];
+
             }
         }
 
@@ -429,11 +436,18 @@ class FrontEndController extends Controller
             if ($VariableParam->is_one) {
                 $additionOptions[] = $VariableParam->price_per_one;
             } else {
+                $summ = 0;
                 if (is_numeric($item['amount'])) {
-                    $additionOptions[] = $VariableParam->price_per_one * $item['amount'];
+                    $summ = $VariableParam->price_per_one * $item['amount'];
                 } else {
-                    $additionOptions[] = $variableParams->price_per_one;
+                    $summ = $variableParams->price_per_one;
                 }
+
+                $additionOptions[] = $summ;
+            }
+            if ($VariableParam->is_square_require) {
+                $additionOptions[count($additionOptions) - 1] = $additionOptions[count($additionOptions) - 1] * $orderCarcas['apartments_square'];
+
             }
         }
 

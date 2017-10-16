@@ -85,6 +85,12 @@ class VariableParamController extends Controller
             $request->status = 1;
         }
 
+        if (!$request->is_square_require) {
+            $request->is_square_require = false;
+        } else {
+            $request->is_square_require = true;
+        }
+
         $request->amount_piece = 0;
 
         $request->price_per_one = preg_replace('/\s/', '', $request->price_per_one);
@@ -98,6 +104,7 @@ class VariableParamController extends Controller
                 $VariableParam->min_amount = $request->min_amount;
                 $VariableParam->max_amount = $request->max_amount;
                 $VariableParam->is_one = $request->is_one;
+                $VariableParam->is_square_require = $request->is_square_require;
                 if ($request->parent_id) {
                     $VariableParam->parent_id = $request->parent_id;
                 }
@@ -193,6 +200,12 @@ class VariableParamController extends Controller
             $request->is_one = 1;
         }
 
+        if (!$request->is_square_require) {
+            $request->is_square_require = false;
+        } else {
+            $request->is_square_require = true;
+        }
+
         $request->amount_piece = 0;
 
         $request->price_per_one = preg_replace('/\s/', '', $request->price_per_one);
@@ -205,6 +218,7 @@ class VariableParamController extends Controller
             $VariableParam->max_amount = $request->max_amount;
             $VariableParam->is_one = $request->is_one;
             $VariableParam->status = $request->status;
+            $VariableParam->is_square_require = $request->is_square_require;
             $VariableParam->save();
 
         } catch (Exception $e) {

@@ -49,6 +49,9 @@
                                 <label class="btn btn-default {{ isset($item->is_one) && $item->is_one ? 'active' : '' }}">
                                     <input type="checkbox" autocomplete="off" name="is_one" value="1" {{ isset($item->is_one) && $item->is_one ? 'checked' : '' }}> Только один элемент
                                 </label>
+                                <label class="btn btn-warning {{ isset($item->is_square_require) && $item->is_square_require ? 'active' : '' }}">
+                                    <input type="checkbox" autocomplete="off" name="is_square_require" value="1" {{ isset($item->is_square_require) && $item->is_square_require ? 'active' : '' }}> Рассчитывать единицы от квадратуры помещения
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -78,12 +81,12 @@
                                             <a href="/home/variable_parapms/{{$child->id}}" target="_blank" class="list-group-item">{{ $child->name }}</a>
                                         @endforeach
                                         </div>
-                                        <a href="/home/variable_parapms/create?parent={{$item->id}}" target="_blank">Создать связанный</a>
                                     @else
                                         <div class="alert alert-info">
                                             Ни одного параметра не привязано
                                         </div>
                                     @endif
+                                        <a href="/home/variable_parapms/create?parent={{$item->id}}" target="_blank">Создать связанный</a>
                                 </div>
                             </div>
                         </div>
