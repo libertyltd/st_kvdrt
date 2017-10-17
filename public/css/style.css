@@ -2218,3 +2218,8 @@ option[disabled]:first-child { display: none; }
 .gm-style-iw a {
     color: #4272db;
 }
+
+
+.design-price {
+    display: none;
+}
