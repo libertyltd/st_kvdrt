@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\AboutPage;
+use App\AdditionalCoefficient;
 use App\CategoryDesign;
 use App\Contact;
 use App\Design;
@@ -55,6 +56,7 @@ class AuthServiceProvider extends ServiceProvider
         PostComment::class => ModelPolicy::class,
         AboutPage::class => ModelPolicy::class,
         VariableParam::class => ModelPolicy::class,
+        AdditionalCoefficient::class => ModelPolicy::class,
     ];
 
     /**

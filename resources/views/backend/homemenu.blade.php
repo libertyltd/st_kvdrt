@@ -24,6 +24,9 @@
             @can ('index', new App\TypeBathroom())
             <li><a href="{{ url('/home/type_bathrooms/') }}"><i class="fa fa-universal-access" aria-hidden="true"></i>&nbsp;Типы санузлов (справочник)</a></li>
             @endcan
+            @can ('index', new App\AdditionalCoefficient())
+            <li><a href="{{ url('/home/additional_coefficients/') }}"><i class="fa fa-percent" aria-hidden="true"></i> Добавочные коэффициенты стоимости</a></li>
+            @endcan
         </ul>
     </li>
     @endcan

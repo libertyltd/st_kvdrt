@@ -41,6 +41,11 @@ Route::group(['middleware' => SEO::class], function () {
 
 Route::group(['middleware' => 'auth'], function() {
     /**
+     * Управление добавочным коэффициентом
+     */
+    Route::resource('/home/additional_coefficients', 'AdditionalCoefficientController');
+
+    /**
      *  Управление свободными параметрами
      */
     Route::resource('/home/variable_parapms', 'VariableParamController');
