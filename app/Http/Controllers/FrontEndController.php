@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\AboutPage;
+use App\AdditionalCoefficient;
 use App\Capcha;
 use App\Contact;
 use App\Design;
@@ -240,6 +241,7 @@ class FrontEndController extends Controller
                 ];
             }
         }
+
 
         $orderCarcas['variable_params'] = $variable_params;
 

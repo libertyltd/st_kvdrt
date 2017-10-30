@@ -78,6 +78,17 @@ class Order extends Model
             $summ += $item;
         }
 
+        $acs = AdditionalCoefficient::where(['status' => 1])->get();
+        $acsSumm = 0;
+        foreach ($acs as $item) {
+            $acsSumm += $item->percent;
+        }
+
+        /**
+         * @todo: Дореализовать алгоритм
+         */
+        $precent = ($summ / 100) * $acsSumm;
+
         return $summ;
     }
 }
