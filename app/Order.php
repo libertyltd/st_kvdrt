@@ -84,11 +84,9 @@ class Order extends Model
             $acsSumm += $item->percent;
         }
 
-        /**
-         * @todo: Дореализовать алгоритм
-         */
-        $precent = ($summ / 100) * $acsSumm;
+        $percent = $acsSumm / 100;
+        $percent = 1 + $acsSumm;
 
-        return $summ;
+        return $summ * $percent;
     }
 }
