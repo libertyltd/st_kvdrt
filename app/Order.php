@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Order extends Model
 {
@@ -85,7 +86,7 @@ class Order extends Model
         }
 
         $percent = $acsSumm / 100;
-        $percent = 1 + $acsSumm;
+        $percent = 1 + $percent;
 
         return $summ * $percent;
     }
