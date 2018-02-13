@@ -147,6 +147,7 @@ class FrontEndController extends Controller
         echo '        <priority>1</priority>'."\n\r";
         echo '    </url>'."\n\r";
         //Добавим страницу блог
+        /*
         echo '    <url>'."\n\r";
         echo '        <loc>http://'.$_SERVER['HTTP_HOST'].'/blog/</loc>'."\n\r";
         echo '        <lastmod>'.date('Y-m-d').'</lastmod>'."\n\r";
@@ -170,6 +171,7 @@ class FrontEndController extends Controller
             echo '        <priority>1</priority>'."\n\r";
             echo '    </url>'."\n\r";
         }
+        */
         //Добавим страницу "О компании"
         $AboutPage = AboutPage::first();
         $SEO = SEO::where(['original_url'=>'about', 'status'=>1])->first();
@@ -582,6 +584,7 @@ class FrontEndController extends Controller
     }
 
     public function blog_list (Request $request) {
+        return abort(404);
         $SEO = SEO::getCurrentSEO();
         $title = '';
         $keywords = '';
@@ -670,6 +673,7 @@ class FrontEndController extends Controller
     }
 
     public function blog_item ($id) {
+        return abort(404);
         $SEO = SEO::getCurrentSEO();
         $title = null;
         $keywords = null;
@@ -736,7 +740,7 @@ class FrontEndController extends Controller
     }
 
     public function blog_item_comment(Request $request, $id) {
-
+        return abort(404);
         $Post = Post::find($id);
         if (!$Post) {
             abort('404');

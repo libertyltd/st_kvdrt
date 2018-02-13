@@ -1,0 +1,205 @@
+header {
+    height: auto;
+    padding: 20px 0;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+}
+
+.close_constructor {
+    display: inline-block;
+    margin: 0 50px;
+    font-size: 30px;
+    font-family: sans-serif;
+    color: #395675;
+}
+
+.header_menu .header_menu_item {
+    color: #395675;
+    margin: 0 10px;
+}
+
+.header_menu .header_menu_item.active {
+    color: #000000;
+}
+
+.control_elements {
+    float: right;
+    margin: 0 50px;
+}
+
+.control_elements .price {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 22px;
+    margin: 5px 10px;
+}
+
+.control_elements .btn {
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 3px;
+    border: 3px solid #395674;
+    color: #395674;
+    background: #ffffff;
+    font-size: 14px;
+    padding: 7px 80px;
+    cursor: pointer;
+}
+
+#addressForm {
+    display: block;
+    position: relative;
+    max-width: 816px;
+    margin: auto;
+}
+
+#finalForm,
+#options {
+    display: none;
+    max-width:  816px;
+    margin: auto;
+}
+
+#bathrooms,
+#rooms {
+    display: none;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 50px;
+    margin-top: 80px;
+    position: relative;
+    font-size: 0;
+}
+
+.constructor-mediaObject {
+    display: inline-block;
+    width: 30%;
+    margin-right: 4.5%;
+    margin-bottom: 20px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.constructor-mediaObject input {
+    display: none;
+}
+
+.constructor-mediaObject input + span {
+    display: inline-block;
+    position: relative;
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 20px;
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+}
+
+.constructor-mediaObject input:checked + span {
+    background: #395674;
+}
+
+.constructor-mediaObject input:checked + span:before {
+    display: block;
+    position: absolute;
+    content: " ";
+    background: #ffffff;
+    border-radius: 30px;
+    width: 6px;
+    height: 6px;
+    top: 50%;
+    margin-top: -3px;
+    left: 50%;
+    margin-left: -3px;
+}
+
+.constructor-mediaObject:nth-child(3n) {
+    margin-right: 0;
+}
+
+.constructor-mediaObject img {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+
+.constructor-mediaObject__name {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 16px;
+}
+
+.constructor-mediaObject__price {
+    float: right;
+    font-size: 16px;
+}
+
+.constructor-mediaObject__description {
+    display: block;
+    font-size: 12px;
+    margin-top: 10px;
+    color: #8b8b8b;
+    padding: 0 0 0 30px;
+    min-height: 14px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.constructor-mediaObject__total {
+    display: block;
+    font-size: 14px;
+    text-align: right;
+    color: #395675;
+}
+
+.constructor-hasErrorHint {
+    display: none;
+    color: #ec5d6b;
+    margin-top: 5px;
+    font-size: 0.7em;
+}
+
+.constructor-hasError > * {
+    border-color: #ec5d6b !important;
+}
+
+.constructor-hasError .constructor-hasErrorHint {
+    display: block;
+}
+
+.helper_text-center {
+    text-align: center;
+}
+
+.constructor_type-apartments {
+    display: inline-block;
+    border: 1px solid #dfdfdf;
+    border-radius: 3px;
+    color: #395674;
+    font-family: "cuprum", sans-serif;
+    font-weight: bold;
+    padding: 20px;
+    margin-right: 13px;
+}
+
+.constructor_type-apartments.active {
+    border: 3px solid #395674;
+}
+
+.constructor_type-apartments-square {
+    max-width: 150px;
+    display: inline-block;
+    font-size: 16px;
+    font-family: 'cuprum', sans-serif;
+    color: #395674;
+    border-radius: 3px;
+    border: 1px solid #dfdfdf;
+    width: 121px;
+    box-sizing: border-box;
+    padding: 20px;
+    height: auto !important;
+}
+
+.overall {
+    margin-bottom: 84px;
+}

@@ -105,7 +105,7 @@
                         </div>
                     </div>
 
-                    @if($item->VariableParams->count() > 0)
+                    @if(isset($item) && $item->VariableParams->count() > 0)
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Обязательные параметры заказа</label>
                             <div class="col-sm-9">

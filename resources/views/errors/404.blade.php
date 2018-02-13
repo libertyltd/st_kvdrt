@@ -7,7 +7,6 @@
             </a>
         </div>
         <ul class="header_menu">
-            <li class="header_menu_item"><a class="{{ isset($blogActive) ? 'active' : '' }}" href="/blog/">Блог</a></li>
         </ul>
     </header>
     <div class="container">

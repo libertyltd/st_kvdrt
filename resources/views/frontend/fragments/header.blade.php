@@ -5,7 +5,6 @@
         </a>
     </div>
     <ul class="header_menu">
-        <li class="header_menu_item"><a class="{{ isset($blogActive) ? 'active' : '' }}" href="/blog/">Блог</a></li>
         <?php
             $AboutPage = App\AboutPage::where(['status'=>1])->first();
             $showAbout = false;
@@ -30,7 +29,7 @@
             <a href="tel:{{ isset($contacts['phoneToLink']) ? $contacts['phoneToLink'] : '' }}"><img src="/images/_0012_icon-phone.png" alt="" class="icon">{{ isset($contacts['phone']) ? $contacts['phone'] : '' }}</a>
         </div>
         <div class="conf-btn">
-            <a href="#" class="add_cont">Конфигуратор</a>
+            <a href="/constructor">Конфигуратор</a>
         </div>
         @if (isset($contacts['facebook_link']) && $contacts['facebook_link'])
             <div class="socials">

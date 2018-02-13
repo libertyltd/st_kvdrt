@@ -59,7 +59,8 @@ class DesignOptionController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
             'category_design_id' => 'required',
-            'price' => 'required'
+            'price' => 'required',
+            'type' => 'required|in:room,bathroom'
         ]);
 
         if ($validator->fails()) {
@@ -72,30 +73,26 @@ class DesignOptionController extends Controller
             $request->status = 1;
         }
 
-        !isset($request->color) ? $request->color = 'FFFFFF' : '';
-
         try {
             DB::transaction(function () use ($request) {
                 $DesignOption = new DesignOption();
-                $DesignOption->color = $request->color;
                 $DesignOption->name = $request->name;
                 $DesignOption->price = $request->price;
                 $DesignOption->category_design_id = $request->category_design_id;
+                $DesignOption->type = $request->type;
+                $DesignOption->description = $request->description;
                 $DesignOption->status = $request->status;
+
                 $DesignOption->save();
 
                 $IS = null;
 
-                if ($request->hall || $request->bath) {
+                if ($request->photo) {
                     $IS = new ImageStorage($DesignOption);
                 }
 
-                if ($request->hall) {
-                    $IS->save($request->hall, 'hall');
-                }
-
-                if ($request->bath) {
-                    $IS->save($request->bath, 'bath');
+                if ($request->photo) {
+                    $IS->save($request->photo, 'photo');
                 }
             });
         } catch (Exception $e) {
@@ -115,8 +112,7 @@ class DesignOptionController extends Controller
     {
         $DesignOption = DesignOption::find($id);
         $IM = new ImageStorage($DesignOption);
-        $DesignOption->hall = $IM->getCropped('hall', 458, 323);
-        $DesignOption->bath = $IM->getCropped('bath', 225, 323);
+        $DesignOption->photo = $IM->getCropped('photo', 458, 323);
 
         return view('backend.designs.view', [
             'item' => $DesignOption,
@@ -136,8 +132,7 @@ class DesignOptionController extends Controller
         $DesignOption = DesignOption::find($id);
 
         $IM = new ImageStorage($DesignOption);
-        $DesignOption->hall = $IM->getCropped('hall');
-        $DesignOption->bath = $IM->getCropped('bath');
+        $DesignOption->photo = $IM->getCropped('photo');
 
         $designs = Design::all();
 
@@ -165,11 +160,12 @@ class DesignOptionController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
             'category_design_id' => 'required',
-            'price' => 'required'
+            'price' => 'required',
+            'type' => 'required|in:room,bathroom'
         ]);
 
         if ($validator->fails()) {
-            return redirect('/home/design_options/edit/')->withInput()->withErrors($validator);
+            return redirect('/home/design_options/' . $id . '/edit/')->withInput()->withErrors($validator);
         }
 
         if (!$request->status) {
@@ -178,30 +174,19 @@ class DesignOptionController extends Controller
             $request->status = 1;
         }
 
-        !isset($request->color) ? $request->color = 'FFFFFF' : '';
-
         try{
-
             $DesignOption = DesignOption::find($id);
-            $DesignOption->color = $request->color;
             $DesignOption->name = $request->name;
             $DesignOption->price = $request->price;
             $DesignOption->category_design_id = $request->category_design_id;
             $DesignOption->status = $request->status;
+            $DesignOption->type = $request->type;
+            $DesignOption->description = $request->description;
             $DesignOption->save();
 
-            $IS = null;
-
-            if ($request->hall || $request->bath) {
+            if ($request->photo) {
                 $IS = new ImageStorage($DesignOption);
-            }
-
-            if ($request->hall) {
-                $IS->save($request->hall, 'hall');
-            }
-
-            if ($request->bath) {
-                $IS->save($request->bath, 'bath');
+                $IS->save($request->photo, 'photo');
             }
 
         } catch (Exception $e) {

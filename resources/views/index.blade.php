@@ -4,7 +4,7 @@
     <div class="page">
         @include('frontend.fragments.first_step_form')
         @include('frontend.fragments.header')
-        @if (isset($slides))
+        @if (isset($slides) && $slides->count() > 0)
         <div class="hero">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
@@ -27,6 +27,16 @@
                 <div class="swiper-pagination"></div>
             </div>
         </div>
+        @else
+            <div class="promo_background">
+                <video autoplay muted loop playsinline>
+                    <source src="/video/background_video.webm" type="video/webm">
+                    <source src="/video/background_video.mp4" type="video/mp4">
+                </video>
+                <div class="conf-btn">
+                    <a href="/constructor">Рассчитать</a>
+                </div>
+            </div>
         @endif
         <div class="about">
             <div class="reg-content">
@@ -91,7 +101,7 @@
                             </div>
                         </div>
                         <div class="count">
-                            <a href="#" class='add_cont'>Рассчитать</a>
+                            <a href="/constructor">Рассчитать</a>
                         </div>
                     </div>
                     <div id="tab2" class="tab">
@@ -173,7 +183,7 @@
                         </div>
                         <div class="row-right">
                             <div class="design-description">
-                                <a href="#" data-id="{{$design->id}}" class="design-head" data-toggle="constructor">
+                                <a href="/constructor" data-id="{{$design->id}}" class="design-head">
                                     {{ $design->name }}
                                 </a>
                                 <div class="design-price">
@@ -192,7 +202,7 @@
                     <div class="design-row">
                         <div class="row-left">
                             <div class="design-description right-align">
-                                <a href="#" data-id="{{$design->id}}" class="design-head" data-toggle="constructor">
+                                <a href="/constructor" data-id="{{$design->id}}" class="design-head">
                                     {{ $design->name }}
                                 </a>
                                 <div class="design-price">
@@ -473,10 +483,6 @@
 
         }
     </script>
-    <!--
-    <style>
-
-    </style> -->
     <div id='kvadrat'></div>
     @include('frontend.fragments.footer')
     <script src="/js/lightbox-plus-jquery.min.js"></script>

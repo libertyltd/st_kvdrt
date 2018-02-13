@@ -151,4 +151,8 @@ jQuery(document).ready(function() {
     });
 });
 
+$(document).ready(function () {
+    $('.promo_background').addClass('enable');
+});
+
 

@@ -28,6 +28,18 @@ Route::get('/constructor/step/3/{id}', 'FrontEndController@constructor_step_3');
 Route::post('/constructor/step/4', 'FrontEndController@constructor_step_4');
 Route::post('/constructor/step/5', 'FrontEndController@constructor_step_5');
 
+
+/**
+ * Переопределяем конструктор
+ */
+Route::get('/constructor', 'PageConstructorController@index');
+Route::post('/constructor/address', 'PageConstructorController@address');
+Route::post('/constructor/rooms', 'PageConstructorController@rooms');
+Route::post('/constructor/bathrooms', 'PageConstructorController@bathrooms');
+Route::post('/constructor/options', 'PageConstructorController@options');
+Route::post('/constructor/contacts', 'PageConstructorController@contacts');
+
+
 /**
  * Рутируем на блог
  */
