@@ -125,6 +125,9 @@ header {
 .constructor-mediaObject__name {
     display: inline-block;
     vertical-align: middle;
+    white-space: nowrap;
+    max-width: 90%;
+    text-overflow: ellipsis;
     font-size: 16px;
 }
 
