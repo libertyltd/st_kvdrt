@@ -340,7 +340,7 @@
                 </div>
             </div>
         </div>
-        @if (isset($feedbacks))
+        @if (isset($feedbacks) && $feedbacks->count() > 0)
         <div class="feedback">
             <div class="lg-head">
                 отзывы

@@ -14,7 +14,7 @@
     </ul>
     <div class="control_elements" id="controls">
         <span class="price"
-              v-if="summ > 0">@{{ summ }} р.</span>
+              v-if="summ > 0">@{{ numberFormat }} р.</span>
         <button class="btn"
             v-on:click.prevent="next">Далее</button>
     </div>

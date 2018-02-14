@@ -8,6 +8,14 @@ var headLine = new Vue({
         isStepOptions: false,
         isStepOrder: false,
     },
+    computed: {
+        numberFormat: function () {
+            var tmp = this.summ;
+            tmp = ''+tmp;
+            tmp = tmp.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+            return tmp;
+        }
+    },
     methods: {
         //роутер по приложению
         next: function (event) {
@@ -72,8 +80,13 @@ var initAddress = function () {
         var min = $(this).data('min');
         var max = $(this).data('max');
         
-        var  val = $(this).val();
-        if (isNaN(parseInt(val)) || val < min || val > max) {
+        var  val = parseInt($(this).val());
+        if (!isNaN(val)) {
+            $(this).val(val);
+            if (val < min || val > max) {
+                $(this).val('');
+            }
+        } else {
             $(this).val('');
         }
     });
@@ -107,6 +120,12 @@ var templateOptions = "<div class='option-item'>" +
                         "<div class='clearbox'></div>" +
                       "</div>";
 
+function numberFormat (number) {
+    number = ''+number;
+    number = number.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+    return number;
+}
+
 var initRooms = function () {
     var $rooms = $('.constructor-mediaObject');
     $rooms.bind('click', function () {
@@ -123,7 +142,7 @@ var initOptions = function () {
         var summ = parseFloat($('#sum').data('price'));
         if ($(this).prop('checked')) {
             headLine.summ = headLine.summ + price;
-            $('#sum').text(price + summ).data('price', price + summ);
+            $('#sum').text(numberFormat(price + summ)).data('price', price + summ);
             $(this).parent().parent().data('added', true);
         }
     });
@@ -133,7 +152,7 @@ var initOptions = function () {
             var price = $(this).parent().parent().find('.checkin').parent().find('label').data('price');
             var summ = parseFloat($('#sum').data('price'));
             headLine.summ = headLine.summ - price;
-            $('#sum').text(summ - price).data('price', summ - price);
+            $('#sum').text(numberFormat(summ - price)).data('price', summ - price);
         }
     });
 
@@ -186,7 +205,7 @@ var sendOptions = function () {
             if (data.success) {
                 $('#options').remove();
                 headLine.summ = parseFloat(data.design_price);
-                $('#sumWnd').text(data.design_price);
+                $('#sumWnd').text(numberFormat(data.design_price));
                 $('#finalForm').css('display', 'block');
                 $('#finalForm .final_form').css('display', 'block');
                 $('#finalForm button').bind('click', function () {
@@ -285,10 +304,6 @@ var sendRooms = function () {
 
 var sendAddress = function () {
     //проверка формы на ввод данных
-    var $address = $('#addressForm [name="address"]');
-    if ($address.val() == '') {
-        $address.parent().addClass('constructor-hasError');
-    }
     var $square = $('#addressForm [name="apartments_square"]');
     if ($square.val() == '') {
         $square.parent().addClass('constructor-hasError');
@@ -327,10 +342,10 @@ var sendAddress = function () {
                         $room.find('input').attr('value', data.rooms[i].id);
                         $room.find('.constructor-mediaObject__name').text(data.rooms[i].name);
                         if (data.rooms[i].price > 0) {
-                            $room.find('.constructor-mediaObject__price').text('+ ' + data.rooms[i].price + ' р.');
+                            $room.find('.constructor-mediaObject__price').text('+ ' + numberFormat(data.rooms[i].price) + ' р.');
                         }
                         $room.find('.constructor-mediaObject__description').text(data.rooms[i].description);
-                        $room.find('.constructor-mediaObject__total > span.total').text(data.rooms[i].design_price + 'р.');
+                        $room.find('.constructor-mediaObject__total > span.total').text(numberFormat(data.rooms[i].design_price) + 'р.');
                         $room.data('design_price', data.rooms[i].design_price);
                         $room.data('price', data.rooms[i].price);
                         $('#rooms').append($room);

@@ -19,7 +19,7 @@ header {
 }
 
 .header_menu .header_menu_item.active {
-    color: #000000;
+    color: #ec5d6b;
 }
 
 .control_elements {
@@ -38,9 +38,9 @@ header {
     display: inline-block;
     vertical-align: middle;
     border-radius: 3px;
-    border: 3px solid #395674;
-    color: #395674;
-    background: #ffffff;
+    border: 3px solid #ec5d6b;
+    background: #ec5d6b;
+    color: #ffffff;
     font-size: 14px;
     padding: 7px 80px;
     cursor: pointer;

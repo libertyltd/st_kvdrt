@@ -154,7 +154,7 @@ footer {
 
 header.gen, footer.gen {
     display: block;
-    min-width: 1349px;
+    min-width: 1265px;
 }
 
 header.gen .header_menu {
@@ -170,7 +170,7 @@ footer.gen .info {
 }
 
 .page {
-        min-width: 1349px;
+        min-width: 1265px;
 }
 
 .logo {
@@ -231,11 +231,12 @@ footer.gen .info {
         padding-right: 10px;
     }
 
+    /*
     .header_menu,
     .header_menu .header_menu_item,
     .header_menu .header_menu_item a {
         display: block;
-    }
+    }*/
 }
 
 .info {
@@ -2278,7 +2279,7 @@ option[disabled]:first-child { display: none; }
 #kvadrat {
     height:244px;
     width:100%;
-    min-width: 1349px; /*Удалить*/
+    min-width: 1265px;
 }
 .gm-style-iw * {
     display: block;
@@ -2315,7 +2316,7 @@ option[disabled]:first-child { display: none; }
 .promo_background video {
     position: absolute;
     width: 100%;
-    top: -50%;
+    top: -17%;
 }
 
 .promo_background.enable {
