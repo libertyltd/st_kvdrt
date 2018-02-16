@@ -16,6 +16,7 @@ use App\Post;
 use App\PostComment;
 use App\SEO;
 use App\Slider;
+use App\TextOnVideo;
 use App\TypeBathroom;
 use App\TypeBuilding;
 use App\User;
@@ -68,6 +69,7 @@ class FrontEndController extends Controller
                 'latitude' => $contact->latitude,
             ];
         }
+        $textOnVideo = TextOnVideo::first();
 
         $slides = Slider::where('status', 1)->get();
         foreach ($slides as &$slide) {
@@ -134,6 +136,7 @@ class FrontEndController extends Controller
             'dateYear' => $dateYear,
             'typesBuilding' => $typesBuilding,
             'typesBathroom' => $typesBathroom,
+            'textOnVideo' => $textOnVideo,
         ]);
     }
 

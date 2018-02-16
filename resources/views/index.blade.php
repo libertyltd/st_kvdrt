@@ -16,7 +16,7 @@
                             </div>
                             @if($slide->show_button)
                             <div class="conf-btn">
-                                <a href="{{ isset($slide->button_link) ? $slide->button_link : '#' }}" class="add_cont">{{ $slide->button_text }}</a>
+                                <a href="{{ isset($slide->button_link) ? $slide->button_link : '/constructor' }}">{{ $slide->button_text }}</a>
                             </div>
                             @endif
                         </div>
@@ -29,6 +29,9 @@
         </div>
         @else
             <div class="promo_background">
+                @if (isset($textOnVideo))
+                <p class="promo_background__text">{{$textOnVideo->text}}</p>
+                @endif
                 <video autoplay muted loop playsinline>
                     <source src="/video/background_video.webm" type="video/webm">
                     <source src="/video/background_video.mp4" type="video/mp4">

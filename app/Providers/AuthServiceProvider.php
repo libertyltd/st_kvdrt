@@ -18,6 +18,7 @@ use App\Role;
 use App\RolePermission;
 use App\SEO;
 use App\Slider;
+use App\TextOnVideo;
 use App\TypeBathroom;
 use App\TypeBuilding;
 use App\User;
@@ -25,6 +26,7 @@ use App\VariableParam;
 use App\Work;
 use App\WorkDescription;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -57,6 +59,7 @@ class AuthServiceProvider extends ServiceProvider
         AboutPage::class => ModelPolicy::class,
         VariableParam::class => ModelPolicy::class,
         AdditionalCoefficient::class => ModelPolicy::class,
+        TextOnVideo::class => ModelPolicy::class,
     ];
 
     /**

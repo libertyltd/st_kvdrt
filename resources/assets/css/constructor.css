@@ -124,12 +124,11 @@ header {
 
 .constructor-mediaObject__name {
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: top;
     overflow: hidden;
-    white-space: nowrap;
     max-width: 90%;
-    text-overflow: ellipsis;
     font-size: 16px;
+    height: 55px;
 }
 
 .constructor-mediaObject__price {
@@ -191,7 +190,7 @@ header {
 }
 
 .constructor_type-apartments-square {
-    max-width: 150px;
+    max-width: 140px;
     display: inline-block;
     font-size: 16px;
     font-family: 'cuprum', sans-serif;

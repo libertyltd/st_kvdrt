@@ -76,7 +76,13 @@ var initAddress = function () {
         }
     });
 
-    var $variableAmounts = $('[data-toggle="variable_param_checkbox"]').find('input').bind('change', function () {
+    $('#addressForm button').bind('click', function () {
+        $('#controls .btn').click();
+        return false;
+    });
+
+    var $variableAmounts = $('[data-toggle="variable_param_checkbox"]').find('input').bind('change', function (ev) {
+        ev.stopPropagation();
         var min = $(this).data('min');
         var max = $(this).data('max');
         
@@ -246,7 +252,7 @@ var sendBathrooms = function () {
                     $option = $($option);
                     $('#options form').append($option);
                 }
-                $('#sum').text(data.design_price).data('price', data.design_price);
+                $('#sum').text(numberFormat(data.design_price)).data('price', data.design_price);
                 $('#options').css('display', 'block');
                 initOptions();
             } else {

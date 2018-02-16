@@ -2313,6 +2313,17 @@ option[disabled]:first-child { display: none; }
     opacity: 0;
 }
 
+.promo_background__text {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    text-align: center;
+    width: 100%;
+    font-size: 4em;
+    color: #ffffff;
+    top: 40%;
+}
+
 .promo_background video {
     position: absolute;
     width: 100%;

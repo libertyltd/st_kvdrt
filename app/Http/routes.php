@@ -137,6 +137,11 @@ Route::group(['middleware' => 'auth'], function() {
      */
     Route::resource('/home/seos', 'SEOsController');
 
+    /**
+     * Управление текстом на видео
+     */
+    Route::resource('/home/textonvideo', 'TextOnVideoController');
+
 
     /**
      * Управление правами доступа

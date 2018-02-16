@@ -86,6 +86,9 @@
                 @endif
             @endforeach
         @endif
+        <div class="form_final_group">
+            <button>Далее</button>
+        </div>
     </div>
     <div id="rooms"></div>
     <div id="bathrooms"></div>
