@@ -210,6 +210,18 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="col-sm-3 control-label">Итого:</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <input type="text" name="cost" id="cost" class="form-control"
+                                       value="{{ !empty($item->cost) ? $item->cost : '' }}">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-ruble" aria-hidden="true"></span> </span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="col-sm-3 control-label">Статус заявки</label>
                         <div class="col-sm-9">
                             <div class="btn-group" data-toggle="buttons">

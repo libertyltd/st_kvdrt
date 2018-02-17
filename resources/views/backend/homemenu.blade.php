@@ -50,7 +50,7 @@
                 <li><a href="{{ url('/home/sliders/') }}"><i class="fa fa-picture-o" aria-hidden="true"></i>&nbsp;Слайды главной страницы</a></li>
             @endcan
             @can('index', new App\TextOnVideo())
-                <li><a href="{{ url('/home/textonvideo') }}"><i class="fa fa-file-alt"></i> Текст на видео</a></li>
+                <li><a href="{{ url('/home/textonvideo') }}"><i class="fa fa-file-video-o"></i> Текст на видео</a></li>
             @endcan
             @can('index', new App\Post())
                 <li><a href="{{ url('/home/posts/') }}"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Блог</a></li>

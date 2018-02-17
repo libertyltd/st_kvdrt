@@ -88,41 +88,39 @@ class PageConstructorController extends Controller
 
         session(['orderCarcas' => $orderCarcas]);
 
+        return response()->json([
+            'success' => true,
+        ]);
+
+    }
+
+    /**
+     * Возвращает все комнаты из всех доступных дизайнов
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getRooms() {
+        $orderCarcas = session('orderCarcas');
+        if (empty($orderCarcas)) {
+            return response()->json([
+                'success' => false,
+            ]);
+        }
+
         $typeBuilding = TypeBuilding::find($orderCarcas['type_building_id']);
         $typeBathroom = TypeBathroom::find($orderCarcas['type_bathroom_id']);
 
-
-        // Соберем все дизайны комнат
         $designs = Design::where(['status' => 1])->get();
         $rooms = [];
+
         foreach ($designs as $design) {
             foreach ($design->CategoryDesigns as $category) {
                 $options = $category->DesignOptions()->where(['status' => 1, 'type' => 'room'])->orderBy('price', 'ASC')->get();
                 foreach ($options as $option) {
 
                     //высчитаем цену дизайна исходя из квадратуры и минимальной цены
-                    $additionOptions = [];
-                    foreach ($variable_params as $item) {
-                        $VariableParam = VariableParam::find($item['id']);
-                        if (!$VariableParam) continue;
-                        if ($VariableParam->is_one) {
-                            $additionOptions[] = $VariableParam->price_per_one;
-                        } else {
-                            $summ = 0;
-                            if (is_numeric($item['amount'])) {
-                                $summ = $VariableParam->price_per_one * $item['amount'];
-                            } else {
-                                $summ = $VariableParam->price_per_one;
-                            }
+                    $additionOptions = VariableParam::getSum($orderCarcas['variable_params'], $orderCarcas['apartments_square']);
 
-                            $additionOptions[] = $summ;
-                        }
-                        if ($VariableParam->is_square_require) {
-                            $additionOptions[count($additionOptions) - 1] = $additionOptions[count($additionOptions) - 1] * $orderCarcas['apartments_square'];
-                        }
-                    }
                     //вычислили сумму
-
                     $IM = new ImageStorage($option);
                     $rooms[] = [
                         'id' => $option->id,
@@ -140,10 +138,14 @@ class PageConstructorController extends Controller
             'success' => true,
             'rooms' => $rooms,
         ]);
-
     }
 
-    public function rooms (Request $request) {
+    /**
+     * Устанавливает выбранную комнату
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function setRoom (Request $request) {
         $orderCarcas = session('orderCarcas');
         if (!isset($orderCarcas) || empty($orderCarcas)) {
             return response()->json([
@@ -165,6 +167,22 @@ class PageConstructorController extends Controller
         $orderCarcas['design_id'] = $design->id;
         session(['orderCarcas' => $orderCarcas]);
 
+        return response()->json([
+            'success' => true,
+        ]);
+    }
+
+    public function getBathrooms () {
+        $orderCarcas = session('orderCarcas');
+        if (!isset($orderCarcas) || empty($orderCarcas)) {
+            return response()->json([
+                'success' => false,
+            ]);
+        }
+
+        $room = DesignOption::find($orderCarcas['room_option_id']);
+        $design = Design::find($orderCarcas['design_id']);
+
         $typeBuilding = TypeBuilding::find($orderCarcas['type_building_id']);
         if (!$typeBuilding) {
             return response()->json([
@@ -179,31 +197,10 @@ class PageConstructorController extends Controller
         }
 
         $variable_params = $orderCarcas['variable_params'];
-
-        $additionOptions = [];
-        foreach ($variable_params as $item) {
-            $VariableParam = VariableParam::find($item['id']);
-            if (!$VariableParam) continue;
-            if ($VariableParam->is_one) {
-                $additionOptions[] = $VariableParam->price_per_one;
-            } else {
-                $summ = 0;
-                if (is_numeric($item['amount'])) {
-                    $summ = $VariableParam->price_per_one * $item['amount'];
-                } else {
-                    $summ = $VariableParam->price_per_one;
-                }
-
-                $additionOptions[] = $summ;
-            }
-            if ($VariableParam->is_square_require) {
-                $additionOptions[count($additionOptions) - 1] = $additionOptions[count($additionOptions) - 1] * $orderCarcas['apartments_square'];
-            }
-        }
+        $additionOptions = VariableParam::getSum($variable_params, $orderCarcas['apartments_square']);
 
         $summ = Order::getFastCalculate($orderCarcas['apartments_square'], $design->price_square, $design->constant_cy, $additionOptions, $typeBuilding->additional_coefficient, $typeBathroom->additional_coefficient);
-        $summ = $summ + $designOption->price;
-
+        $summ = $summ + $room->price;
 
         $designs = Design::where(['status' => 1])->get();
         $bathrooms = [];
@@ -231,7 +228,7 @@ class PageConstructorController extends Controller
         ]);
     }
 
-    public function bathrooms(Request $request) {
+    public function setBathroom(Request $request) {
         $orderCarcas = session('orderCarcas');
         if (!isset($orderCarcas) || empty($orderCarcas)) {
             return response()->json([
@@ -245,35 +242,29 @@ class PageConstructorController extends Controller
                 'success' => false,
             ]);
         }
+
         $orderCarcas['bathroom_option_id'] = $request->bathroom;
         $orderCarcas['designOptions'] = [$orderCarcas['bathroom_option_id'], $orderCarcas['room_option_id']];
         session(['orderCarcas' => $orderCarcas]);
 
-        $variable_params = $orderCarcas['variable_params'];
+        return response()->json([
+            'success' =>true,
+        ]);
+    }
 
-        $additionOptions = [];
-        foreach ($variable_params as $item) {
-            $VariableParam = VariableParam::find($item['id']);
-            if (!$VariableParam) continue;
-            if ($VariableParam->is_one) {
-                $additionOptions[] = $VariableParam->price_per_one;
-            } else {
-                $summ = 0;
-                if (is_numeric($item['amount'])) {
-                    $summ = $VariableParam->price_per_one * $item['amount'];
-                } else {
-                    $summ = $VariableParam->price_per_one;
-                }
-
-                $additionOptions[] = $summ;
-            }
-            if ($VariableParam->is_square_require) {
-                $additionOptions[count($additionOptions) - 1] = $additionOptions[count($additionOptions) - 1] * $orderCarcas['apartments_square'];
-            }
+    public function getOptions() {
+        $orderCarcas = session('orderCarcas');
+        if (!isset($orderCarcas) || empty($orderCarcas)) {
+            return response()->json([
+                'success' => false,
+            ]);
         }
 
-        $design = Design::find($orderCarcas['design_id']);
+        $bathroom = DesignOption::find($orderCarcas['bathroom_option_id']);
         $room = DesignOption::find($orderCarcas['room_option_id']);
+        $variable_params = $orderCarcas['variable_params'];
+        $additionOptions = VariableParam::getSum($variable_params, $orderCarcas['apartments_square']);
+        $design = Design::find($orderCarcas['design_id']);
         $typeBuilding = TypeBuilding::find($orderCarcas['type_building_id']);
         if (!$typeBuilding) {
             return response()->json([
@@ -287,11 +278,9 @@ class PageConstructorController extends Controller
             ]);
         }
 
-
         $summ = Order::getFastCalculate($orderCarcas['apartments_square'], $design->price_square, $design->constant_cy, $additionOptions, $typeBuilding->additional_coefficient, $typeBathroom->additional_coefficient);
         $summ = $summ + $room->price + $bathroom->price;
 
-        //сформируем список дополнительных опций
         $Options = Option::where('status', '1')->get();
         $preparedOprions = [];
         foreach ($Options as $option) {
@@ -336,35 +325,18 @@ class PageConstructorController extends Controller
             }
         }
         $orderCarcas['options'] = $optionsArray;
-        session(['orderCarcas' => $orderCarcas]);
+
 
 
         $variable_params = $orderCarcas['variable_params'];
 
-        $additionOptions = [];
-        foreach ($variable_params as $item) {
-            $VariableParam = VariableParam::find($item['id']);
-            if (!$VariableParam) continue;
-            if ($VariableParam->is_one) {
-                $additionOptions[] = $VariableParam->price_per_one;
-            } else {
-                $summ = 0;
-                if (is_numeric($item['amount'])) {
-                    $summ = $VariableParam->price_per_one * $item['amount'];
-                } else {
-                    $summ = $VariableParam->price_per_one;
-                }
-
-                $additionOptions[] = $summ;
-            }
-            if ($VariableParam->is_square_require) {
-                $additionOptions[count($additionOptions) - 1] = $additionOptions[count($additionOptions) - 1] * $orderCarcas['apartments_square'];
-            }
-        }
+        $additionOptions = VariableParam::getSum($variable_params, $orderCarcas['apartments_square']);
 
         $summ = Order::getFastCalculate($orderCarcas['apartments_square'], $design->price_square, $design->constant_cy, $additionOptions, $typeBuilding->additional_coefficient, $typeBathroom->additional_coefficient);
         $summ = $summ + $room->price + $bathroom->price + $summOptions;
 
+        $orderCarcas['cost'] = $summ;
+        session(['orderCarcas' => $orderCarcas]);
         return response()->json([
             'success' => true,
             'design_price' => $summ,
@@ -409,6 +381,9 @@ class PageConstructorController extends Controller
             $Order->type_bathroom_id = $orderCarcas['type_bathroom_id'];
             $Order->phone  = $orderCarcas['phone'];
             $Order->design_id = $orderCarcas['design_id'];
+            $Order->cost = $orderCarcas['cost'];
+
+
             $Order->save();
 
             $headers  = "Content-type: text/html; charset=utf-8 \r\n";

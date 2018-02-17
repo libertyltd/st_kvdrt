@@ -7,6 +7,10 @@ var headLine = new Vue({
         isStepBathrooms: false,
         isStepOptions: false,
         isStepOrder: false,
+
+        selectedRoom: null,
+        selectedBathroom: null,
+        additionToBathroom: 0,
     },
     computed: {
         numberFormat: function () {
@@ -17,6 +21,66 @@ var headLine = new Vue({
         }
     },
     methods: {
+        gotoRooms: function () {
+            if (!this.isStepRooms) {
+                if (this.selectedRoom) {
+                    //проверка на установку выбранного санузла
+                    this.isStepBathrooms = false;
+                    this.isStepRooms = true;
+
+                    var bathroom = $('[name="room"]:checked').val();
+                    headLine.additionToBathroom = $('[name="room"]:checked').parent().parent().data('price');
+                    this.selectedBathroom = bathroom;
+                    if (!bathroom) return false;
+                    var hash = $('#addressForm').data('hash');
+                    $.ajax({
+                        url: '/constructor/bathrooms',
+                        type: 'POST',
+                        data: '_token=' + hash + '&bathroom=' + bathroom,
+                        success: function (data) {
+                            if (!data.success) {
+                                window.location.reload();
+                            } else {
+                                loadRooms();
+                            }
+                        },
+                        error: function() {
+                            window.location.reload();
+                        }
+                    });
+                }
+            }
+        },
+        gotoBathrooms: function () {
+            if (!this.isStepBathrooms) {
+                if (this.selectedBathroom) {
+                    this.isStepRooms = false;
+                    this.isStepBathrooms = true;
+
+
+                    var room = $('[name="room"]:checked').val();
+                    this.selectedRoom = room;
+                    if (!room) return false;
+
+                    var hash = $('#addressForm').data('hash');
+                    $.ajax({
+                        url: '/constructor/rooms',
+                        type: 'POST',
+                        data: '_token=' + hash + '&room=' + room,
+                        success: function (data) {
+                            if (!data.success) {
+                                window.location.reload();
+                            } else {
+                                loadBathrooms();
+                            }
+                        },
+                        error: function () {
+                            window.location.reload();
+                        }
+                    });
+                }
+            }
+        },
         //роутер по приложению
         next: function (event) {
             if (this.isStepOrder) {
@@ -132,13 +196,42 @@ function numberFormat (number) {
     return number;
 }
 
-var initRooms = function () {
-    var $rooms = $('.constructor-mediaObject');
-    $rooms.bind('click', function () {
+var initMediaObjects = function () {
+    var $mediaObject = $('.constructor-mediaObject');
+    $mediaObject.bind('click', function () {
         var design_price = $(this).data('design_price');
         var price = $(this).data('price');
         headLine.summ = parseFloat(design_price)+parseFloat(price);
+
+        if (headLine.isStepRooms) {
+            headLine.summ = parseFloat(headLine.additionToBathroom) + headLine.summ;
+        }
     });
+};
+
+/**
+ * Добавляет медиа-объекты в контейнер
+ * @param mediaObjects
+ * @param targetSelector
+ */
+var addMediaObjects = function (mediaObjects, targetSelector) {
+    var $container = $(targetSelector);
+    for (var i = 0; i < mediaObjects.length; i++) {
+        var $mediaObject = $(templateMediaObject);
+        $mediaObject.find('img').attr('src', mediaObjects[i].img);
+        $mediaObject.find('input').attr('value', mediaObjects[i].id);
+        $mediaObject.find('.constructor-mediaObject__name').text(mediaObjects[i].name);
+        if (mediaObjects[i].price > 0) {
+            $mediaObject.find('.constructor-mediaObject__price').text('+ ' + numberFormat(mediaObjects[i].price) + ' р.');
+        }
+        $mediaObject.find('.constructor-mediaObject__description').text(mediaObjects[i].description);
+        $mediaObject.find('.constructor-mediaObject__total > span.total').text(numberFormat(mediaObjects[i].design_price) + 'р.');
+        $mediaObject.data('design_price', mediaObjects[i].design_price);
+        $mediaObject.data('price', mediaObjects[i].price);
+        $container.append($mediaObject);
+    }
+
+    initMediaObjects();
 };
 
 var initOptions = function () {
@@ -232,18 +325,17 @@ var sendOptions = function () {
     return true;
 };
 
-var sendBathrooms = function () {
-    var bathroom = $('[name="room"]:checked').val();
-    if (!bathroom) return false;
-    var hash = $('#addressForm').data('hash');
+
+var loadOptions = function () {
     $.ajax({
-        url: '/constructor/bathrooms',
-        type: 'POST',
-        data: '_token=' + hash + '&bathroom=' + bathroom,
+        url: '/constructor/options',
+        type: 'GET',
         success: function (data) {
             if (data.success) {
-                $('#bathrooms').remove();
+                $('#bathrooms').empty().css('display', 'none');
                 headLine.summ = parseFloat(data.design_price);
+                headLine.selectedRoom = null;
+                headLine.selectedBathroom = null;
                 for (var i = 0; i < data.options.length; i++) {
                     var $option = templateOptions.replace(/{{name}}/g, data.options[i].name);
                     $option = $option.replace(/{{id}}/g, data.options[i].id);
@@ -259,6 +351,30 @@ var sendBathrooms = function () {
                 window.location.reload();
             }
         },
+        error: function () {
+            window.location.reload();
+        }
+    });
+}
+
+var sendBathrooms = function (goto) {
+    var bathroom = $('[name="room"]:checked').val();
+    if (!bathroom) return false;
+    var hash = $('#addressForm').data('hash');
+    $.ajax({
+        url: '/constructor/bathrooms',
+        type: 'POST',
+        data: '_token=' + hash + '&bathroom=' + bathroom,
+        success: function (data) {
+            if (data.success) {
+                if (!goto) {
+                    headLine.selectedBathroom = bathroom;
+                    loadOptions();
+                }
+            } else {
+                window.location.reload();
+            }
+        },
         error: function() {
             window.location.reload();
         }
@@ -267,7 +383,34 @@ var sendBathrooms = function () {
     return true;
 };
 
-var sendRooms = function () {
+
+/**
+ * Функция загрузки списка ванных комнат
+ */
+var loadBathrooms = function () {
+    $.ajax({
+        url: '/constructor/bathrooms',
+        type: 'GET',
+        success: function(data) {
+            if (data.success) {
+                $('#rooms').empty().css('display', 'none');
+                $('#bathrooms').empty();
+                addMediaObjects(data.bathrooms, '#bathrooms');
+                if (headLine.selectedBathroom) {
+                    $('[value="' + headLine.selectedBathroom + '"]').parent().parent().click();
+                }
+                $('#bathrooms').css('display', 'block');
+            } else {
+                window.location.reload();
+            }
+        },
+        error: function () {
+            window.location.reload();
+        }
+    });
+};
+
+var sendRooms = function (goto) {
     var room = $('[name="room"]:checked').val();
     if (!room) return false;
 
@@ -278,25 +421,10 @@ var sendRooms = function () {
         data: '_token=' + hash + '&room=' + room,
         success: function (data) {
             if (data.success) {
-                $('#rooms').remove();
-                //выведем блоки
-                for (var i = 0; i < data.bathrooms.length; i++) {
-                    var $bathroom = $(templateMediaObject);
-                    $bathroom.find('img').attr('src', data.bathrooms[i].img);
-                    $bathroom.find('input').attr('value', data.bathrooms[i].id);
-                    $bathroom.find('.constructor-mediaObject__name').text(data.bathrooms[i].name);
-                    if (data.bathrooms[i].price > 0) {
-                        $bathroom.find('.constructor-mediaObject__price').text('+ ' + data.bathrooms[i].price + ' р.');
-                    }
-                    $bathroom.find('.constructor-mediaObject__description').text(data.bathrooms[i].description);
-                    $bathroom.data('design_price', data.bathrooms[i].design_price);
-                    $bathroom.data('price', data.bathrooms[i].price);
-                    $bathroom.find('.constructor-mediaObject__total span').remove();
-                    $('#bathrooms').append($bathroom);
+                if (!goto) {
+                    headLine.selectedRoom = room;
+                    loadBathrooms();
                 }
-                $('#bathrooms').css('display', 'block');
-                //блок инициализации выбора комнаты
-                initRooms();
             } else {
                 window.location.reload();
             }
@@ -306,6 +434,34 @@ var sendRooms = function () {
         }
     });
     return true;
+};
+
+/**
+ * Функция загрузки списка дизайна комнат
+ */
+var loadRooms = function () {
+    $.ajax({
+        url: '/constructor/rooms',
+        type: 'GET',
+        success: function(data) {
+            if (data.success) {
+                $('#addressForm').css('display', 'none');
+                $('#rooms').empty();
+                //выведем блоки
+                addMediaObjects(data.rooms, '#rooms');
+                //проинициализируем блок, если он был выбран ранее
+                if (headLine.selectedRoom) {
+                    $('[value="' + headLine.selectedRoom + '"]').parent().parent().click();
+                }
+                $('#rooms').css('display', 'block');
+            } else {
+                window.location.reload();
+            }
+        },
+        error: function() {
+            window.location.reload();
+        }
+    });
 };
 
 var sendAddress = function () {
@@ -340,25 +496,7 @@ var sendAddress = function () {
             data: '_token=' + hash + '&' + data,
             success: function (data) {
                 if (data.success) {
-                    $('#addressForm').css('display', 'none');
-                    //выведем блоки
-                    for (var i = 0; i < data.rooms.length; i++) {
-                        var $room = $(templateMediaObject);
-                        $room.find('img').attr('src', data.rooms[i].img);
-                        $room.find('input').attr('value', data.rooms[i].id);
-                        $room.find('.constructor-mediaObject__name').text(data.rooms[i].name);
-                        if (data.rooms[i].price > 0) {
-                            $room.find('.constructor-mediaObject__price').text('+ ' + numberFormat(data.rooms[i].price) + ' р.');
-                        }
-                        $room.find('.constructor-mediaObject__description').text(data.rooms[i].description);
-                        $room.find('.constructor-mediaObject__total > span.total').text(numberFormat(data.rooms[i].design_price) + 'р.');
-                        $room.data('design_price', data.rooms[i].design_price);
-                        $room.data('price', data.rooms[i].price);
-                        $('#rooms').append($room);
-                    }
-                    $('#rooms').css('display', 'block');
-                    //блок инициализации выбора комнаты
-                    initRooms();
+                    loadRooms();
                 } else {
                     window.location.reload();
                 }

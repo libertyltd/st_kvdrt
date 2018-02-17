@@ -22,6 +22,11 @@ header {
     color: #ec5d6b;
 }
 
+.header_menu .header_menu_item.point {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .control_elements {
     float: right;
     margin: 0 50px;

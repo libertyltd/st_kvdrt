@@ -78,6 +78,7 @@ class OrderController extends Controller
             'apartments_type' => 'max:255',
             'apartments_square' => 'numeric',
             'phone' => 'max:255',
+            'cost' => 'numeric'
         ]);
 
         if ($validator->fails()) {
@@ -115,6 +116,7 @@ class OrderController extends Controller
                 $Order->design_id = $request->design_id;
                 $Order->phone = $request->phone;
                 $Order->status = $request->status;
+                $Order->cost = $request->cost;
                 $Order->save();
 
                 if ($request->design_option_id) {
@@ -219,6 +221,7 @@ class OrderController extends Controller
             'apartments_type' => 'max:255',
             'apartments_square' => 'numeric',
             'phone' => 'max:255',
+            'cost' => 'numeric'
         ]);
 
         if ($validator->fails()) {
@@ -255,6 +258,7 @@ class OrderController extends Controller
             $Order->design_id = $request->design_id;
             $Order->phone = $request->phone;
             $Order->status = $request->status;
+            $Order->cost = $request->cost;
             $Order->save();
 
             if ($request->design_option_id) {

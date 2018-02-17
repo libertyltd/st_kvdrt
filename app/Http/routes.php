@@ -34,8 +34,13 @@ Route::post('/constructor/step/5', 'FrontEndController@constructor_step_5');
  */
 Route::get('/constructor', 'PageConstructorController@index');
 Route::post('/constructor/address', 'PageConstructorController@address');
-Route::post('/constructor/rooms', 'PageConstructorController@rooms');
-Route::post('/constructor/bathrooms', 'PageConstructorController@bathrooms');
+
+Route::get('/constructor/rooms', 'PageConstructorController@getRooms');
+Route::post('/constructor/rooms', 'PageConstructorController@setRoom');
+Route::get('/constructor/bathrooms', 'PageConstructorController@getBathrooms');
+Route::post('/constructor/bathrooms', 'PageConstructorController@setBathroom');
+
+Route::get('/constructor/options', 'PageConstructorController@getOptions');
 Route::post('/constructor/options', 'PageConstructorController@options');
 Route::post('/constructor/contacts', 'PageConstructorController@contacts');
 

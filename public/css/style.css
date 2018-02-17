@@ -2313,6 +2313,18 @@ option[disabled]:first-child { display: none; }
     opacity: 0;
 }
 
+.promo_background:before {
+    display: block;
+    content: " ";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.4);
+}
+
 .promo_background__text {
     display: block;
     position: absolute;
