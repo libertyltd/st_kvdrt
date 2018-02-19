@@ -1,61 +1,7 @@
-var VariableParamCheckbox = function (element) {
-    this.$element = $(element);
-    this.$checkbox = this.$element.find('input[type="checkbox"]');
-    this.$input = this.$element.find('input[type="text"]');
-    this.input_max = this.$input.data('max');
-    this.input_min = this.$input.data('min');
-
-    if (isNaN(parseInt(this.input_min))) {
-        this.input_min = null;
-    }
-
-    if (isNaN(parseInt(this.input_max))) {
-        this.input_max = this.input_min;
-    }
-
-
-    var self = this;
-    this.$checkbox.bind('change', function () {
-        self.handleCheckbox();
-    });
-
-    this.$input.bind('click', function (ev) {
-        ev.preventDefault();
-    });
-    this.$input.bind('change', function() {
-        self.handleInput();
-    });
-
-    this.handleCheckbox();
-    this.handleInput();
-};
-
-VariableParamCheckbox.prototype.handleInput = function () {
-    var value = this.$input.val();
-    if (isNaN(parseInt(value))) {
-        this.$input.val(this.input_min);
-    } else if (!isNaN(parseInt(this.input_min)) && !isNaN(parseInt(this.input_max))) {
-        if (value < this.input_min || value > this.input_max) {
-            this.$input.val(this.input_min);
-        }
-    }
-};
-
-VariableParamCheckbox.prototype.handleCheckbox = function () {
-    if (this.$checkbox.prop('checked')) {
-        this.$input.attr('required', 'required');
-    } else {
-        this.$input.removeAttr('required');
-    }
-};
-
 
 
 
 jQuery(document).ready(function() {
-    $('[data-toggle="variable_param_checkbox"]').each(function () {
-        new VariableParamCheckbox(this);
-    });
 
     var finalForm = {
         hide: function() {

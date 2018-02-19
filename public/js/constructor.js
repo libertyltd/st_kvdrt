@@ -122,6 +122,57 @@ var headLine = new Vue({
     }
 });
 
+var VariableParamCheckbox = function (element) {
+    this.$element = $(element);
+    this.$checkbox = this.$element.find('input[type="checkbox"]');
+    this.$input = this.$element.find('input[type="text"]');
+    this.input_max = this.$input.data('max');
+    this.input_min = this.$input.data('min');
+
+    if (isNaN(parseInt(this.input_min))) {
+        this.input_min = null;
+    }
+
+    if (isNaN(parseInt(this.input_max))) {
+        this.input_max = this.input_min;
+    }
+
+
+    var self = this;
+    this.$checkbox.bind('change', function () {
+        self.handleCheckbox();
+    });
+
+    this.$input.bind('click', function (ev) {
+        ev.preventDefault();
+    });
+    this.$input.bind('change', function() {
+        self.handleInput();
+    });
+
+    this.handleCheckbox();
+    this.handleInput();
+};
+
+VariableParamCheckbox.prototype.handleInput = function () {
+    var value = this.$input.val();
+    if (isNaN(parseInt(value))) {
+        this.$input.val(this.input_min);
+    } else if (!isNaN(parseInt(this.input_min)) && !isNaN(parseInt(this.input_max))) {
+        if (value < this.input_min || value > this.input_max) {
+            this.$input.val(this.input_min);
+        }
+    }
+};
+
+VariableParamCheckbox.prototype.handleCheckbox = function () {
+    if (this.$checkbox.prop('checked')) {
+        this.$input.attr('required', 'required');
+    } else {
+        this.$input.removeAttr('required');
+    }
+};
+
 var initAddress = function () {
     var $typesAppartments = $('.constructor_type-apartments');
     $typesAppartments.find('input:checked').parent().addClass('active');
@@ -145,20 +196,8 @@ var initAddress = function () {
         return false;
     });
 
-    var $variableAmounts = $('[data-toggle="variable_param_checkbox"]').find('input').bind('change', function (ev) {
-        ev.stopPropagation();
-        var min = $(this).data('min');
-        var max = $(this).data('max');
-        
-        var  val = parseInt($(this).val());
-        if (!isNaN(val)) {
-            $(this).val(val);
-            if (val < min || val > max) {
-                $(this).val('');
-            }
-        } else {
-            $(this).val('');
-        }
+    $('[data-toggle="variable_param_checkbox"]').each(function () {
+        new VariableParamCheckbox(this);
     });
 };
 
