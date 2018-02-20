@@ -209,6 +209,6 @@ class DesignOptionController extends Controller
         $IM = new ImageStorage($DesignOption);
         $IM->deleteNamespaceDir();
         $DesignOption->delete();
-        return redirect('/home/design_option/')->with(['success'=>[$nameOfDelete.' успешно удален!']]);
+        return redirect('/home/design_options/')->with(['success'=>[$nameOfDelete.' успешно удален!']]);
     }
 }
