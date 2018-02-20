@@ -31,7 +31,11 @@ var headLine = new Vue({
                     var bathroom = $('[name="room"]:checked').val();
                     headLine.additionToBathroom = parseFloat($('[name="room"]:checked').parent().parent().data('price'));
                     this.selectedBathroom = bathroom;
-                    if (!bathroom) return false;
+                    if (!bathroom) {
+                        loadRooms();
+                        $('#bathrooms').empty().css('display', 'none');
+                        return;
+                    }
                     var hash = $('#addressForm').data('hash');
                     $.ajax({
                         url: '/constructor/bathrooms',
