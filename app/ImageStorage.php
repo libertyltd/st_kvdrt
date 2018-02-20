@@ -198,19 +198,23 @@ class ImageStorage {
     public function getCropped ($namespace, $width=300, $height=300) {
         $files = $this->get($namespace, false);
         $croppedFiles = [];
-        foreach ($files as $file) {
-            list($baseName, $extension) = $this->getFileNameAndExtension($file);
+        try {
+            foreach ($files as $file) {
+                list($baseName, $extension) = $this->getFileNameAndExtension($file);
 
-            if (!preg_match("/(.*)_derived_(.*).{$extension}/", $file) && !Storage::disk($this::$defaultDisk)->exists($this->pathToDir.$namespace.'/'.$baseName.'_derived_'.$width.'x'.$height.'.'.$extension)) {
-                Image::make(Storage::disk('public')->get($this->pathToDir.$namespace.'/'.$baseName.'.'.$extension))->fit($width,$height)->save(storage_path('app/'.$this::$defaultDisk.'/'.$this->pathToDir.$namespace.'/'.$baseName.'_derived_'.$width.'x'.$height.'.'.$extension));
-                $croppedFiles[] = Storage::disk($this::$defaultDisk)->url($this->pathToDir.$namespace.'/'.urlencode($baseName).'_derived_'.$width.'x'.$height.'.'.$extension);
-            } else {
-                if (preg_match("/(.*)_derived_{$width}x{$height}.{$extension}/", $file)) {
-                    $croppedFiles[] = Storage::disk($this::$defaultDisk)->url($this->pathToDir.$namespace.'/'.urlencode($baseName).'.'.$extension);
+                if (!preg_match("/(.*)_derived_(.*).{$extension}/", $file) && !Storage::disk($this::$defaultDisk)->exists($this->pathToDir.$namespace.'/'.$baseName.'_derived_'.$width.'x'.$height.'.'.$extension)) {
+                    Image::make(Storage::disk('public')->get($this->pathToDir.$namespace.'/'.$baseName.'.'.$extension))->fit($width,$height)->save(storage_path('app/'.$this::$defaultDisk.'/'.$this->pathToDir.$namespace.'/'.$baseName.'_derived_'.$width.'x'.$height.'.'.$extension));
+                    $croppedFiles[] = Storage::disk($this::$defaultDisk)->url($this->pathToDir.$namespace.'/'.urlencode($baseName).'_derived_'.$width.'x'.$height.'.'.$extension);
+                } else {
+                    if (preg_match("/(.*)_derived_{$width}x{$height}.{$extension}/", $file)) {
+                        $croppedFiles[] = Storage::disk($this::$defaultDisk)->url($this->pathToDir.$namespace.'/'.urlencode($baseName).'.'.$extension);
+                    }
                 }
+
+
             }
-
-
+        } catch (Exception $e) {
+            return [];
         }
 
         return $croppedFiles;

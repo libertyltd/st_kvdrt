@@ -248,7 +248,7 @@ var initMediaObjects = function () {
         var price = $(this).data('price');
         headLine.summ = parseFloat(design_price)+parseFloat(price);
 
-        if (headLine.isStepRooms) {
+        if (headLine.isStepRooms && !isNaN(parseFloat(headLine.additionToBathroom))) {
             headLine.summ = parseFloat(headLine.additionToBathroom) + headLine.summ;
         }
     });
