@@ -29,7 +29,7 @@ var headLine = new Vue({
                     this.isStepRooms = true;
 
                     var bathroom = $('[name="room"]:checked').val();
-                    headLine.additionToBathroom = $('[name="room"]:checked').parent().parent().data('price');
+                    headLine.additionToBathroom = parseFloat($('[name="room"]:checked').parent().parent().data('price'));
                     this.selectedBathroom = bathroom;
                     if (!bathroom) return false;
                     var hash = $('#addressForm').data('hash');
