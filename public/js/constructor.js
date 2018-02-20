@@ -42,6 +42,7 @@ var headLine = new Vue({
                                 window.location.reload();
                             } else {
                                 loadRooms();
+                                $('#bathrooms').empty().css('display', 'none');
                             }
                         },
                         error: function() {
@@ -72,6 +73,7 @@ var headLine = new Vue({
                                 window.location.reload();
                             } else {
                                 loadBathrooms();
+                                $('#rooms').empty().css('display', 'none');
                             }
                         },
                         error: function () {
