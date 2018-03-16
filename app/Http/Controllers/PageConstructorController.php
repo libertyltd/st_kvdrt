@@ -38,12 +38,20 @@ class PageConstructorController extends Controller
         date_default_timezone_set('UTC');
         $validator = Validator::make($request->all(), [
             'apartments_type' => 'required|max:255',
-            'apartments_square' => 'numeric|required',
+            'apartments_square' => 'required',
             'type_building_id' => 'numeric|required',
             'type_bathroom_id' => 'numeric|required',
         ]);
 
         if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Ошибка входных данных',
+            ]);
+        }
+
+        $request->apartments_square = str_replace(',', '.', $request->apartments_square);
+        if (!is_float($request->apartments_square)) {
             return response()->json([
                 'success' => false,
                 'message' => 'Ошибка входных данных',
