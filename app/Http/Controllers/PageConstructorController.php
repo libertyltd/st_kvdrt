@@ -12,6 +12,7 @@ use App\TypeBuilding;
 use App\User;
 use App\VariableParam;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Validator;
 use Exception;
 
