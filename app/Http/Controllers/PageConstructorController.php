@@ -52,7 +52,7 @@ class PageConstructorController extends Controller
         }
 
         $request->apartments_square = str_replace(',', '.', $request->apartments_square);
-        if (!is_float($request->apartments_square)) {
+        if (!is_numeric($request->apartments_square)) {
             Log::info($request->apartments_square);
             return response()->json([
                 'success' => false,
