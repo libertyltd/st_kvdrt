@@ -54,7 +54,7 @@ class PageConstructorController extends Controller
         if (!is_float($request->apartments_square)) {
             return response()->json([
                 'success' => false,
-                'message' => 'Ошибка входных данных',
+                'message' => 'Ошибка площади квартиры',
             ]);
         }
 
